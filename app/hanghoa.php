@@ -23,11 +23,5 @@ class hanghoa extends Model
     }
     public function khohang(){
         return $this->belongsTo('App\khohang', 'kho_id', 'kho_id');
-    }
-    public function baocaotonkho(){
-        return $this->hasMany('App\baocaotonkho', 'bctk_id', 'bctk_id');
-    }
-
-
-    
+    } 
 }

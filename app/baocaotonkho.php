@@ -9,7 +9,7 @@ class baocaotonkho extends Model
     public    $timestamps   = false;
 
     protected $table        = 'baocaotonkho';
-    protected $fillable     = ['pxk_id', 'pnk_id','soluongtondau','soluongtoncuoi'];
+    protected $fillable     = ['pxk_id', 'pnk_id'];
     protected $guarded      = ['bctk_id'];
 
     protected $primaryKey   = 'bctk_id';
