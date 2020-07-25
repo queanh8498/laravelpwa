@@ -26,8 +26,40 @@ Route::get('/dangxuat','NhanvienController@getdangxuat');
 Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::get('/tongquanbanhang','NhanvienController@xem_tongquanbanhang');
 //QUẢN LÝ KHO HÀNG
+	//khohang
+	Route::get('/danhsach-kho','KhohangController@getdanhsach_kho');
+	Route::get('/tao-kho','KhohangController@gettao_kho');
+	Route::post('/tao-kho','KhohangController@posttao_kho');
+	Route::get('/sua-kho/{kho_id}','KhohangController@getsua_kho');
+	Route::post('/sua-kho/{kho_id}','KhohangController@postsua_kho');
+	//nhacungcap
+	Route::get('/danhsach-ncc','NhacungcapController@getdanhsach_ncc');
+	Route::get('/tao-ncc','NhacungcapController@gettao_ncc');
+	Route::post('/tao-ncc','NhacungcapController@posttao_ncc');
+	Route::get('/sua-ncc/{ncc_id}','NhacungcapController@getsua_ncc');
+	Route::post('/sua-ncc/{ncc_id}','NhacungcapController@postsua_ncc');
+	//nhomhanghoa
+	Route::get('/danhsach-nhom','NhomhanghoaController@getdanhsach_nhom');
+	Route::get('/ncc/{ncc_id}','NhomhanghoaController@ncc');
+	Route::get('/tao-nhom','NhomhanghoaController@gettao_nhom');
+	Route::post('/tao-nhom','NhomhanghoaController@posttao_nhom');
+	Route::get('/sua-nhom/{nhom_id}','NhomhanghoaController@getsua_nhom');
+	Route::post('/sua-nhom/{nhom_id}','NhomhanghoaController@postsua_nhom');
 
-
+	//hanghoa
+	Route::get('/danhsach-hh','HanghoaController@getdanhsach_hh');
+	Route::get('/tao-hh','HanghoaController@gettao_hh');
+	Route::post('/tao-hh','HanghoaController@posttao_hh');
+	Route::get('/sua-hh/{hh_id}','HanghoaController@getsua_hh');
+	Route::post('/sua-hh/{hh_id}','HanghoaController@postsua_hh');
+	//phieunhapkho
+	Route::get('/danhsach-pnk','PhieunhapkhoController@getdanhsach_pnk');
+	Route::get('/chitiet-pnk/{pnk_id}','PhieunhapkhoController@getchitiet_pnk');
+	Route::get('/tao-pnk','PhieunhapkhoController@gettao_pnk');
+	Route::get('/dongia','PhieunhapkhoController@dongia');
+	Route::get('/hanghoa','PhieunhapkhoController@hanghoa');
+Route::post('/dynamic-field/insert', 'PhieunhapkhoController@insert')->name('dynamic-field.insert');
+	
 //QUẢN LÝ BÁN HÀNG
 	
 	});
