@@ -107,7 +107,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Quản lý bán hàng</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="#">Danh mục khách hàng</a></li>
+                        <li><a href="{{URL::to('banhang/khachhang')}}">Danh mục khách hàng</a></li>
                         <li><a href="#">Danh mục hàng hóa còn tồn kho</a></li>
                    
                         

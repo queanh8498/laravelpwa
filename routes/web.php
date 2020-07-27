@@ -59,6 +59,15 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::get('/dongia','PhieunhapkhoController@dongia');
 	Route::get('/hanghoa','PhieunhapkhoController@hanghoa');
 Route::post('/dynamic-field/insert', 'PhieunhapkhoController@insert')->name('dynamic-field.insert');
+
+	//khachhang
+	Route::get('/khachhang','KhachhangController@index')->name('khachhang.index');
+	Route::get('/khachhang','KhachhangController@create')->name('khachhang.create');
+	Route::get('/khachhang/edit/{id}','KhachhangController@edit')->name('khachhang.edit');
+	Route::post('/khachhang/update/{id}','KhachhangController@update')->name('khachhang.update');
+	Route::get('/khachhang/chitiet/{id}','KhachhangController@getdetail');
+
+	Route::resource('/khachhang', 'KhachhangController');
 	
 //QUẢN LÝ BÁN HÀNG
 	
