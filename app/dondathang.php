@@ -9,7 +9,7 @@ class dondathang extends Model
     public    $timestamps   = false;
 
     protected $table        = 'dondathang';
-    protected $fillable     = ['kh_id','id', 'ddh_trangthai','ddh_ngaylap','ddh_giamchietkhau','ddh_congnocu','ddh_congnomoi'];
+    protected $fillable     = ['kh_id','id', 'ddh_trangthai','ddh_ngaylap','ddh_giamchietkhau','ddh_congnocu','ddh_congnomoi','ddh_datra'];
     protected $guarded      = ['ddh_id'];
     protected $primaryKey   = 'ddh_id';
 
@@ -21,5 +21,8 @@ class dondathang extends Model
     }
     public function user(){
         return $this->belongsTo('App\User', 'id', 'id');
+    }
+    public function baocaocongno(){
+        return $this->hasMany('App\baocaocongno', 'ddh_id', 'ddh_id');
     }
 }

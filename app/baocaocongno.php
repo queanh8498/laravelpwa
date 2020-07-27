@@ -17,7 +17,7 @@ class baocaocongno extends Model
     protected $dates        = ['bccn_hanno'];
     protected $dateFormat   = 'Y-m-d H:i:s';
 
-    public function khachhang(){
-        return $this->belongsTo('App\khachhang', 'kh_id', 'kh_id');
+    public function dondathang(){
+        return $this->belongsTo('App\dondathang', 'ddh_id', 'ddh_id');
     }
 }

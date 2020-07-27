@@ -66,8 +66,11 @@ Route::post('/dynamic-field/insert', 'PhieunhapkhoController@insert')->name('dyn
 	Route::get('/khachhang/edit/{id}','KhachhangController@edit')->name('khachhang.edit');
 	Route::post('/khachhang/update/{id}','KhachhangController@update')->name('khachhang.update');
 	Route::get('/khachhang/chitiet/{id}','KhachhangController@getdetail');
-
 	Route::resource('/khachhang', 'KhachhangController');
+
+	//dondathang
+	Route::get('/danhsachdondathang','DonDatHangController@xem_danhsachdondathang');
+	Route::get('/chitietdondathang/{ddh_id}','DonDatHangController@chitietdondathang');
 	
 //QUẢN LÝ BÁN HÀNG
 	

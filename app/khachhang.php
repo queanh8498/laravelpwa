@@ -18,7 +18,5 @@ class khachhang extends Model
     public function dondathang(){
         return $this->hasMany('App\dondathang', 'kh_id', 'kh_id');
     }
-    public function baocaocongno(){
-        return $this->hasMany('App\baocaocongno', 'kh_id', 'kh_id');
-    }
+    
 }
