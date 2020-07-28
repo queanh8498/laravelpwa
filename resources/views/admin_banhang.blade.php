@@ -92,11 +92,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Quản lý kho</span>
                     </a>
                     <ul class="sub">
-                        <li><a href="{{URL::to('banhang/danhsach-kho')}}">Danh mục kho xuất hàng</a></li>
+                      <li><a href="{{URL::to('banhang/danhsach-kho')}}">Danh mục kho xuất hàng</a></li>
                         <li><a href="{{URL::to('banhang/danhsach-ncc')}}">Danh mục nhà cung cấp</a></li>
                         <li><a href="{{URL::to('banhang/danhsach-nhom')}}">Danh mục nhóm hàng hóa</a></li>
                         <li><a href="{{URL::to('banhang/danhsach-hh')}}">Danh mục hàng hóa</a></li>
                         <li><a href="{{URL::to('banhang/danhsach-pnk')}}">Phiếu nhập kho</a></li>
+                        <li><a href="{{URL::to('banhang/danhsach-pth')}}">Phiếu khách trả hàng</a></li>
+                        <li><a href="{{URL::to('banhang/danhsach-ptncc')}}">Phiếu trả nhà cung cấp</a></li>
+                        
                         
                       
                     </ul>

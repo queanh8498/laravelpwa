@@ -36,7 +36,7 @@
 <script type="text/javascript">
   $(document).on('change','#ncc_id',function () {
       var ncc_id=$(this).val();
-        $.get("banhang/ncc/"+ncc_id,function(data){
+        $.get("banhang/nhomhanghoa/"+ncc_id,function(data){
           console.log(data);
         $("#dataTables-example").html(data);
     });

@@ -23,8 +23,8 @@ class PhieunhapkhoController extends Controller
    
     public function gettao_pnk(){
       $kho=khohang::all();
-      $nhom=nhomhanghoa::all();
-    	return view('kho.phieunhapkho.tao_pnk')->with('nhom',$nhom)->with('kho',$kho);
+      $ncc_id=nhacungcap::all();
+    	return view('kho.phieunhapkho.tao_pnk')->with('kho',$kho)->with('ncc_id',$ncc_id);
     }
      public function getdanhsach_pnk(){
      $pnk=phieunhapkho::all();
@@ -32,9 +32,14 @@ class PhieunhapkhoController extends Controller
     }
        public function getchitiet_pnk($pnk_id){
     $pnk=phieunhapkho::find($pnk_id);
-    $ctpn=DB::table('chitietphieunhap')->join('hanghoa','hanghoa.hh_id','=','chitietphieunhap.hh_id')->where('pnk_id',$pnk_id)->get();
+    $ctpn=DB::table('chitietphieunhap')
+     ->join('hanghoa','hanghoa.hh_id','=','chitietphieunhap.hh_id')
+     ->join('nhomhanghoa','hanghoa.nhom_id','=','nhomhanghoa.nhom_id')
+    ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
+     ->where('chitietphieunhap.pnk_id',$pnk_id)->get();
 
-      return view('kho.phieunhapkho.chitiet_pnk')->with('pnk',$pnk)->with('ctpn',$ctpn);
+    return view('kho.phieunhapkho.chitiet_pnk')->with('pnk',$pnk)->with('ctpn',$ctpn);
+   
     }
     
      public function dongia(Request $request){
@@ -65,6 +70,27 @@ public function hanghoa(Request $request){
             echo $output;
         
   }
+  public function nhh_theoncc(Request $request){
+
+    
+      //if our chosen id and products table prod_cat_id col match the get first 100 data 
+
+        //$request->id here is the id of our chosen option id
+        $data=nhomhanghoa::select('nhom_ten','nhom_id')->where('ncc_id',$request->ncc_id)->get();
+          
+            $output = '';
+          
+           $output = ' <option value="">--Chọn nhóm hàng hóa--</option>';
+                
+                foreach($data as $key => $value){
+                    $output.='<option value="'.$value->nhom_id.'">'.$value->nhom_ten.'</option>';
+                
+
+            }
+
+            echo $output;
+        
+  }
 function insert(Request $request)
     {
       if($request->ajax())
@@ -85,11 +111,13 @@ function insert(Request $request)
        ]);
         
       }
-     $checkout_code = substr(md5(microtime()),rand(0,26),5);
+  
      $pnk =new phieunhapkho;
-     $pnk->pnk_id=$checkout_code;
+  
       $pnk->id=$request->nv_id;
       $pnk->kho_id=$request->kho_id;
+       $pnk->ncc_id=$request->ncc_id;
+        $pnk->pnk_trangthai=1;
       date_default_timezone_set('Asia/Ho_Chi_Minh');
       $pnk->pnk_ngaynhapkho = now();
       $pnk->save();
@@ -110,7 +138,7 @@ function insert(Request $request)
       for($count = 0; $count < count($hh_id); $count++)
       {
        $data = array(
-        'pnk_id'=>$checkout_code,
+        'pnk_id'=>$pnk->pnk_id,
         'hh_id' => $hh_id[$count],
         'ctpn_soluong'  => $ctpn_soluong[$count],
         'ctpn_dongia'  => $ctpn_dongia[$count]

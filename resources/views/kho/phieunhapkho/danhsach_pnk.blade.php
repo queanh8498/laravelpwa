@@ -20,6 +20,7 @@
             <th>Mã phiếu nhập kho</th>
             <th>Nhân viên tạo phiếu</th>
             <th>Kho nhập</th>
+            <th>Nhà cung cấp</th>
             <th>Ngày nhập kho</th>
             <th style="width:30px;"></th>
           </tr>
@@ -29,9 +30,10 @@
           @foreach($pnk as $dspnk)
           <tr>
            
-            <td>{{ $dspnk->pnk_id }}</td>
+            <td>PNK00{{ $dspnk->pnk_id }}</td>
             <td>{{ $dspnk->User->name}}</td>
             <td>{{ $dspnk->khohang->kho_ten}}</td>
+            <td>{{ $dspnk->nhacungcap->ncc_ten}}</td>
             <td>{{ $dspnk->pnk_ngaynhapkho}}</td>
              <td>
               <a href="{{URL::to('/banhang/chitiet-pnk/'.$dspnk->pnk_id)}}"  class="active styling-edit" ui-toggle-class="">

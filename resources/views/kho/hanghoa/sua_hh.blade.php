@@ -33,11 +33,6 @@
                                     <label for="exampleInputEmail1">Đơn giá</label>
                                     <input type="text" data-validation="number" data-validation-error-msg="Làm ơn điền đơn giá" name="hh_dongia" class="form-control" id="exampleInputEmail1" placeholder="Giá sản phẩm" value="{{$hh->hh_dongia}}" >
                                 </div>
-                               
-                             <div class="form-group">
-                                    <label for="exampleInputEmail1">Số lượng</label>
-                                    <input type="text" data-validation="number" data-validation-error-msg="Làm ơn nhập số lượng" name="hh_soluong" class="form-control" id="exampleInputEmail1" placeholder="Số lượng sản phẩm" value="{{$hh->hh_soluong}}" >
-                                </div>
                
                                    <div class="form-group">
                                     <label for="exampleInputPassword1">Kho</label>

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Redirect;
 use App\nhomhanghoa;
 use App\khohang;
 use App\hanghoa;
+use App\nhacungcap;
 session_start();
 
 class HanghoaController extends Controller
@@ -22,8 +23,8 @@ class HanghoaController extends Controller
     }
        public function gettao_hh(){
         $khohang=khohang::all();
-        $nhom=nhomhanghoa::all();
-        return view('kho.hanghoa.tao_hh',['khohang'=>$khohang],['nhom'=>$nhom]);
+        $ncc=nhacungcap::all();
+        return view('kho.hanghoa.tao_hh',['khohang'=>$khohang],['ncc'=>$ncc]);
     }
    public function posttao_hh(Request $request){
    		$this->validate($request,[
@@ -40,8 +41,8 @@ class HanghoaController extends Controller
      	$hh->hh_ten=$request->hh_ten;
      	$hh->nhom_id=$request->nhom_id;
      	$hh->kho_id=$request->kho_id;
+        $hh->hh_soluong=0;
      	$hh->hh_dongia=$request->hh_dongia;
-     	$hh->hh_soluong=$request->hh_soluong;
      	$hh->hh_thongtin=$request->hh_thongtin;
      	date_default_timezone_set('Asia/Ho_Chi_Minh');
         $hh->hh_ngaytaomoi = now();
@@ -88,7 +89,6 @@ class HanghoaController extends Controller
      	$hh->nhom_id=$request->nhom_id;
      	$hh->kho_id=$request->kho_id;
      	$hh->hh_dongia=$request->hh_dongia;
-     	$hh->hh_soluong=$request->hh_soluong;
      	$hh->hh_thongtin=$request->hh_thongtin;
      	date_default_timezone_set('Asia/Ho_Chi_Minh');
         $hh->hh_ngaycapnhat= now();
@@ -109,5 +109,26 @@ class HanghoaController extends Controller
         
 
     }
+      public function nhh_hh_theoncc(Request $request){
+
+    
+      //if our chosen id and products table prod_cat_id col match the get first 100 data 
+
+        //$request->id here is the id of our chosen option id
+        $data=nhomhanghoa::select('nhom_ten','nhom_id')->where('ncc_id',$request->ncc_id)->get();
+          
+            $output = '';
+          
+           $output = ' <option value="">--Chọn nhóm hàng hóa--</option>';
+                
+                foreach($data as $key => $value){
+                    $output.='<option value="'.$value->nhom_id.'">'.$value->nhom_ten.'</option>';
+                
+
+            }
+
+            echo $output;
+        
+  }
     
 }

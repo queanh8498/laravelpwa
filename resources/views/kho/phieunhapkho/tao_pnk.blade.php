@@ -33,7 +33,16 @@
                                             
                                     </select>
                                 </div>
-                             
+                                 <div class="form-group">
+                                    <label for="exampleInputPassword1">Nhà cung cấp</label>
+                                      <select name="ncc_id" class="form-control input-sm m-bot15" id="ncc_id">
+                                        <option value="">--Chọn nhà cung cấp--</option>
+                                        @foreach($ncc_id as $key => $dsncc)
+                                            <option value="{{$dsncc->ncc_id}}">{{$dsncc->ncc_ten}}</option>
+                                        @endforeach
+                                            
+                                    </select>
+                                </div>
                  <span id="result"></span>
                  <table class="table table-bordered table-striped" id="user_table">
 
@@ -83,11 +92,10 @@ $(document).ready(function(){
  function dynamic_field(number)
  {
   html = '<tr>';
-     html += '<td><select name="nhom_id[]" class="form-control nhom_id" data-sub_nhom_id="'+count+'">   <option value="">--Chọn nhóm hàng hóa--</option>@foreach($nhom as $key => $dsnhom)'+
-        '<option value="{{$dsnhom->nhom_id}}">{{$dsnhom->nhom_ten}}</option>@endforeach</select></td>';
+     html += '<td><select name="nhom_id[]" class="form-control nhom_id" id="nhom_id'+count+'" data-sub_nhom_id="'+count+'">   <option value="">--Chọn nhóm hàng hóa--</option></select></td>';
         html += '<td><select name="hh_id[]" class="form-control hh_id" id="hh_id'+count+'" data-sub_hh_id="'+count+'"><option value="" >--Chọn hàng hóa--</option></select></td>';
         html += '<td><input type="text" name="ctpn_soluong[]" class="form-control ctpn_soluong" id="ctpn_soluong'+count+'"  placeholder="nhập số lượng" ></td>';
-        html += '<td><input type="text"  name="ctpn_dongia[]" class="form-control ctpn_dongia readonly=""  id="ctpn_dongia'+count+'" value="0" readonly=""></td>';
+        html += '<td><input type="text"  name="ctpn_dongia[]" class="form-control ctpn_dongia"  id="ctpn_dongia'+count+'" value="0" readonly=""></td>';
           html += '<td><input type="text"  name="ctpn_tt[]" class="form-control ctpn_tt"  id="ctpn_tt'+count+'" value="0" readonly="" ></td>';
         if(number > 1)
         {
@@ -104,6 +112,22 @@ $(document).ready(function(){
  $(document).on('click', '#add', function(){
   count++;
   dynamic_field(count);
+   var ncc_id=$('#ncc_id').val();
+    
+   $.ajax({
+
+        type:'get',
+        url:'{!!URL::to('banhang/nhh-theoncc')!!}',
+        data:{'ncc_id':ncc_id},
+      
+        success:function(data){
+         console.log(data);
+             $('#nhom_id'+count).html(data);
+        },
+        error:function(){
+
+        }
+      });
  });
 
  $(document).on('click', '.remove', function(){
@@ -138,7 +162,7 @@ $(document).ready(function(){
                 }
                 else
                 {
-                    dynamic_field(1);
+                   
                     $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
                 }
                 $('#save').attr('disabled', false);
@@ -159,6 +183,28 @@ $(document).ready(function(){
           count = count + 1;
 
         });
+  $(document).on('change','#ncc_id',function () {
+      var ncc_id=$(this).val();
+    
+   $.ajax({
+
+        type:'get',
+        url:'{!!URL::to('banhang/nhh-theoncc')!!}',
+        data:{'ncc_id':ncc_id},
+      
+        success:function(data){
+         console.log(data);
+             $('.nhom_id').html(data);
+          $('.hh_id option:selected ').text("--Chọn hàng hóa--");
+            $('.ctpn_soluong').val("");
+             $('.ctpn_dongia').val(0);
+               $('.ctpn_tt').val(0);
+        },
+        error:function(){
+
+        }
+      });
+    });
  $(document).on('change','.nhom_id',function () {
       var nhom_id=$(this).val();
       var kho_id=$('#kho_id').val();
@@ -171,7 +217,7 @@ $(document).ready(function(){
         data:{'id':nhom_id,'kho_id':kho_id},
       
         success:function(data){
-         console.log(data);
+        // console.log(data);
              $('#hh_id'+sub_nhom_id).html(data);
         },
         error:function(){

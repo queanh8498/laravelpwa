@@ -13,7 +13,7 @@ class chitietphieunhap extends Model
     protected $guarded      = ['pnk_id', 'hh_id'];
 
     protected $primaryKey   = ['pnk_id', 'hh_id'];
-    public    $incrementing = false;
+   
 
     public function hanghoa(){
         return $this->belongsTo('App\hanghoa', 'hh_id', 'hh_id');

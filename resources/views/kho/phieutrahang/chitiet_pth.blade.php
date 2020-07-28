@@ -5,7 +5,7 @@
   
   <div class="panel panel-default">
     <div class="panel-heading">
-    Chi tiết phiếu nhập kho
+    Chi tiết phiếu khách trả hàng
     </div>
     
     <div class="table-responsive">
@@ -14,22 +14,26 @@
         <thead>
           <tr>
            
-            <th>Tên khách hàng</th>
-            <th>Kho hàng</th>
-            <th>Địa chỉ kho</th>
-            <th>Mã phiếu nhập</th>
-            <th>Nhà cung cấp</th>
+            <th>Mã phiếu trả hàng</th>
+            <th>Mã đơn đặt hàng</th>
+            <th>Nhân viên lập phiếu</th>
+            <th>Khách hàng</th>
+            <th>Ngày lập phiếu</th>
+            <th>Trạng thái</th>
            
           </tr>
         </thead>
         <tbody>
         
           <tr>
-            <td>{{$pnk->User->name}}</td>
-            <td>{{$pnk->khohang->kho_ten}}</td>
-            <td>{{$pnk->khohang->kho_diachi}}</td>
-            <td>PNK00{{$pnk->pnk_id}}</td>
-             <td>{{$pnk->nhacungcap->ncc_ten}}</td>
+            <td>PTH00{{$pth->pth_id}}</td>
+            <td>{{$pth->ddh_id}}</td>
+             <td>{{$pth->User->name}}</td>
+            <td>{{$pth->dondathang->khachhang->kh_ten}}</td>
+            <td>{{$pth->pth_ngaylap}}</td>
+             @if($pth->pth_trangthai==1)
+                  <td>Chỉ xem phiếu</td>
+                  @endif
           </tr>
      
         </tbody>
@@ -43,7 +47,7 @@
     <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-       Thông tin chi tiết phiếu nhập kho
+       Thông tin chi tiết phiếu khách trả hàng
     </div>
   
                          @if(session('thongbao'))
@@ -56,6 +60,7 @@
         <thead>
           <tr>
             <th>Tên hàng hóa</th>
+            <th>Nhà cung cấp</th>
             <th>Nhóm hàng hóa</th>
             <th>Số lượng</th>
             <th width="12%">Đơn giá</th>
@@ -65,15 +70,16 @@
           </tr>
         </thead>
         <tbody>
-          @foreach($ctpn as $key => $dsctpn)
+          @foreach($ctth as $key => $dsctpth)
           <tr>
-            <td>{{$dsctpn->hh_ten}}</td>
-            <td>{{$dsctpn->nhom_ten}}</td>
-            <td>{{$dsctpn->ctpn_soluong}}</td>
-            <td>{{$dsctpn->ctpn_dongia }}</td>
-            <td>{{$dsctpn->ctpn_soluong*$dsctpn->ctpn_dongia}}</td>
+            <td>{{$dsctpth->hh_ten}}</td>
+            <td>{{$dsctpth->ncc_ten}}</td>
+            <td>{{$dsctpth->nhom_ten}}</td>
+            <td>{{$dsctpth->ctth_soluong}}</td>
+            <td>{{$dsctpth->ctth_dongia }}</td>
+            <td>{{$dsctpth->ctth_soluong*$dsctpth->ctth_dongia}}</td>
             <?php
-            $total=$total+($dsctpn->ctpn_soluong*$dsctpn->ctpn_dongia);
+            $total=$total+($dsctpth->ctth_soluong*$dsctpth->ctth_dongia);
              ?>
           </tr>
           @endforeach
@@ -93,10 +99,11 @@
         
   
       </div>
+     
+      
     </footer>
   </div>
-   <br>
-    <a  type="button" name="taopnk" class="btn btn-info" href="{{URL::to('/banhang/tao-ptncc/'.$pnk->pnk_id)}}"> <i class="glyphicon glyphicon-plus"></i>Tạo phiếu trả nhà cung cấp</a>
 </div>
+ 
 
 @endsection

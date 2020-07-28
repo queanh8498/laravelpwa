@@ -49,7 +49,7 @@ class NhomhanghoaController extends Controller
           
     	return view('kho.nhomhanghoa.danhsach_nhom')->with('ncc',$ncc)->with('output',$output);
     }
-    public function ncc($ncc_id){
+    public function nhomhanghoa($ncc_id){
          if($ncc_id!=0)
        {
         

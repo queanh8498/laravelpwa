@@ -19,6 +19,13 @@
                             <div class="position-center">
                                 <form role="form" action="{{URL::to('/banhang/tao-hh')}}" method="post" enctype="multipart/form-data">
                                     {{ csrf_field() }}
+                                      <div class="form-group">
+                           <label for="exampleInputEmail1">Người tạo hàng hóa:</label>
+                            @if(isset(Auth::user()->name))
+                             <input type="text"  class="form-control" value="{{Auth::user()->name}}" readonly="" >
+                               <input type="hidden" id="nv_id" name="nv_id" value="{{Auth::user()->id}}" >
+                              @endif
+                        </div> 
                              <div class="form-group">
                                     <label for="exampleInputEmail1">Tên hàng hóa</label>
                                     <input type="text" data-validation="length" data-validation-length="min10"  data-validation-error-msg="Làm ơn điền ít nhất 10 ký tự" name="hh_ten" class="form-control" id="exampleInputEmail1" placeholder="Tên hàng hóa" >
@@ -33,10 +40,6 @@
                                     <input type="text" data-validation="number" data-validation-error-msg="Làm ơn điền đơn giá" name="hh_dongia" class="form-control" id="exampleInputEmail1" placeholder="Giá sản phẩm" >
                                 </div>
                                
-                             <div class="form-group">
-                                    <label for="exampleInputEmail1">Số lượng</label>
-                                    <input type="text" data-validation="number" data-validation-error-msg="Làm ơn nhập số lượng" name="hh_soluong" class="form-control" id="exampleInputEmail1" placeholder="Số lượng sản phẩm" >
-                                </div>
                                   <div class="form-group">
                                     <label for="exampleInputPassword1">kho</label>
                                       <select name="kho_id" class="form-control input-sm m-bot15">
@@ -46,13 +49,20 @@
                                             
                                     </select>
                                 </div>
-                                  <div class="form-group">
-                                    <label for="exampleInputPassword1">Nhóm</label>
-                                      <select name="nhom_id" class="form-control input-sm m-bot15">
-                                        @foreach($nhom as $key => $dsnhom)
-                                            <option value="{{$dsnhom->nhom_id}}">{{$dsnhom->nhom_ten}}</option>
+                                <div class="form-group">
+                                    <label for="exampleInputPassword1">Nhà cung cấp</label>
+                                      <select name="ncc_id" class="form-control input-sm m-bot15" id="ncc_id">
+                                           <option value="">--Chọn nhà cung cấp--</option>
+                                        @foreach($ncc as $key => $dsncc)
+                                            <option value="{{$dsncc->ncc_id}}">{{$dsncc->ncc_ten}}</option>
                                         @endforeach
                                             
+                                    </select>
+                                </div>
+                                  <div class="form-group">
+                                    <label for="exampleInputPassword1">Nhóm</label>
+                                      <select name="nhom_id" class="form-control input-sm m-bot15" id="nhom_id">
+                                      <option value="">--Chọn nhóm hàng hóa--</option>          
                                     </select>
                                 </div>
                                <div class="form-group">
@@ -74,4 +84,23 @@
 
             </div>
         </div>
+<script type="text/javascript">
+      $(document).on('change','#ncc_id',function () {
+      var ncc_id=$(this).val();
+   $.ajax({
+
+        type:'get',
+        url:'{!!URL::to('banhang/nhh-hh-theoncc')!!}',
+        data:{'ncc_id':ncc_id},
+      
+        success:function(data){
+         console.log(data);
+             $('#nhom_id').html(data);
+        },
+        error:function(){
+
+        }
+      });
+    });
+</script>
 @endsection

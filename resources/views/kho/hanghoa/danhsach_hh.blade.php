@@ -16,11 +16,11 @@
 <table class="table table-striped b-t b-light" id="dataTables-example">
         <thead>
           <tr>
-            
+            <th>Tên hàng hóa</th>  
             <th>Mã hàng hóa</th>
             <th>Nhóm hàng hóa</th>
             <th width="12%">Kho hàng</th>
-            <th>Tên hàng hóa</th>   
+          
             <th width="12%">Đơn giá</th>
             <th>Số lượng</th>
             <th>Ngày tạo mới</th>
@@ -31,11 +31,10 @@
         <tbody>
           @foreach($hh as $key => $dshh)
           <tr>
-           
+            <td>{{$dshh->hh_ten }}</td>
             <td>{{$dshh->hh_id}}</td>
             <td>{{$dshh->nhomhanghoa->nhom_ten}}</td>
             <td>{{$dshh->khohang->kho_ten}}</td>
-            <td>{{$dshh->hh_ten }}</td>
             <td>{{number_format($dshh->hh_dongia).' '.'VNĐ'}}</td>
             <td>{{$dshh->hh_soluong}}</td>
             <td>{{$dshh->hh_ngaytaomoi}}</td>
