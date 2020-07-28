@@ -9,7 +9,7 @@ class baocaocongno extends Model
     public    $timestamps   = false;
 
     protected $table        = 'baocaocongno';
-    protected $fillable     = ['bccn_hanno', 'bccn_soducongno','kh_id'];
+    protected $fillable     = ['bccn_hanno', 'bccn_soducongno','ddh_id'];
     protected $guarded      = ['bccn_id'];
 
     protected $primaryKey   = 'bccn_id';   

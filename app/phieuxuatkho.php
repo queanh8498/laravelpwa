@@ -19,8 +19,10 @@ class phieuxuatkho extends Model
     public function khohang(){
         return $this->belongsTo('App\khohang', 'kho_id', 'kho_id');
     }
-    
     public function user(){
         return $this->belongsTo('App\User', 'id', 'id');
+    }
+	public function dondathang(){
+        return $this->belongsTo('App\dondathang', 'pxk_id', 'pxk_id');
     }
 }
