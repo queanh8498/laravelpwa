@@ -46,9 +46,9 @@ tr:hover {background-color: #f5f5f5;}
                   <th>NHÂN VIÊN </th>
                   <th>NGÀY LẬP ĐƠN</th>
                   <th>NGÀY TỚI HẠN</th>
-                  <th>CÔNG NỢ CŨ</th>
-                  <th>CÔNG NỢ MỚI</th>
-                  
+				   <!-- NỢ THEO ĐƠN = CÔNG NỢ MỚI -->
+                  <th>NỢ ĐƠN</th>
+				  <th>TỔNG NỢ THEO ĐƠN</th>
                 </tr>
             </thead>
             
@@ -63,9 +63,38 @@ tr:hover {background-color: #f5f5f5;}
                     <td>Kế toán công nợ</td>
                     @endif
                     <td>{{ $ctkh->ddh_ngaylap }}</td>
-                    <td>{{ $ctkh->bccn_hanno }}</td>
-                    <td>{{ number_format($ctkh->ddh_congnocu,0,',',',') }} VNĐ</td>
+					
+					<!-- Nếu congnomoi=0 tức là đơn hàng đó đã trả -->
+                    @if ($ctkh->ddh_congnomoi == 0)
+                        <td>
+                            <div style="color:green;"> {{ $ctkh->bccn_hanno }} (Đã trả)</div>
+                        </td>
+                    @else
+					@if ($current_day < $ctkh->bccn_hanno )
+                        @if ($current_day_add >= $ctkh->bccn_hanno )
+                            <td>
+                                <div style="color:orange;">{{ $ctkh->bccn_hanno }} <br> (Sắp tới hạn)<div>
+                            </td>
+                        @else
+                            <td>
+                            {{ $ctkh->bccn_hanno }}
+                            </td>
+                        @endif
+                    @elseif($current_day > $ctkh->bccn_hanno)
+                        <td>
+                            <div style="color:red;"><b>{{ $ctkh->bccn_hanno }}</b> <br> (Qúa hạn)<div>
+                        </td>
+                    @elseif($current_day == $ctkh->bccn_hanno)
+                    <td>
+                        <div style="color:blue;"><b>{{ $ctkh->bccn_hanno }}</b> <br> (Tới hạn)<div>
+                    </td>
+                    @endif
+                    @endif
+					<!-- end -->
                     <td>{{ number_format($ctkh->ddh_congnomoi,0,',',',') }} VNĐ</td>
+					<?php $tongCNtheoDH = $ctkh->ddh_congnomoi + $ctkh->ddh_congnocu;?>
+                    <td>{{ number_format($tongCNtheoDH,0,',',',') }} VNĐ</td>
+					
                     <?php $sum += $ctkh->ddh_congnomoi;?>
                 </tr>
             @endforeach
@@ -76,7 +105,7 @@ tr:hover {background-color: #f5f5f5;}
             <td ></td>
             <td ></td>
             <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
-
+			<td ></td>
             </tr>
             </tbody>
         </table>

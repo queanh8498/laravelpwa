@@ -11,6 +11,8 @@ use App\User;
 use App\khachhang;
 use App\dondathang;
 use App\hanghoa;
+use Carbon\Carbon;
+use DateTime;
 
 session_start();
 
@@ -29,9 +31,40 @@ class KhachhangController extends Controller
                                 JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
                                 join khachhang kh on kh.kh_id = dh.kh_id
                                 WHERE dh.kh_id='.$id);
-        
-        return view('khachhang.chitiet')->with('chitiet_kh', $chitiet_kh);
-    }
+		// now+5 >= hanno;
+       // 11/1 + 5 => 20/1 => sap toi han ;
+    /************************** */
+    //    if now < hanno {
+    //     if (now+5 >= hanno)
+    //         =>saptoihan;
+    //     }
+    //      }elseif (now = hanno){
+    //     ==>toi han;
+    // }
+    //else{ 
+    //     ==>qua han;
+    // }
+		//lấy ngày hiện tại -> format lại
+        $current_day = Carbon::now('Asia/Ho_Chi_Minh');
+        $a = $current_day;
+        $current_day=$a->format("Y-m-d");
+        //lấy ngày hiện tại + 5 -> format lại
+        $current_day_add=$a->addDays(5);
+        $b = $current_day_add;
+        $current_day_add=$b->format("Y-m-d");
+		
+		//dd($current_day); //ok
+       //dd($current_day_add); //ok 
+
+       //sau khi format thì đã có thể so sánh được
+        //  if( $current_day < $current_day_add){ $t = 1; }
+        //  dd($t); 
+
+        return view('khachhang.chitiet')
+        ->with('chitiet_kh', $chitiet_kh)
+        ->with('current_day', $current_day)
+        ->with('current_day_add', $current_day_add);   
+	}
 
     public function create(){
 

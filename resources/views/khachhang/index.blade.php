@@ -61,7 +61,7 @@ tr:hover {background-color: #f5f5f5;}
                     @if($kh->tongcongno == null)
                     <td>0</td>
                     @else
-                    <td>{{ $kh->tongcongno }}</td>
+                    <td>{{ number_format($kh->tongcongno,0,',',',') }}</td>
                     @endif
                     <td>
                         <a href="{{URL::to('banhang/khachhang/chitiet/'.$kh->kh_id)}}" class="active styling-edit" ui-toggle-class="">
