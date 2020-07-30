@@ -42,6 +42,9 @@
              <td>
               <a href="{{URL::to('/banhang/sua-hh/'.$dshh->hh_id)}}" class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                  <a onclick="return confirm('Bạn có chắc là muốn xóa hàng hóa này không ?')" href="{{URL::to('/banhang/xoa-hh'.$dshh->hh_id)}}" class="active styling-edit" ui-toggle-class="">
+                <i class="fa fa-times text-danger text"></i>
+              </a>
             </td>
           </tr>
           @endforeach

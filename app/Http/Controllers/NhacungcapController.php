@@ -82,5 +82,10 @@ class NhacungcapController extends Controller
         return redirect('banhang/danhsach-ncc')->with('thongbao','Sửa thông tin nhà cung cấp thành công');
  
     }
+      public function getxoa_ncc($ncc_id){
+        $ncc=nhacungcap::find($ncc_id);
+        $ncc->delete();
+        return redirect('banhang/danhsach-ncc')->with('thongbao','Bạn đã xóa thành công');
+    }
     
 }

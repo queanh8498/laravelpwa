@@ -70,4 +70,9 @@ class KhohangController extends Controller
      	return redirect('banhang/danhsach-kho')->with('thongbao','Sửa thông tin kho thành công');
  
     }
+     public function getxoa_kho($kho_id){
+        $khohang=khohang::find($kho_id);
+        $khohang->delete();
+        return redirect('banhang/danhsach-kho')->with('thongbao','Bạn đã xóa thành công');
+    }
 }

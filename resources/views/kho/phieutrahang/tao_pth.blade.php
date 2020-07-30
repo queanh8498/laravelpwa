@@ -25,16 +25,30 @@
                               @endif
                         </div>
 
-                         <div class="form-group">
-                                    <label for="exampleInputPassword1">Khách hàng</label>
-                                      <select name="kh_id" class="form-control input-sm m-bot15" id="kh_id">
-                                         <option value="0">--Chọn khách hàng--</option>
-                                        @foreach($kh as $key => $dskh)
-                                            <option value="{{$dskh->kh_id}}">{{$dskh->kh_ten}}</option>
-                                        @endforeach
-                                            
-                                    </select>
+                    
+                          
+                                <div class="form-group">
+                                    <label for="kh_sdt">Số điện thoại:</label>
+                                    <input type="text" name="kh_sdt" class="form-control" id="kh_sdt" >
+                                   
                                 </div>
+                                
+                                <div  class="form-group">
+                                    <label for="kh_ten">Khách hàng:</label>
+                        
+                                    <!-- <input type="text" onkeyup="checkInput(this.value)" name="kh_ten" class="form-control" id="kh_ten" > -->
+                                    <!-- <input type="text" name="kh_id" class="form-control" id="kh_id" value=" <script> console.log(kh_ten) </script>" > -->
+                                  <input type="text" name="kh_ten" class="form-control" id="kh_ten" >
+                                </div>
+                               
+                                  
+                        
+                                    <!-- <input type="text" onkeyup="checkInput(this.value)" name="kh_ten" class="form-control" id="kh_ten" > -->
+                                    <!-- <input type="text" name="kh_id" class="form-control" id="kh_id" value=" <script> console.log(kh_ten) </script>" > -->
+                                     <input type="hidden" name="kh_id" class="form-control" id="kh_id" >
+                            
+                         
+                      
                               <div class="form-group" id="ddh_id">
                                             
                                 </div>
@@ -87,22 +101,37 @@ $(document).ready(function(){
                  
                     $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
                 }
-                $('#save').attr('disabled', false);
+                $('#save').attr('disabled', true);
             }
         })
  });
 
 });
- $(document).on('change','#kh_id',function () {
-      var kh_id=$(this).val();
-  
+    $(document).ready(function(){
+        fetch_customer_data();
+        function fetch_customer_data(query = ''){
+            $.ajax({
+                url:"{{ route('taopth.timsdt_khpth') }}",
+                method:'GET',
+                data:{query:query},
+                dataType:'json',
+                success:function(data){
+                  
+                    $('#kh_ten').val(data.kh_ten);
+                    $('#kh_id').val(data.kh_id);
+        
+           var kh_id=$('#kh_id').val();
+            if($('#kh_ten').val()=="Không có khách hàng"){
+             kh_id=$('#kh_id').val(0);
+            }
         $.get("banhang/ddh/"+kh_id,function(data){
       
         $('#ddh_id').html(data);
-
+         
         $('input[type="checkbox"]').change(function() {
           if ($(this).is(":checked")) {
-             $("#kh_id").find("option:not(:selected)").hide().attr("disabled",true);
+             $('#kh_sdt').prop("readonly", true);
+             $('#kh_ten').prop("readonly", true);
             $('input[type="checkbox"]:not(:checked)').attr('disabled', 'disabled');
                var ddh_id=$(this).val();
               
@@ -115,6 +144,7 @@ $(document).ready(function(){
         success:function(data){
        // console.log(data);
       $('#user_table').html(data);
+       $('#save').attr('disabled', true);
        $('.hh_id').prop('disabled', true);
        $('.ctth_soluong').prop('disabled', true);
        $('.ctdh_soluong').prop('disabled', true);
@@ -128,6 +158,7 @@ $(document).ready(function(){
           
            if ($(this).is(":checked")) {
             console.log(check);
+             $('#save').attr('disabled', false);
             $('#hh_id'+check).prop('disabled', false);
             $('#ctdh_soluong'+check).prop('disabled', false);
             $('#ctth_dongia'+check).prop('disabled', false);
@@ -152,6 +183,7 @@ $(document).ready(function(){
         $('#ctth_tt'+check).val(ctth_tt);}
          
     }); }else{
+                 $('#save').attr('disabled', true);
                $('#hh_id'+check).prop('disabled', true);
              $('#ctth_soluong'+check).prop('disabled', true);
             $('#ctdh_soluong'+check).prop('disabled', true);
@@ -180,7 +212,22 @@ $(document).ready(function(){
 
 });
     });
-          });
+                  
+ 
+                }
+            })
+        }
+
+        $(document).on('keyup', '#kh_sdt', function(){
+            var query = $(this).val();
+            fetch_customer_data(query);
+            
+        });
+    });
+
+
+    
+         
 
  
   

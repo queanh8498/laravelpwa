@@ -22,8 +22,8 @@
             <th>Khách hàng</th>
             <th>Số điện thoại Khách hàng</th>
             <th>Ngày lập</th>
-            <th>Trạng thái</th>
-            <th style="width:30px;"></th>
+         
+            <th style="width:60px;"></th>
           </tr>
         </thead>
         <tbody>
@@ -36,12 +36,11 @@
               <td>{{ $dspth->dondathang->khachhang->kh_ten }}</td>
                  <td>{{ $dspth->dondathang->khachhang->kh_sdt }}</td>
                <td>{{ $dspth->pth_ngaylap }}</td>
-               @if($dspth->pth_trangthai==1)
-                  <td>Chỉ xem phiếu</td>
-                  @endif
+             
              <td>
               <a href="{{URL::to('/banhang/chitiet-pth/'.$dspth->pth_id)}}"   class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                <i class="fa fa-eye text-success text-active"></i></a>
+                  <a href=" {{URL::to('/banhang/pdf-pth/'.$dspth->pth_id)}}" class="fa fa-print" ></a>
             </td>
           </tr>
           @endforeach

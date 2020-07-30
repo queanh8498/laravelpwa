@@ -18,6 +18,7 @@ use App\phieutrahang;
 use App\chitiettrahang;
 use App\chitietphieunhap;
 use App\chitietdathang;
+use Barryvdh\DomPDF\Facade as PDF;
 use Validator;
 session_start();
 
@@ -37,11 +38,11 @@ class PhieutrahangController extends Controller
          if($kh_id!=0)
        {
         
-        $ddh=dondathang::with('khachhang')->where([['kh_id',$kh_id],['ddh_trangthai',3]])->get();
+        $ddh=dondathang::with('khachhang')->where('kh_id',$kh_id)->get();
         if(!$ddh->isEmpty()){
       foreach ($ddh as $dondathang) {
         echo ' <input type="checkbox"  value="'.$dondathang->ddh_id.'">
-         <label >'.$dondathang->ddh_id.'</label><br> ';
+         <label >DDH00'.$dondathang->ddh_id.'</label><br> ';
       }
         
       }
@@ -185,5 +186,62 @@ class PhieutrahangController extends Controller
     return view('kho.phieutrahang.chitiet_pth')->with('pth',$pth)->with('ctth',$ctth);
 
     }
+        function timsdt_khpth(Request $request){
+        if($request->ajax()){
+            $output = '';
+            $output1 = '';
+            $query = $request->get('query');
+            if($query != ''){
+                $data = DB::table('khachhang')
+                    ->where('kh_sdt', 'like', '%'.$query.'%')
+                    ->get();
+            }
+     
+            $total_row = $data->count();
+
+            if($total_row > 0){
+                foreach($data as $row){
+                    $output .= $row->kh_ten;
+                    $output1 .= $row->kh_id;
+                }
+            }
+            else{
+                $output =
+                "Không có khách hàng";
+            }
+            $data = array(
+                //'table_data'  => $output,
+                'kh_ten' => $output,
+                'kh_id' => $output1,
+                'total_data'  => $total_row
+            );
+
+            echo json_encode($data);
+        }
+    }
+
+         public function pdf_pth($pth_id) 
+{
+   $pth = phieutrahang::find($pth_id);
+      $ctth=DB::table('chitiettrahang')
+     ->join('hanghoa','hanghoa.hh_id','=','chitiettrahang.hh_id')
+     ->join('nhomhanghoa','hanghoa.nhom_id','=','nhomhanghoa.nhom_id')
+    ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
+   ->where('chitiettrahang.pth_id',$pth_id)->get();
+    $data = [
+        'pth' => $pth,
+        'ctth'  => $ctth,
+    ];
+
+   
+    /* Code dành cho việc debug
+    - Khi debug cần hiển thị view để xem trước khi Export PDF
+    */
+    // return view('backend.sanpham.pdf')
+    //     ->with('danhsachsanpham', $ds_sanpham)
+    //     ->with('danhsachloai', $ds_loai);
+     $pdf = PDF::loadView('kho.phieutrahang.pdf_pth',$data);
+     return $pdf->stream();
+}
     
 }

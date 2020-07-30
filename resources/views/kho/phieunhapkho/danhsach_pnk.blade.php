@@ -22,7 +22,7 @@
             <th>Kho nhập</th>
             <th>Nhà cung cấp</th>
             <th>Ngày nhập kho</th>
-            <th style="width:30px;"></th>
+            <th style="width:60px;"></th>
           </tr>
         </thead>
         <tbody>
@@ -37,7 +37,8 @@
             <td>{{ $dspnk->pnk_ngaynhapkho}}</td>
              <td>
               <a href="{{URL::to('/banhang/chitiet-pnk/'.$dspnk->pnk_id)}}"  class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                <i class="fa fa-eye text-success text-active"></i></a>
+                <a href=" {{URL::to('/banhang/pdf-pnk/'.$dspnk->pnk_id)}}" class="fa fa-print" ></a>
             </td>
           </tr>
           @endforeach

@@ -42,10 +42,12 @@ class NhomhanghoaController extends Controller
              <td>';
           $output.="<a href='banhang/sua-nhom/$dsnhom->nhom_id' class='active styling-edit' ui-toggle-class=''>
                 <i class='fa fa-pencil-square-o text-success text-active'></i></a>
+                 <a onclick='return confirm('Bạn có chắc là muốn xóa hàng hóa này không ?')' href='{{URL::to('/banhang/xoa-nhom'.$dsnhom->nhom_id)}}' class='active styling-edit' ui-toggle-class=''>
+                <i class='fa fa-times text-danger text'></i>
             </td>
-          </tr>
-           </tbody>";
-      }
+          </tr>";}
+          $output.=" </tbody>";
+      
           
     	return view('kho.nhomhanghoa.danhsach_nhom')->with('ncc',$ncc)->with('output',$output);
     }
@@ -76,12 +78,12 @@ class NhomhanghoaController extends Controller
             <td>'.$dsnhom->nhom_ngaytaomoi.'</td>
             <td>'.$dsnhom->nhom_ngaycapnhat.'</td>
              <td>';
-          $output.="<a href='banhang/sua-nhom/$dsnhom->nhom_id' class='active styling-edit' ui-toggle-class=''>
+        
+        $output.="<a href='banhang/sua-nhom/$dsnhom->nhom_id' class='active styling-edit' ui-toggle-class=''>
                 <i class='fa fa-pencil-square-o text-success text-active'></i></a>
             </td>
-          </tr>
-           </tbody>";
-      }
+          </tr>";}
+          $output.=" </tbody>";
          echo $output;
        }
        else{
@@ -108,12 +110,11 @@ class NhomhanghoaController extends Controller
             <td>'.$dsnhom->nhom_ngaytaomoi.'</td>
             <td>'.$dsnhom->nhom_ngaycapnhat.'</td>
              <td>';
-          $output.="<a href='banhang/sua-nhom/$dsnhom->nhom_id' class='active styling-edit' ui-toggle-class=''>
+         $output.="<a href='banhang/sua-nhom/$dsnhom->nhom_id' class='active styling-edit' ui-toggle-class=''>
                 <i class='fa fa-pencil-square-o text-success text-active'></i></a>
             </td>
-          </tr>
-           </tbody>";
-      }
+          </tr>";}
+          $output.=" </tbody>";
          echo $output;
        }
     
@@ -178,6 +179,12 @@ class NhomhanghoaController extends Controller
         $nhom->save();
         return redirect('banhang/danhsach-nhom')->with('thongbao','Sửa thông tin nhóm thành công');
  
+    }
+    
+        public function getxoa_nhom($nhom_id){
+        $nhom=nhomhanghoa::find($nhom_id);
+        $nhom->delete();
+        return redirect('banhang/danhsach-nhom')->with('thongbao','Bạn đã xóa thành công');
     }
   
 }

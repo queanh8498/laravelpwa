@@ -27,12 +27,13 @@
                       
                       <div class="form-group">
                                     <label for="exampleInputEmail1">Mã phiếu nhập kho</label>
-                                    <input type="text" name="pnk_id" class="form-control" id="pnk_id"  value="{{$pnk->pnk_id}}">
+                                    <input type="text" name="pnk_ten" class="form-control" id="pnk_ten"  value="{{'PNK00'.$pnk->pnk_id}}">
                                 
                                 </div>
+                                <input type="hidden" name="pnk_id" class="form-control" id="pnk_id"  value="{{$pnk->pnk_id}}">
                          <div class="form-group">
                                     <label for="exampleInputEmail1">Nhà cung cấp</label>
-                                    <input type="text" name="ncc_ten" class="form-control" id="ncc_ten"  value="{{$pnk->nhacungcap->ncc_ten}}">
+                                     <input type="text" name="ncc_ten" class="form-control" id="ncc_ten"  value="{{$pnk->nhacungcap->ncc_ten}}">
                                      <input type="hidden" id="ncc_id" name="ncc_id" value="{{$pnk->ncc_id}}" >
                           </div>
                           
@@ -109,7 +110,7 @@
                  
                     $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
                 }
-                $('#save').attr('disabled', false);
+                $('#save').attr('disabled', true);
             }
         })
  });
@@ -133,6 +134,7 @@ count++;
      
  
     $('tbody').html(html);
+     $('#save').attr('disabled', true);
     $('.hh_ten').prop('disabled', true);
     $('.hh_id').prop('disabled', true);
     $('.ctpn_soluong').prop('disabled', true);
@@ -150,7 +152,7 @@ count++;
             $('#ctncc_soluong'+check).prop('disabled', false);
             $('#ctncc_dongia'+check).prop('disabled', false);
             $('#ctptncc_tt'+check).prop('disabled', false);
-      
+              $('#save').attr('disabled', false);
              $('#hh_id'+check).prop("readonly", true);
              $('#ctpn_soluong'+check).prop("readonly", true);
              $('#ctncc_soluong'+check).prop('disabled', false);
@@ -170,6 +172,7 @@ count++;
     });
            }
              else{
+                $('#save').attr('disabled', true);
             $('#hh_id'+check).prop('disabled', true);
             $('#ctpn_soluong'+check).prop('disabled', true);
             $('#ctncc_soluong'+check).prop('disabled', true);

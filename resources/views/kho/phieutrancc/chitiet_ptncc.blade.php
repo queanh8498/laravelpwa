@@ -1,6 +1,6 @@
 @extends('admin_banhang')
 @section('admin_content')
-<?php  $total=0;?>
+<?php  $total=0; $i=1;?>
   <div class="table-agile-info">
   
   <div class="panel panel-default">
@@ -19,7 +19,7 @@
              <th>Tạo bởi phiếu nhập</th>
             <th>Nhân viên tạo phiếu</th>
             <th>Ngày lập</th>
-            <th>Trạng thái</th>
+           
            
           </tr>
         </thead>
@@ -28,12 +28,9 @@
           <tr>
             <td>PTNCC00{{$ptncc->ptncc_id}}</td>
             <td>{{$ptncc->nhacungcap->ncc_ten}}</td>
-            <td>{{$ptncc->pnk_id}}</td>
+            <td>PNK00{{$ptncc->pnk_id}}</td>
              <td>{{$ptncc->User->name}}</td>
             <td>{{$ptncc->ptncc_ngaylap}}</td>
-             @if($ptncc->ptncc_trangthai==1)
-                  <td>Chỉ xem phiếu</td>
-                  @endif
           </tr>
      
         </tbody>
@@ -47,7 +44,7 @@
     <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-       Thông tin chi tiết phiếu khách trả hàng
+     
     </div>
   
                          @if(session('thongbao'))
@@ -59,6 +56,7 @@
 <table class="table table-striped b-t b-light" >
         <thead>
           <tr>
+            <th>STT</th>
             <th>Tên hàng hóa</th>
             <th>Số lượng</th>
             <th width="12%">Đơn giá</th>
@@ -70,10 +68,11 @@
         <tbody>
           @foreach($ctncc as $key => $dsctptncc)
           <tr>
+            <td>{{$i++}}</td>
             <td>{{$dsctptncc->hh_ten}}</td>
             <td>{{$dsctptncc->ctncc_soluong}}</td>
-            <td>{{$dsctptncc->ctncc_dongia }}</td>
-            <td>{{$dsctptncc->ctncc_soluong*$dsctptncc->ctncc_dongia}}</td>
+            <td>{{number_format($dsctptncc->ctncc_dongia,0,',','.') }}</td>
+            <td>{{number_format($dsctptncc->ctncc_soluong*$dsctptncc->ctncc_dongia,0,',','.')}}</td>
             <?php
             $total=$total+($dsctptncc->ctncc_soluong*$dsctptncc->ctncc_dongia);
              ?>

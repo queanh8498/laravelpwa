@@ -35,6 +35,8 @@
              <td>
               <a  href="{{URL::to('/banhang/sua-ncc/'.$dsncc->ncc_id)}}" class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                 <a onclick="return confirm('Bạn có chắc là muốn xóa nhà cung cấp này không ?')" href="{{URL::to('/banhang/xoa-ncc'.$dsncc->ncc_id)}}" class="active styling-edit" ui-toggle-class="">
+                <i class="fa fa-times text-danger text"></i>
             </td>
           </tr>
           @endforeach

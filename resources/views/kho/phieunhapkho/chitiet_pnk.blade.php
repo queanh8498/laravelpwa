@@ -14,7 +14,7 @@
         <thead>
           <tr>
            
-            <th>Tên khách hàng</th>
+            <th>Tên nhân viên lập phiếu</th>
             <th>Kho hàng</th>
             <th>Địa chỉ kho</th>
             <th>Mã phiếu nhập</th>
@@ -43,7 +43,7 @@
     <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-       Thông tin chi tiết phiếu nhập kho
+    
     </div>
   
                          @if(session('thongbao'))
@@ -55,6 +55,7 @@
 <table class="table table-striped b-t b-light" >
         <thead>
           <tr>
+            <th>STT</th>
             <th>Tên hàng hóa</th>
             <th>Nhóm hàng hóa</th>
             <th>Số lượng</th>
@@ -65,13 +66,15 @@
           </tr>
         </thead>
         <tbody>
+            <?php $i=1; ?>
           @foreach($ctpn as $key => $dsctpn)
           <tr>
+            <td> {{$i++}}</td>
             <td>{{$dsctpn->hh_ten}}</td>
             <td>{{$dsctpn->nhom_ten}}</td>
             <td>{{$dsctpn->ctpn_soluong}}</td>
-            <td>{{$dsctpn->ctpn_dongia }}</td>
-            <td>{{$dsctpn->ctpn_soluong*$dsctpn->ctpn_dongia}}</td>
+            <td>{{number_format($dsctpn->ctpn_dongia,0,',','.')}}</td>
+            <td>{{number_format($dsctpn->ctpn_soluong*$dsctpn->ctpn_dongia,0,',','.')}}</td>
             <?php
             $total=$total+($dsctpn->ctpn_soluong*$dsctpn->ctpn_dongia);
              ?>
@@ -96,7 +99,11 @@
     </footer>
   </div>
    <br>
+   @if($pnk->pnk_trangthai==1)
     <a  type="button" name="taopnk" class="btn btn-info" href="{{URL::to('/banhang/tao-ptncc/'.$pnk->pnk_id)}}"> <i class="glyphicon glyphicon-plus"></i>Tạo phiếu trả nhà cung cấp</a>
+    @else
+    <b>Phiếu nhập đã có hàng hóa hoàn trả nhà cung cấp</b>
+    @endif
 </div>
 
 @endsection

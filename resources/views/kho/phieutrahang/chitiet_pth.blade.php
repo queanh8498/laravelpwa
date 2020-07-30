@@ -15,11 +15,12 @@
           <tr>
            
             <th>Mã phiếu trả hàng</th>
-            <th>Mã đơn đặt hàng</th>
+            <th>Phiếu trả cho đơn hàng</th>
             <th>Nhân viên lập phiếu</th>
-            <th>Khách hàng</th>
+            <th>Khách trả hàng</th>
+            <th>Địa chỉ khách trả hàng</th>
             <th>Ngày lập phiếu</th>
-            <th>Trạng thái</th>
+          
            
           </tr>
         </thead>
@@ -27,13 +28,11 @@
         
           <tr>
             <td>PTH00{{$pth->pth_id}}</td>
-            <td>{{$pth->ddh_id}}</td>
+            <td>DDH00{{$pth->ddh_id}}</td>
              <td>{{$pth->User->name}}</td>
             <td>{{$pth->dondathang->khachhang->kh_ten}}</td>
+             <td>{{$pth->dondathang->khachhang->kh_diachi}}</td>
             <td>{{$pth->pth_ngaylap}}</td>
-             @if($pth->pth_trangthai==1)
-                  <td>Chỉ xem phiếu</td>
-                  @endif
           </tr>
      
         </tbody>
@@ -47,7 +46,7 @@
     <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-       Thông tin chi tiết phiếu khách trả hàng
+      
     </div>
   
                          @if(session('thongbao'))
@@ -59,6 +58,7 @@
 <table class="table table-striped b-t b-light" >
         <thead>
           <tr>
+            <th>STT</th>
             <th>Tên hàng hóa</th>
             <th>Nhà cung cấp</th>
             <th>Nhóm hàng hóa</th>
@@ -70,14 +70,16 @@
           </tr>
         </thead>
         <tbody>
+             <?php $i=1; ?>
           @foreach($ctth as $key => $dsctpth)
           <tr>
+             <td> {{$i++}}</td>
             <td>{{$dsctpth->hh_ten}}</td>
             <td>{{$dsctpth->ncc_ten}}</td>
             <td>{{$dsctpth->nhom_ten}}</td>
             <td>{{$dsctpth->ctth_soluong}}</td>
-            <td>{{$dsctpth->ctth_dongia }}</td>
-            <td>{{$dsctpth->ctth_soluong*$dsctpth->ctth_dongia}}</td>
+            <td>{{number_format($dsctpth->ctth_dongia,0,',','.')}}</td>
+            <td>{{number_format($dsctpth->ctth_soluong*$dsctpth->ctth_dongia,0,',','.')}}</td>
             <?php
             $total=$total+($dsctpth->ctth_soluong*$dsctpth->ctth_dongia);
              ?>

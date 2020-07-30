@@ -32,12 +32,14 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::post('/tao-kho','KhohangController@posttao_kho');
 	Route::get('/sua-kho/{kho_id}','KhohangController@getsua_kho');
 	Route::post('/sua-kho/{kho_id}','KhohangController@postsua_kho');
+	Route::get('xoa-kho/{kho_id}','KhohangController@getxoa_kho');
 	//nhacungcap
 	Route::get('/danhsach-ncc','NhacungcapController@getdanhsach_ncc');
 	Route::get('/tao-ncc','NhacungcapController@gettao_ncc');
 	Route::post('/tao-ncc','NhacungcapController@posttao_ncc');
 	Route::get('/sua-ncc/{ncc_id}','NhacungcapController@getsua_ncc');
 	Route::post('/sua-ncc/{ncc_id}','NhacungcapController@postsua_ncc');
+	Route::get('xoa-ncc/{ncc_id}','NhacungcapController@getxoa_ncc');
 	//nhomhanghoa
 	Route::get('/danhsach-nhom','NhomhanghoaController@getdanhsach_nhom');
 	Route::get('/nhomhanghoa/{ncc_id}','NhomhanghoaController@nhomhanghoa');
@@ -45,6 +47,7 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::post('/tao-nhom','NhomhanghoaController@posttao_nhom');
 	Route::get('/sua-nhom/{nhom_id}','NhomhanghoaController@getsua_nhom');
 	Route::post('/sua-nhom/{nhom_id}','NhomhanghoaController@postsua_nhom');
+	Route::get('xoa-nhom/{nhom_id}','NhomhanghoapController@getxoa_nhom');
 
 	//hanghoa
 	Route::get('/danhsach-hh','HanghoaController@getdanhsach_hh');
@@ -53,6 +56,7 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::get('/sua-hh/{hh_id}','HanghoaController@getsua_hh');
 	Route::post('/sua-hh/{hh_id}','HanghoaController@postsua_hh');
 	Route::get('/nhh-hh-theoncc','HanghoaController@nhh_hh_theoncc');
+	Route::get('xoa-hh/{hh_id}','HanghoaController@getxoa_hh');
 	//phieunhapkho
 	Route::get('/danhsach-pnk','PhieunhapkhoController@getdanhsach_pnk');
 	Route::get('/chitiet-pnk/{pnk_id}','PhieunhapkhoController@getchitiet_pnk');
@@ -60,16 +64,20 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::get('/dongia','PhieunhapkhoController@dongia');
 	Route::get('/hanghoa','PhieunhapkhoController@hanghoa');
 	Route::get('/nhh-theoncc','PhieunhapkhoController@nhh_theoncc');
-Route::post('/dynamic-field/insert', 'PhieunhapkhoController@insert')->name('dynamic-field.insert');
+	Route::get('/pdf-pnk/{pnk_id}', 'PhieunhapkhoController@pdf_pnk');
+    Route::post('/dynamic-field/insert', 'PhieunhapkhoController@insert')->name('dynamic-field.insert');
+
 //phieutrahang
 	Route::get('/danhsach-pth','PhieutrahangController@getdanhsach_pth');
 	Route::get('/chitiet-pth/{pth_id}','PhieutrahangController@getchitiet_pth');
 	Route::get('/tao-pth','PhieutrahangController@gettao_pth');
 	Route::get('/ddh/{kh_id}','PhieutrahangController@ddh');
 	Route::get('/checkddh','PhieutrahangController@checkddh');
+	Route::get('/pdf-pth/{pth_id}', 'PhieutrahangController@pdf_pth');
+	Route::get('/taopth/timsdt_khpth','PhieutrahangController@timsdt_khpth')->name('taopth.timsdt_khpth');
 	Route::post('/dynamic-field/insertddh', 'PhieutrahangController@insertddh')->name('dynamic-field.insertddh');
 //phieutrancc
-	
+	Route::get('/pdf-ptncc/{ptncc_id}', 'PhieutranhacungcapController@pdf_ptncc');
 	Route::get('/tao-ptncc/{pnk_id}','PhieutranhacungcapController@gettao_ptncc');
 	Route::post('/dynamic-field/insertncc', 'PhieutranhacungcapController@insertncc')->name('dynamic-field.insertncc');
 	Route::get('/danhsach-ptncc','PhieutranhacungcapController@getdanhsach_ptncc');

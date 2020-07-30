@@ -130,5 +130,10 @@ class HanghoaController extends Controller
             echo $output;
         
   }
+   public function getxoa_hh($hh_id){
+        $hh=hanghoa::find($hh_id);
+        $hanghoa->delete();
+        return redirect('banhang/danhsach-hh')->with('thongbao','Bạn đã xóa thành công');
+    }
     
 }

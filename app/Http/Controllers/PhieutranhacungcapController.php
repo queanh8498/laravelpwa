@@ -20,6 +20,7 @@ use App\chitietphieunhap;
 use App\chitietdathang;
 use App\phieutrancc;
 use App\chitiettrancc;
+use Barryvdh\DomPDF\Facade as PDF;
 use Validator;
 session_start();
 
@@ -63,6 +64,11 @@ class PhieutranhacungcapController extends Controller
       date_default_timezone_set('Asia/Ho_Chi_Minh');
       $ptncc->ptncc_ngaylap = now();
       $ptncc->save();
+
+      $pnk= phieunhapkho::find($request->pnk_id);
+      $pnk->pnk_trangthai=2;
+      $pnk->save();
+
         $hh_id = $request->hh_id;
       $ctncc_soluong = $request->ctncc_soluong;
       $ctncc_dongia=$request->ctncc_dongia;
@@ -101,6 +107,30 @@ class PhieutranhacungcapController extends Controller
     return view('kho.phieutrancc.chitiet_ptncc')->with('ptncc',$ptncc)->with('ctncc',$ctncc);
 
     }
+    public function pdf_ptncc($ptncc_id) 
+{
+    $ptncc=phieutrancc::find($ptncc_id);
+   $ctncc=DB::table('chitiettrancc')
+     ->join('hanghoa','hanghoa.hh_id','=','chitiettrancc.hh_id')
+     ->join('nhomhanghoa','hanghoa.nhom_id','=','nhomhanghoa.nhom_id')
+    ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
+   ->where('chitiettrancc.ptncc_id',$ptncc_id)->get();
+    $data = [
+        'ptncc' => $ptncc,
+        'ctncc'  => $ctncc,
+    ];
+
+   
+    /* Code dành cho việc debug
+    - Khi debug cần hiển thị view để xem trước khi Export PDF
+    */
+    // return view('backend.sanpham.pdf')
+    //     ->with('danhsachsanpham', $ds_sanpham)
+    //     ->with('danhsachloai', $ds_loai);
+     $pdf = PDF::loadView('kho.phieutrancc.pdf_ptncc',$data);
+     return $pdf->stream();
+}
+    
     }
  
 
