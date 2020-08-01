@@ -44,7 +44,8 @@
                                 <td>
                                     <a href="{{URL::to('/banhang/chitietdondathang/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class="">
                                         <i class="fa fa-eye text-success text-active"></i>
-                                    </a>
+                                    </a> &nbsp;
+                                    <a href=" {{URL::to('/banhang/pdf-ddh/'.$ddh->ddh_id)}}" class="fa fa-print" ></a>
                                 </td>
                             </tr>
                         @endforeach

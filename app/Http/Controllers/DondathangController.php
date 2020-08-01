@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
+use Auth;
+use Illuminate\Support\Facades\Redirect;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\KhachHang;
 use App\DonDatHang;
 use App\HangHoa;
@@ -12,6 +15,9 @@ use App\ChiTietDatHang;
 use App\User;
 use App\BaoCaoCongNo;
 use App\NhomHangHoa;
+use Validator;
+use Carbon\Carbon;
+session_start();
 
 class DondathangController extends Controller
 {
@@ -53,7 +59,8 @@ class DondathangController extends Controller
             FROM (
             SELECT SUM(ctdh.ctdh_soluong) AS TongSoLuong, 
                     SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia) TongTienHang, 
-                    SUM((ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * ddh.ddh_giamchietkhau/100)) AS TongCong, ddh.ddh_giamchietkhau, ddh.ddh_datra
+                    SUM((ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * ddh.ddh_giamchietkhau/100)) AS TongCong, 
+                    ddh.ddh_giamchietkhau, ddh.ddh_datra
             FROM dondathang ddh
             JOIN chitietdathang ctdh ON ctdh.ddh_id = ddh.ddh_id
             JOIN hanghoa hh ON ctdh.hh_id = hh.hh_id
@@ -67,4 +74,178 @@ class DondathangController extends Controller
             ->with('ddh1', $ddh1)
             ->with('ddh2', $ddh2);       
     }
+    public function tao_dondathang(){
+        $khachhang = KhachHang::all();
+        $nhanvien = User::all();
+        $nhom=nhomhanghoa::all();
+
+        return view('dondathang.tao_ddh')
+            ->with('khachhang', $khachhang)
+            ->with('nhanvien', $nhanvien)
+            ->with('nhom', $nhom);
+    }
+
+    public function dongia(Request $request){
+  
+        //it will get price if its id match with product id
+        $p=hanghoa::select('hh_dongia')->where('hh_id',$request->id)->first();
+        
+        return response()->json($p);
+    }
+
+    public function hanghoa(Request $request){
+    //if our chosen id and products table prod_cat_id col match the get first 100 data 
+
+    //$request->id here is the id of our chosen option id
+    $data=hanghoa::select('hh_ten','hh_id')->where([['nhom_id',$request->id]])->get();
+    
+        $output = '';
+    
+        $output = ' <option value="">--Chọn hàng hóa--</option>';
+        
+        foreach($data as $key => $value){
+                $output.='<option value="'.$value->hh_id.'">'.$value->hh_ten.'</option>';
+        }
+        echo $output;       
+    }
+
+    function insert(Request $request){
+        if($request->ajax()){
+            $rules = array(
+                'nhom_id.*'=>'required',
+                'hh_id.*'=>'required',
+                'ctdh_soluong.*'  => 'required'
+            );
+
+            $error = Validator::make($request->all(), $rules);
+
+            if($error->fails()){
+                return response()->json([
+                'error'  => $error->errors()->all()
+                ]); 
+            }
+            
+            //$checkout_code = substr(md5(microtime()),rand(0,26),5);
+            $ddh = new dondathang();
+            $ddh->ddh_id=$request->ddh_id;
+            $ddh->id=$request->id;
+            $ddh->kh_id=$request->kh_id;
+            //dd($ddh->kh_id);
+            //date_default_timezone_set('Asia/Ho_Chi_Minh');
+            $ddh->ddh_ngaylap = Carbon::now('Asia/Ho_Chi_Minh');
+            $ddh->ddh_trangthai = 1;
+            $ddh->ddh_giamchietkhau = $request->ddh_giamchietkhau;
+            $ddh->ddh_congnocu = $request->ddh_congnocu;
+            $ddh->ddh_congnomoi =$request->ddh_congnomoi;
+            $ddh->ddh_datra = $request->ddh_datra;
+            $ddh->save();
+            
+
+            $hh_id = $request->hh_id;
+            $ctdh_soluong = $request->ctdh_soluong;
+            $ctdh_dongia=$request->ctdh_dongia;
+           
+            for($count1 = 0; $count1 < count($hh_id); $count1++){
+                $product= DB::table('hanghoa')->where('hh_id',$hh_id[$count1])->get();
+                foreach ($product as $key => $value){
+                    $value1=$value->hh_soluong+$ctdh_soluong[$count1];
+                    $data1 = array();
+                    $data1['hh_soluong'] =$value1;
+                    DB::table('hanghoa')->where('hh_id',$hh_id[$count1] )->update($data1); 
+                }
+            }
+            for($count = 0; $count < count($hh_id); $count++){
+                $data = array(
+                    'ddh_id'=> $ddh->ddh_id,
+                    'hh_id' => $hh_id[$count],
+                    'ctdh_soluong'  => $ctdh_soluong[$count],
+                    'ctdh_dongia'  => $ctdh_dongia[$count]
+                );
+                $insert_data[] = $data; 
+            }
+            
+    
+            ChiTietDatHang::insert($insert_data);
+            return response()->json([
+                'success'  => 'Đơn hàng được tạo thành công.'
+            ]);
+        }
+    }
+
+    function timsdt_kh(Request $request){
+        if($request->ajax()){
+            $output = '';
+            $output1 = '';
+            $output2 = '';
+            $query = $request->get('query');
+            //$query2 = $request->get('query2');
+            if($query != ''){
+                $data = DB::table('khachhang')
+                    ->select('khachhang.kh_ten', 'khachhang.kh_id', DB::raw('SUM(dondathang.ddh_congnomoi) as ddh_congnocu'))
+                    ->join('dondathang', 'dondathang.kh_id', '=', 'khachhang.kh_id')
+                    ->where('kh_sdt', 'like', '%'.$query.'%')
+                    ->get();
+            }
+     
+            $total_row = $data->count();
+
+            if($total_row > 0){
+                foreach($data as $row){
+                    $output .= $row->kh_ten;
+                    $output1 .= $row->kh_id;
+                    $output2 .= $row->ddh_congnocu;
+                }
+            }
+            else{
+                $output =
+                '<tr>
+                    <td align="center" colspan="5">No Data Found</td>
+                </tr>';
+            }
+
+            $data = array(
+                //'table_data'  => $output,
+                'kh_ten' => $output,
+                'kh_id' => $output1,
+                'ddh_congnocu' => $output2,
+                'total_data'  => $total_row
+            );
+
+            echo json_encode($data);
+        }
+    }
+
+    public function pdf_ddh($ddh_id) {
+        $ddh = dondathang::find($ddh_id);
+        $ctdh=DB::table('chitietdathang')
+            ->join('hanghoa','hanghoa.hh_id','=','chitietdathang.hh_id')
+            ->where('chitietdathang.ddh_id',$ddh_id)->get();
+        $ddh2 = DB::select(
+            'SELECT bbb.TongCong, bbb.ddh_congnocu, bbb.ddh_datra, SUM((bbb.TongCong+bbb.ddh_congnocu-bbb.ddh_datra)) AS ConLai
+            FROM(
+                SELECT  SUM((ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * ddh.ddh_giamchietkhau/100)) AS TongCong ,ddh.ddh_datra, ddh.ddh_congnocu
+                FROM dondathang ddh
+                JOIN chitietdathang ctdh ON ctdh.ddh_id = ddh.ddh_id
+                JOIN hanghoa hh ON ctdh.hh_id = hh.hh_id
+                WHERE ddh.ddh_id='.$ddh_id.'
+                GROUP BY ddh.ddh_datra, ddh.ddh_congnocu) AS bbb
+            GROUP BY bbb.TongCong, bbb.ddh_congnocu, bbb.ddh_datra');
+        $ddh3 = DB::select(
+            'SELECT SUM(ccc.TongTien * ccc.ddh_giamchietkhau/100) AS TienGiamChietKhau
+            FROM(
+            SELECT SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia) AS TongTien, ddh.ddh_giamchietkhau
+            FROM dondathang ddh
+            JOIN chitietdathang ctdh ON ctdh.ddh_id = ddh.ddh_id
+            JOIN hanghoa hh ON ctdh.hh_id = hh.hh_id
+            WHERE ddh.ddh_id='.$ddh_id.') AS ccc');
+
+        $data = [
+            'ddh' => $ddh,
+            'ctdh' => $ctdh,
+            'ddh2' => $ddh2,
+            'ddh3' => $ddh3,
+        ];
+        $pdf = PDF::loadView('dondathang.pdf_ddh',$data);
+        return $pdf->stream();
+}
 }

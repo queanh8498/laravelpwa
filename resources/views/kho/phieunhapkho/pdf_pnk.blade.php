@@ -29,7 +29,7 @@
   <p>Nhà cung cấp: {{$pnk->nhacungcap->ncc_ten}}</p>
   <br>
   
-            <table class="table-styling">
+            <table class="table-stingy">
                 <thead>
                     <tr>
                             <th>STT</th>

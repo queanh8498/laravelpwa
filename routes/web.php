@@ -95,7 +95,12 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	//dondathang
 	Route::get('/danhsachdondathang','DonDatHangController@xem_danhsachdondathang');
 	Route::get('/chitietdondathang/{ddh_id}','DonDatHangController@chitietdondathang');
-	
+	Route::get('/taodondathang','DonDatHangController@tao_dondathang')->name('taodondathang');
+	Route::get('/pdf-ddh/{ddh_id}', 'DonDatHangController@pdf_ddh');
+	Route::get('/dongia1','DonDatHangController@dongia');
+	Route::get('/hanghoa1','DonDatHangController@hanghoa');
+	Route::get('/taodondathang/timsdt_kh','DonDatHangController@timsdt_kh')->name('taodondathang.timsdt_kh');
+	Route::post('/dynamic-field/insert1', 'DonDatHangController@insert')->name('dynamic-field.insert1');
 //QUẢN LÝ BÁN HÀNG
 	
 	});
