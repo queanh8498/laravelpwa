@@ -82,7 +82,11 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::post('/dynamic-field/insertncc', 'PhieutranhacungcapController@insertncc')->name('dynamic-field.insertncc');
 	Route::get('/danhsach-ptncc','PhieutranhacungcapController@getdanhsach_ptncc');
 	Route::get('/chitiet-ptncc/{ptncc_id}','PhieutranhacungcapController@getchitiet_ptncc');
-	
+//baocaonhap-xuat-ton theo ncc
+
+	Route::get('/tao-bcncc','BaocaonccController@gettao_bcncc');
+	Route::post('/xem-bcncc','BaocaonccController@postxem_bcncc');
+	Route::get('/pdf-bcncc','BaocaonccController@postpdf_bcncc');
 
 	//khachhang
 	Route::get('/khachhang','KhachhangController@index')->name('khachhang.index');
