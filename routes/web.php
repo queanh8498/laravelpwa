@@ -93,7 +93,8 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::get('/khachhang','KhachhangController@create')->name('khachhang.create');
 	Route::get('/khachhang/edit/{id}','KhachhangController@edit')->name('khachhang.edit');
 	Route::post('/khachhang/update/{id}','KhachhangController@update')->name('khachhang.update');
-	Route::get('/khachhang/chitiet/{id}','KhachhangController@getdetail');
+	Route::get('/khachhang/chitiet/{id}','KhachhangController@getdetail')->name('khachhang.chitiet');
+	Route::post('/khachhang/search/{id}', 'KhachhangController@search')->name('khachhang.search');
 	Route::resource('/khachhang', 'KhachhangController');
 
 	//dondathang
