@@ -17,6 +17,8 @@ use App\BaoCaoCongNo;
 use App\NhomHangHoa;
 use Validator;
 use Carbon\Carbon;
+use Session;
+
 session_start();
 
 class DondathangController extends Controller
@@ -182,7 +184,7 @@ class DondathangController extends Controller
             if($query != ''){
                 $data = DB::table('khachhang')
                     ->select('khachhang.kh_ten', 'khachhang.kh_id', DB::raw('SUM(dondathang.ddh_congnomoi) as ddh_congnocu'))
-                    ->join('dondathang', 'dondathang.kh_id', '=', 'khachhang.kh_id')
+                    ->leftJoin('dondathang', 'dondathang.kh_id', '=', 'khachhang.kh_id')
                     ->where('kh_sdt', 'like', '%'.$query.'%')
                     ->get();
             }
@@ -193,7 +195,13 @@ class DondathangController extends Controller
                 foreach($data as $row){
                     $output .= $row->kh_ten;
                     $output1 .= $row->kh_id;
-                    $output2 .= $row->ddh_congnocu;
+                    if(empty($row->ddh_congnocu)){
+                        $output2 .= 0;
+                    }
+					else
+					{
+						$output2 .= $row->ddh_congnocu;
+                    }
                 }
             }
             else{
@@ -248,4 +256,31 @@ class DondathangController extends Controller
         $pdf = PDF::loadView('dondathang.pdf_ddh',$data);
         return $pdf->stream();
 }
+	public function store_kh_moi(Request $request)
+    {
+        $validation = $request->validate([
+            'kh_sdt_' => 'unique:khachhang',
+            'kh_ten_' => 'required',
+            'kh_diachi_' => 'required',
+            'kh_sdt_' => 'required',
+        ],
+        [
+            'kh_sdt_.unique'=>'Số diện thoại này đã tồn tại',
+             'kh_ten_.required'=>'Vui lòng nhập họ tên khách hàng',
+             'kh_diachi_.required'=>'Vui lòng nhập địa chỉ khách hàng',
+             'kh_sdt_.required'=>'Vui lòng nhập số điện thoại'
+        ]
+    );
+
+        $kh = new khachhang();
+        $kh->kh_ten = $request->kh_ten_;
+        $kh->kh_sdt = $request->kh_sdt_;
+        $kh->kh_diachi = $request->kh_diachi_;
+        
+        $kh->save();
+
+        Session::flash('alert-success','Tạo khách hàng thành công');
+
+        return redirect()->route('taodondathang');
+    }
 }

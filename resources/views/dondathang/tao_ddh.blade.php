@@ -1,6 +1,35 @@
 @extends('admin_banhang')
 
 @section('admin_content')
+<style>
+td {
+    vertical-align: top;
+}
+#table1, #table2{
+    display: none;
+}
+
+</style>
+<a class="btn btn-light" onclick='show(1);'>Tạo khách hàng mới</a>
+  <br/>
+	@if(count($errors)>0)
+		<span class="text-alert">
+		@foreach($errors->all() as $err)
+			{{$err}}<br>
+			@endforeach
+		</span>
+	@endif
+<br />
+<div class="flash-message">
+	@foreach(['warning','success','info','danger'] as $msg)
+		@if(Session::has('alert-' . $msg))
+			<p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}
+			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+			</p>
+		@endif
+	@endforeach
+	</div>
+<br />
     <div class="row">
         <div class="col-lg-12">
             <section class="panel">
@@ -9,6 +38,55 @@
                 </header>
                 
                 <div class="panel-body">
+				<!-- #table1 -->
+		 <div id="table1"> 
+                <form method="post" id="" action="{{ route('taodondathang.store_kh_moi') }}">
+                    {{ csrf_field() }}
+
+                    <div class="row">
+                        <div class="col-sm-1">
+                        </div> 
+
+                        <div class="col-sm-5">
+                            <label>Tên Khách hàng:</label>
+                            <input type="text"  class="form-control" name="kh_ten_" id="kh_ten_" value="">
+                        </div> 
+                        <div class="col-sm-5">
+                            <label>Số điện thoại:</label>
+                            <input type="text"  class="form-control" name="kh_sdt_" id="kh_sdt_" value="">    
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-1">
+                        </div>
+
+                        <div class="col-sm-10">
+                            <label>Địa chỉ:</label>
+                            <input type="text"  class="form-control" name="kh_diachi_" id="kh_diachi_" value="">    
+                        </div>
+
+                        <div class="col-sm-1">
+                        </div>
+                    </div>
+                    <div class="col-sm-1">
+                    </div>
+            <br>
+            <div class="row">
+                        <div class="col-sm-1">
+                        </div>
+                        <div class="col-sm-8">
+                            <button class="btn btn-dark btn-sm btn-block" type="submit">LƯU KHÁCH HÀNG MỚI</button>
+                        </div>
+                        <div class="col-sm-2">
+                            <a class="btn btn-light btn-sm btn-block" onclick='show(2);'>ẨN FORM</a>
+                        </div>
+                        <div class="col-sm-1">
+                        </div>
+                    </div>
+                </form>
+        </div>
+		 <!-- #table2 -->
+        <div id="table2">  </div>
                     <form id="dynamic_form" method="post">
                         {{ csrf_field() }}
                         <div class="form-group">
@@ -272,6 +350,15 @@
         
        
     // });
+
+</script>
+<script>
+function show(nr) {
+    document.getElementById("table1").style.display="none";
+    document.getElementById("table2").style.display="none";
+    
+    document.getElementById("table"+nr).style.display="block";
+}
 
 </script>
 
