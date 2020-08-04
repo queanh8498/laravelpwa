@@ -97,13 +97,13 @@ td {
                                    
                                 </div>
                                 <div class="col-md-6">
-                                    <input type="hidden" name="kh_id" class="form-control" id="kh_id" >
-                                </div>
-                                <div class="col-md-6">
                                     <label for="kh_ten">Khách hàng:</label>
                                     <input type="text" name="kh_ten" class="form-control" id="kh_ten" readonly >
                                     <!-- <input type="text" name="kh_id" class="form-control" id="kh_id" value=" <script> console.log(kh_ten) </script>" > -->
                                     <!-- <span id="kh_ten"></span> -->
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="hidden" name="kh_id" class="form-control" id="kh_id" >
                                 </div>
                             </div>
                         </div>
@@ -345,13 +345,18 @@ td {
         $('#estimated_ammount').val(sum);
     }
 
-    // $(document).on('change','.ddh_giamchietkhau',function () {
-    //     var ddh_giamchietkhau=$(this).val();
-        
-       
-    // });
+    $(document).on('change','#ddh_datra',function () {
+        tong=$(estimated_ammount).val();
+        giamchietkhau=$(estimated_ammount).val()*($(ddh_giamchietkhau).val()/100);
+        tiendagiam=tong-giamchietkhau;
+        congnocu=$('#ddh_congnocu').val();
+        khachdatra=$(this).val();
+        congnomoi=tiendagiam+(congnocu-khachdatra);
+        $('#ddh_congnomoi').val(congnomoi);
+    });
 
 </script>
+
 <script>
 function show(nr) {
     document.getElementById("table1").style.display="none";
