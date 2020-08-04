@@ -28,15 +28,15 @@
           @foreach($ncc as $key => $dsncc)
           <tr>
            
-            <td>{{ $dsncc->ncc_id }}</td>
+            <td>NCC00{{ $dsncc->ncc_id }}</td>
             <td>{{ $dsncc->ncc_ten}}</td>
             <td>{{ $dsncc->ncc_diachi}}</td>
              <td>{{ $dsncc->ncc_sdt}}</td>
              <td>
               <a  href="{{URL::to('/banhang/sua-ncc/'.$dsncc->ncc_id)}}" class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active"></i></a>
-                 <a onclick="return confirm('Bạn có chắc là muốn xóa nhà cung cấp này không ?')" href="{{URL::to('/banhang/xoa-ncc'.$dsncc->ncc_id)}}" class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-times text-danger text"></i>
+                 <a onclick="return confirm('Bạn có chắc là muốn xóa nhà cung cấp này không ?')" href="{{URL::to('/banhang/xoa-ncc/'.$dsncc->ncc_id)}}" class="active styling-edit" ui-toggle-class="">
+                <i class="fa fa-times text-danger text"></i> </a>
             </td>
           </tr>
           @endforeach

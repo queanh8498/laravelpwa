@@ -34,18 +34,18 @@ class NhomhanghoaController extends Controller
            foreach($nhom as $key => $dsnhom){
            $output.='<tr>
            
-            <td>'. $dsnhom->nhom_id .'</td>
+            <td>NHOM00'. $dsnhom->nhom_id .'</td>
             <td>'.$dsnhom->nhacungcap->ncc_ten.'</td>
             <td>'. $dsnhom->nhom_ten.'</td>
             <td>'.$dsnhom->nhom_ngaytaomoi.'</td>
             <td>'.$dsnhom->nhom_ngaycapnhat.'</td>
              <td>';
-          $output.="<a href='banhang/sua-nhom/$dsnhom->nhom_id' class='active styling-edit' ui-toggle-class=''>
-                <i class='fa fa-pencil-square-o text-success text-active'></i></a>
-                 <a onclick='return confirm('Bạn có chắc là muốn xóa hàng hóa này không ?')' href='{{URL::to('/banhang/xoa-nhom'.$dsnhom->nhom_id)}}' class='active styling-edit' ui-toggle-class=''>
-                <i class='fa fa-times text-danger text'></i>
+          $output.='<a href="banhang/sua-nhom/'.$dsnhom->nhom_id.'" class="active styling-edit" ui-toggle-class="">
+                <i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                 <a onclick= "return confirm(\'Bạn có chắc là muốn xóa hàng hóa này không ?\')" href="banhang/xoa-nhom/'.$dsnhom->nhom_id.'" class="active styling-edit" ui-toggle-class="">
+                <i class="fa fa-times text-danger text"></i>
             </td>
-          </tr>";}
+          </tr>';}
           $output.=" </tbody>";
       
           
@@ -72,17 +72,19 @@ class NhomhanghoaController extends Controller
            foreach($nhom as $key => $dsnhom){
            $output.='<tr>
            
-            <td>'. $dsnhom->nhom_id .'</td>
+            <td>NHOM00'. $dsnhom->nhom_id .'</td>
             <td>'.$dsnhom->ncc_ten.'</td>
             <td>'. $dsnhom->nhom_ten.'</td>
             <td>'.$dsnhom->nhom_ngaytaomoi.'</td>
             <td>'.$dsnhom->nhom_ngaycapnhat.'</td>
              <td>';
         
-        $output.="<a href='banhang/sua-nhom/$dsnhom->nhom_id' class='active styling-edit' ui-toggle-class=''>
-                <i class='fa fa-pencil-square-o text-success text-active'></i></a>
+        $output.='<a href="banhang/sua-nhom/'.$dsnhom->nhom_id.'" class="active styling-edit" ui-toggle-class="">
+                <i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                 <a onclick= "return confirm(\'Bạn có chắc là muốn xóa hàng hóa này không ?\')" href="banhang/xoa-nhom/'.$dsnhom->nhom_id.'" class="active styling-edit" ui-toggle-class="">
+                <i class="fa fa-times text-danger text"></i>
             </td>
-          </tr>";}
+          </tr>';}
           $output.=" </tbody>";
          echo $output;
        }
@@ -104,16 +106,18 @@ class NhomhanghoaController extends Controller
            foreach($nhom as $key => $dsnhom){
            $output.='<tr>
            
-            <td>'. $dsnhom->nhom_id .'</td>
+            <td>NHOM00'.$dsnhom->nhom_id .'</td>
             <td>'.$dsnhom->nhacungcap->ncc_ten.'</td>
             <td>'. $dsnhom->nhom_ten.'</td>
             <td>'.$dsnhom->nhom_ngaytaomoi.'</td>
             <td>'.$dsnhom->nhom_ngaycapnhat.'</td>
              <td>';
-         $output.="<a href='banhang/sua-nhom/$dsnhom->nhom_id' class='active styling-edit' ui-toggle-class=''>
-                <i class='fa fa-pencil-square-o text-success text-active'></i></a>
+         $output.='<a href="banhang/sua-nhom/'.$dsnhom->nhom_id.'" class="active styling-edit" ui-toggle-class="">
+                <i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                 <a onclick= "return confirm(\'Bạn có chắc là muốn xóa hàng hóa này không ?\')" href="banhang/xoa-nhom/'.$dsnhom->nhom_id.'" class="active styling-edit" ui-toggle-class="">
+                <i class="fa fa-times text-danger text"></i>
             </td>
-          </tr>";}
+          </tr>';}
           $output.=" </tbody>";
          echo $output;
        }

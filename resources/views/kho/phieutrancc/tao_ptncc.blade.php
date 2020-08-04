@@ -27,13 +27,13 @@
                       
                       <div class="form-group">
                                     <label for="exampleInputEmail1">Mã phiếu nhập kho</label>
-                                    <input type="text" name="pnk_ten" class="form-control" id="pnk_ten"  value="{{'PNK00'.$pnk->pnk_id}}">
+                                    <input type="text" name="pnk_ten" class="form-control" id="pnk_ten"  value="{{'PNK00'.$pnk->pnk_id}}" readonly="">
                                 
                                 </div>
                                 <input type="hidden" name="pnk_id" class="form-control" id="pnk_id"  value="{{$pnk->pnk_id}}">
                          <div class="form-group">
                                     <label for="exampleInputEmail1">Nhà cung cấp</label>
-                                     <input type="text" name="ncc_ten" class="form-control" id="ncc_ten"  value="{{$pnk->nhacungcap->ncc_ten}}">
+                                     <input type="text" name="ncc_ten" class="form-control" id="ncc_ten"  value="{{$pnk->nhacungcap->ncc_ten}}" readonly="">
                                      <input type="hidden" id="ncc_id" name="ncc_id" value="{{$pnk->ncc_id}}" >
                           </div>
                           
@@ -56,6 +56,11 @@
              
                </tbody>
                <tfoot>
+                   <tr>
+                <td colspan="5" class="text-right" >  <strong>Tính tổng:</strong> </td>
+                <td><input type="text" name="sum" id="sum" class="form-control" readonly="" value="0"></td>
+                  <td></td>
+              </tr>
                 <tr>
                                 <td colspan="6" align="right">&nbsp;</td>
                                 <td>
@@ -110,7 +115,7 @@
                  
                     $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
                 }
-                $('#save').attr('disabled', true);
+                $('#save').hide();
             }
         })
  });
@@ -147,6 +152,7 @@ count++;
           
            if ($(this).is(":checked")) {
             console.log(check);
+
             $('#hh_id'+check).prop('disabled', false);
             $('#ctpn_soluong'+check).prop('disabled', false);
             $('#ctncc_soluong'+check).prop('disabled', false);
@@ -158,7 +164,10 @@ count++;
              $('#ctncc_soluong'+check).prop('disabled', false);
              $('#ctncc_dongia'+check).prop("readonly", true);
              $('#ctptncc_tt'+check).prop("readonly", true);
+              var sum1=parseInt($('#sum').val())+parseInt($('#ctptncc_tt'+check).val());
+            $('#sum').val(sum1);
                    $(document).on('change','.ctncc_soluong',function () {
+            
           if(parseInt($('#ctncc_soluong'+check).val())>parseInt($('#ctpn_soluong'+check).val())){
               alert('Số lượng trả hàng vượt quá quy định');
               $('#ctncc_soluong'+check).val($('#ctpn_soluong'+check).val());
@@ -167,12 +176,15 @@ count++;
          var ctncc_soluong=$('#ctncc_soluong'+check).val();
          var ctncc_dongia=$('#ctncc_dongia'+check).val();
           var ctptncc_tt = ctncc_soluong*ctncc_dongia;
-        $('#ctptncc_tt'+check).val(ctptncc_tt);}
+        $('#ctptncc_tt'+check).val(ctptncc_tt);
+             sum_pnk();
+      }
          
     });
            }
              else{
-                $('#save').attr('disabled', true);
+            var sum2=parseInt($('#sum').val())-parseInt($('#ctptncc_tt'+check).val());
+            $('#sum').val(sum2);
             $('#hh_id'+check).prop('disabled', true);
             $('#ctpn_soluong'+check).prop('disabled', true);
             $('#ctncc_soluong'+check).prop('disabled', true);
@@ -182,5 +194,17 @@ count++;
    
   });
 });
+   function sum_pnk(){
+  var sum=0;
+  $('.ctptncc_tt').each(function(){
+     var value=$(this).val();
+    if(value.length !=0){
+      sum+=parseFloat(value);
+
+    }
+  });
+  $('#sum').val(sum);
+}      
+  
 </script>
 @endsection

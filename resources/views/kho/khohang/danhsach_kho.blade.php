@@ -27,14 +27,14 @@
           @foreach($khohang as $key => $dskho)
           <tr>
            
-            <td>{{ $dskho->kho_id }}</td>
+            <td>KHO00{{ $dskho->kho_id }}</td>
             <td>{{ $dskho->kho_ten}}</td>
             <td>{{ $dskho->kho_diachi}}</td>
              <td>
               <a href="{{URL::to('banhang/sua-kho/'.$dskho->kho_id)}}" class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active"></i></a>
-                 <a onclick="return confirm('Bạn có chắc là muốn xóa kho hàng này không ?')" href="{{URL::to('/banhang/xoa-kho'.$dskho->kho_id)}}" class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-times text-danger text"></i>
+                 <a onclick="return confirm('Bạn có chắc là muốn xóa kho hàng này không ?')" href="{{URL::to('/banhang/xoa-kho/'.$dskho->kho_id)}}" class="active styling-edit" ui-toggle-class="">
+                <i class="fa fa-times text-danger text"></i> </a>
             </td>
           </tr>
           @endforeach

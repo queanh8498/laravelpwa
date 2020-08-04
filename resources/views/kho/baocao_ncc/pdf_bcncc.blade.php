@@ -20,32 +20,37 @@
   $date=date("d-m-Y", strtotime($from));
   $date1=date("d-m-Y", strtotime($to));
  ?>
-   <h1><center>Báo cáo</center></h1>
+   <h1><center>Báo cáo nhập xuất tồn theo nhà cung cấp</center></h1>
  <h4><center>Sổ tiền mặt Tân Thành</center></h4>
    <h4><center>Từ ngày: {{$date}} - Đến ngày: {{$date1}}</center></h4>
-  <p>Nhà cung cấp: {{$ncc->ncc_ten}}</p>
-             
-            <table class="table-styling" >
+       <table width=100%>
+        <tr>
+            <td><i>Nhà cung cấp: </i><strong>{{$ncc->ncc_ten}}</strong></td>
+            <td style="text-align: right;"><i>Địa chỉ nhà cung cấp: </i><strong>{{$ncc->ncc_diachi}}</strong></td>
+        </tr>
+        
+    </table>
+            <table border="1" width=100% >
                <thead>
                 <tr>
-                   <th rowspan="2" style=" border:1px solid #000; "> Mã hàng hóa</th>
-                   <th rowspan="2" style=" border:1px solid #000; "> Tên hàng hóa</th> 
-                   <th rowspan="2" style=" border:1px solid #000; "> Đơn vị</th> 
-                      <th colspan="2" style=" border:1px solid #000;"> Tồn đầu kỳ</th>
-                       <th  colspan="2" style=" border:1px solid #000;"> Nhập trong kỳ</th>
-                        <th  colspan="2" style=" border:1px solid #000;"> Xuất trong kỳ </th>
-                      <th  colspan="2" style=" border:1px solid #000;"> Tồn cuối kỳ</th>
+                   <th rowspan="2" > Mã hàng hóa</th>
+                   <th rowspan="2"> Tên hàng hóa</th> 
+                   <th rowspan="2" > Đơn vị</th> 
+                      <th colspan="2" > Tồn đầu kỳ</th>
+                       <th  colspan="2" > Nhập trong kỳ</th>
+                        <th  colspan="2" > Xuất trong kỳ </th>
+                      <th  colspan="2"> Tồn cuối kỳ</th>
                 </tr>
                 <tr>    
                 
-                <th style=" border:1px solid #000;">Số lượng</th>
-                 <th style=" border:1px solid #000;">Đơn giá</th>  
-                  <th style=" border:1px solid #000;">Số lượng</th>
-                 <th style=" border:1px solid #000;">Đơn giá</th>  
-                  <th style=" border:1px solid #000;">Số lượng</th>
-                 <th style=" border:1px solid #000;">Đơn giá</th>  
-                  <th style=" border:1px solid #000;">Số lượng</th>
-                 <th style=" border:1px solid #000;">Đơn giá</th>  
+                <th >Số lượng</th>
+                 <th>Đơn giá</th>  
+                  <th>Số lượng</th>
+                 <th >Đơn giá</th>  
+                  <th >Số lượng</th>
+                 <th >Đơn giá</th>  
+                  <th >Số lượng</th>
+                 <th>Đơn giá</th>  
                          
                 </tr>
              
@@ -54,7 +59,7 @@
                
                  @foreach ($data as $key => $value) 
           <?php  $tck=0;?>
-               <tr>
+               <tr  align=center>
              <td>HH00{{$value->hh_id}}</td>
                <td>{{$value->hh_ten}}</td>
               <td>{{$value->hh_donvitinh}}</td>
@@ -115,14 +120,14 @@
                         <td>0</td>
                     @endif
                     <td>{{$tck}}</td>
-                    <td>{{number_format($tck*$value->hh_dongia,0,',','.')}}</td>
+                    <td>{{number_format($tck*$value->hh_dongia,0,',','.')}}</td></tr>
                @endforeach
                 </tbody>
               </table>
  
   
        
-      <p>---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</p>
+    <hr style="color: black; margin-top: 150px;" />
    
 </body>
 </html>

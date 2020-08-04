@@ -102,6 +102,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <li><a href="{{URL::to('banhang/danhsach-pth')}}">Phiếu khách trả hàng</a></li>
                         <li><a href="{{URL::to('banhang/danhsach-ptncc')}}">Phiếu trả nhà cung cấp</a></li>
                         <li><a href="{{URL::to('banhang/tao-bcncc')}}">Báo cáo nhập-xuất-tồn theo nhà cung cấp</a></li>
+                        <li><a href="{{URL::to('banhang/tao-bckh')}}">Báo cáo nhập-xuất theo khách hàng</a></li>
+                        <li><a href="{{URL::to('banhang/tao-bctk')}}">Báo cáo tồn kho tức thời</a></li>
                         
                       
                     </ul>

@@ -16,24 +16,30 @@
 </head>
 <body>
    <h1><center>Phiếu nhập kho</center></h1>
- <h4><center>Sổ tiền mặt Tân Thành</center></h4>
  <?php 
 
   $date=date("d-m-Y", strtotime($pnk->pnk_ngaynhapkho));
  ?>
-  <h5><center>Ngày lập: {{$date}}</center></h5>
-  <p>Tên nhân viên lập phiếu: {{$pnk->User->name}}</p>
-  <p>Mã phiếu nhập: PNK00{{$pnk->pnk_id}}</p>
-  <p>Kho nhập hàng: {{$pnk->khohang->kho_ten}}</p>
-  <p>Địa chỉ: {{$pnk->khohang->kho_diachi}}</p>
-  <p>Nhà cung cấp: {{$pnk->nhacungcap->ncc_ten}}</p>
+  <span><center>Sổ Tiền Mặt Tân Thành -- Ngày: {{ $date }}</center></span> 
+    <br>
+    <table width=100%>
+        <tr>
+            <td><i>Kho nhập: </i><strong>{{$pnk->khohang->kho_ten}}</strong></td>
+            <td style="text-align: right;"><i>Địa chỉ: </i><strong>{{$pnk->khohang->kho_diachi}}</strong></td>
+        </tr>
+        <tr>
+           <td><i>Nhà cung cấp: </i><strong>{{$pnk->nhacungcap->ncc_ten}}</strong></td>
+        </tr>
+    </table>
+    
   <br>
   
-            <table class="table-stingy">
+            <table border="1" width=100%>
                 <thead>
                     <tr>
                             <th>STT</th>
                             <th>Tên hàng hóa</th>
+                             <th>Đơn vị tính</th>
                             <th>Nhóm hàng hóa</th>
                             <th>Số lượng</th>
                             <th width="12%">Đơn giá</th>
@@ -45,9 +51,10 @@
                      $total=0;
                      ?>
           @foreach($ctpn as $key => $dsctpn)
-          <tr>
+          <tr  align=center>
             <td> {{$i++}}</td>
             <td>{{$dsctpn->hh_ten}}</td>
+               <td>{{$dsctpn->hh_donvitinh}}</td>
             <td>{{$dsctpn->nhom_ten}}</td>
             <td>{{$dsctpn->ctpn_soluong}}</td>
             <td>{{number_format($dsctpn->ctpn_dongia,0,',','.')}}</td>
@@ -57,14 +64,15 @@
              ?>
           </tr>
           @endforeach
-          <tr>
-                <td colspan="6">
+          <tr >
+           
+                <td colspan="7">
                     <p>Tổng tiền: {{number_format($total,0,',','.').' VNĐ'}}</p>
                 </td>
         </tr>
           </tbody>
       </table>
-      <p>------------------------------------------------------------------------------------------------------------------------</p>
+      <hr style="color: black; margin-top: 150px;" />
 
           <table>
                 <thead>
@@ -76,6 +84,7 @@
                     </tr>
                 </thead>
                 <tbody>
+                
                 </tbody>
             
         </table>      

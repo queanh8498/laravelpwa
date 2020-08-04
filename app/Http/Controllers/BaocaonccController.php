@@ -148,7 +148,7 @@ else{
               $output.='<td>'.$tck.'</td>
               
              
-               <td>'.number_format($tck*$value->hh_dongia,0,',','.').'</td>';
+               <td>'.number_format($tck*$value->hh_dongia,0,',','.').'</td></tr>';
           }
           $output.= "</tbody>";
           return $output;

@@ -47,7 +47,7 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::post('/tao-nhom','NhomhanghoaController@posttao_nhom');
 	Route::get('/sua-nhom/{nhom_id}','NhomhanghoaController@getsua_nhom');
 	Route::post('/sua-nhom/{nhom_id}','NhomhanghoaController@postsua_nhom');
-	Route::get('xoa-nhom/{nhom_id}','NhomhanghoapController@getxoa_nhom');
+	Route::get('xoa-nhom/{nhom_id}','NhomhanghoaController@getxoa_nhom');
 
 	//hanghoa
 	Route::get('/danhsach-hh','HanghoaController@getdanhsach_hh');
@@ -82,11 +82,22 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::post('/dynamic-field/insertncc', 'PhieutranhacungcapController@insertncc')->name('dynamic-field.insertncc');
 	Route::get('/danhsach-ptncc','PhieutranhacungcapController@getdanhsach_ptncc');
 	Route::get('/chitiet-ptncc/{ptncc_id}','PhieutranhacungcapController@getchitiet_ptncc');
-//baocaonhap-xuat-ton theo ncc
+//baocao nhap-xuat-ton theo ncc
 
 	Route::get('/tao-bcncc','BaocaonccController@gettao_bcncc');
 	Route::post('/xem-bcncc','BaocaonccController@postxem_bcncc');
-	Route::get('/pdf-bcncc','BaocaonccController@postpdf_bcncc');
+	Route::post('/pdf-bcncc','BaocaonccController@postpdf_bcncc');
+//baocao nhap-xuat theo khách hàng
+
+	Route::get('/tao-bckh','BaocaokhController@gettao_bckh');
+	Route::post('/xem-bckh','BaocaokhController@postxem_bckh');
+	Route::post('/pdf-bckh','BaocaokhController@postpdf_bckh');
+	Route::get('/taobaocaokh/timsdt_bc_kh','BaocaokhController@timsdt_bc_kh')->name('taobaocaokh.timsdt_bc_kh');
+//baocao ton kho tuc thoi 
+
+	Route::get('/tao-bctk','BaocaotkController@gettao_bctk');
+	Route::post('/xem-bctk','BaocaotkController@postxem_bctk');
+	Route::post('/pdf-bctk','BaocaotkController@postpdf_bctk');
 
 	//khachhang
 	Route::get('/khachhang','KhachhangController@index')->name('khachhang.index');

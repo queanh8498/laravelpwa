@@ -101,7 +101,7 @@ $(document).ready(function(){
                  
                     $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
                 }
-                $('#save').attr('disabled', true);
+                $('#save').hide();
             }
         })
  });
@@ -170,7 +170,8 @@ $(document).ready(function(){
              $('#ctth_soluong'+check).prop('disabled', false);
              $('#ctth_dongia'+check).prop("readonly", true);
              $('#ctth_tt'+check).prop("readonly", true);
-            
+              var sum1=parseInt($('#sum').val())+parseInt($('#ctth_tt'+check).val());
+            $('#sum').val(sum1);
              $(document).on('change','.ctth_soluong',function () {
           if(parseInt($('#ctth_soluong'+check).val())>parseInt($('#ctdh_soluong'+check).val())){
               alert('Số lượng trả hàng vượt quá quy định');
@@ -180,10 +181,14 @@ $(document).ready(function(){
          var ctth_soluong=$('#ctth_soluong'+check).val();
          var ctth_dongia=$('#ctth_dongia'+check).val();
           var ctth_tt = ctth_soluong*ctth_dongia;
-        $('#ctth_tt'+check).val(ctth_tt);}
+        $('#ctth_tt'+check).val(ctth_tt);
+         sum_pnk();
+    }
          
     }); }else{
-                 $('#save').attr('disabled', true);
+                 var sum2=parseInt($('#sum').val())-parseInt($('#ctth_tt'+check).val());
+            $('#sum').val(sum2);
+             
                $('#hh_id'+check).prop('disabled', true);
              $('#ctth_soluong'+check).prop('disabled', true);
             $('#ctdh_soluong'+check).prop('disabled', true);
@@ -227,7 +232,17 @@ $(document).ready(function(){
 
 
     
-         
+   function sum_pnk(){
+  var sum=0;
+  $('.ctth_tt').each(function(){
+     var value=$(this).val();
+    if(value.length !=0){
+      sum+=parseFloat(value);
+
+    }
+  });
+  $('#sum').val(sum);
+}      
 
  
   

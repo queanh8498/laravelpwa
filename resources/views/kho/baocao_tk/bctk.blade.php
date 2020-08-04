@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                       Báo cáo nhập xuất tồn theo nhà cung cấp
+                       Báo cáo tồn kho tức thời
                         </header>
                          @if(count($errors)>0)
                         <span class="text-alert">
@@ -15,25 +15,20 @@
                          @endif
                         
                         <div class="panel-body">
-                              <form role="form" method="post" id="dynamic_form" action="{{URL::to('/banhang/pdf-bcncc')}}" > 
+                              <form role="form" method="post" id="dynamic_form" action="{{URL::to('/banhang/pdf-bctk')}}" > 
                                 @csrf
                             <div class="position-center">
                                      <div class="form-group">
-                                    <label for="exampleInputPassword1">Nhà cung cấp</label>
-                                      <select name="ncc_id" class="form-control input-sm m-bot15" id="ncc_id">
-                                        @foreach($ncc as $key => $dsncc)
-                                            <option value="{{$dsncc->ncc_id}}">{{$dsncc->ncc_ten}}</option>
+                                    <label for="exampleInputPassword1">Kho hàng</label>
+                                      <select name="kho_id" class="form-control input-sm m-bot15" id="kho_id">
+                                        @foreach($khohang as $key => $dskho)
+                                            <option value="{{$dskho->kho_id}}">{{$dskho->kho_ten}}</option>
                                         @endforeach  
                                     </select>
                                 </div>
                                 
-                                 <label>Từ ngày: </label>
-                                   <input type="date" class="form-control" id="tungay" name="tungay">
-                                  
-                                 <label>Đến </label> 
-                                      <input type="date" class="form-control" id="denngay" name="denngay">
                                  
-                            <br>
+                        
                               <input  type="button" name="save" id="save" class="btn btn-primary" value="Xem báo cáo" />
 
                             </div>
@@ -45,7 +40,7 @@
              
                            </table>
                            
-                              <input  type='submit' name='taobaocaoncc' id='taobaocaoncc' class='btn btn-info' value="Tạo báo cáo"> 
+                              <input  type='submit' name='taobaocaotk' id='taobaocaotk' class='btn btn-info' value="Tạo báo cáo"> 
                                </form>
                         </div>
                     </section>
@@ -53,7 +48,7 @@
             </div>
         </div>
 <script type="text/javascript">
-$('#taobaocaoncc').hide();
+$('#taobaocaotk').hide();
      $('#save').on('click', function(event){
         event.preventDefault();
        var a= $('#dynamic_form').serialize();
@@ -62,14 +57,14 @@ $('#taobaocaoncc').hide();
           $.ajax({
 
         type:'post',
-        url:'{!!URL::to('banhang/xem-bcncc')!!}',
+        url:'{!!URL::to('banhang/xem-bctk')!!}',
        data:$('#dynamic_form').serialize(),
         success:function(data){
           $("#table").html(data);
 
-          $('#taobaocaoncc').show();
+          $('#taobaocaotk').show();
           if($('#check').val()=='Ngày không hợp lệ'){
-              $('#taobaocaoncc').hide();
+              $('#taobaocaotk').hide();
           }
         },
         error:function(){

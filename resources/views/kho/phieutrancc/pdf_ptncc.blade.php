@@ -15,19 +15,26 @@
         </style>
 </head>
 <body>
-   <h1><center>Phiếu trả nhà cung cấp</center></h1>
- <h4><center>Sổ tiền mặt Tân Thành</center></h4>
- <?php 
+        <h1><center>Phiếu trả nhà cung cấp</center></h1>
+  <?php 
   $date=date("d-m-Y", strtotime($ptncc->ptncc_ngaylap));
  ?>
-  <h5><center>Ngày lập: {{$date}}</center></h5>
-  <p>Tên nhân viên lập phiếu:{{$ptncc->User->name}}</p>
-  <p>Mã phiếu trả nhà cung cấp: PTNCC00{{$ptncc->ptncc_id}}</p>
-  <p>Nhà cung cấp: {{$ptncc->nhacungcap->ncc_ten}}</p>
-  <p>Tạo bởi phiếu nhập: PNK00{{$ptncc->pnk_id}}</p>
+  <span><center>Sổ Tiền Mặt Tân Thành -- Ngày: {{ $date }}</center></span> 
+    <br>
+    <table width=100%>
+        <tr>
+            <td><i>Nhà cung cấp: </i><strong> {{$ptncc->nhacungcap->ncc_ten}}</strong></td>
+            <td style="text-align: right;"><i>Địa chỉ nhà cung cấp: </i><strong> {{$ptncc->nhacungcap->ncc_diachi}}</strong></td>
+        </tr>
+        <tr>
+           <td><i>Tạo bởi phiếu nhập: </i><strong>PNK00{{$ptncc->pnk_id}}</strong></td>
+        </tr>
+    </table>
+    
   <br>
+
   
-            <table class="table-styling">
+            <table border="1" width=100%>
                 <thead>
                     <tr>
                                <th>STT</th>
@@ -40,7 +47,7 @@
                 <tbody>
         <?php $i=1;$total=0; ?>
           @foreach($ctncc as $key => $dsctptncc)
-          <tr>
+          <tr align=center>
             <td>{{$i++}}</td>
             <td>{{$dsctptncc->hh_ten}}</td>
             <td>{{$dsctptncc->ctncc_soluong}}</td>
@@ -58,7 +65,7 @@
         </tr>
           </tbody>
       </table>
-      <p>------------------------------------------------------------------------------------------------------------------------</p>
+     <hr style="color: black; margin-top: 150px;" />
 
           <table>
                 <thead>

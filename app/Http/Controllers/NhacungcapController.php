@@ -58,14 +58,13 @@ class NhacungcapController extends Controller
      public function postsua_ncc(Request $request,$ncc_id){
             
         $this->validate($request,[
-                'ncc_ten'=> 'required|unique:nhacungcap,ncc_ten|min:1|max:100',
+                'ncc_ten'=> 'required|min:1|max:100',
                 'ncc_diachi'=>'required',
                 'ncc_sdt'=> 'required|min:10|max:10'
 
         ],
         [
                 'ncc_ten.required'=>'Bạn chưa nhập tên nhà cung cấp',
-                'ncc_ten.unique'=>'Tên nhà cung cấp đã tồn tại',
                 'ncc_ten.min'=>'Tên nhà cung cấp phải có độ dài từ 1 cho đến 100 ký tự',
                 'ncc_ten.max'=>'Tên nhà cung cấp phải có độ dài từ 1 cho đến 100 ký tự',
                 'ncc_diachi.required'=>'Bạn chưa nhập địa chỉ nhà cung cấp',

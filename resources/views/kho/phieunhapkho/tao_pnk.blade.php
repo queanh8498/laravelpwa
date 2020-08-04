@@ -60,6 +60,12 @@
 
                </tbody>
                <tfoot>
+                 <tr>
+                <td colspan="4" class="text-right" >  <strong>Tính tổng:</strong> </td>
+                <td><input type="text" name="sum" id="sum" class="form-control" readonly="" value="0"></td>
+                  <td></td>
+              </tr>
+
                 <tr>
                                 <td colspan="5" align="right">&nbsp;</td>
                                 <td>
@@ -133,6 +139,7 @@ $(document).ready(function(){
  $(document).on('click', '.remove', function(){
   count--;
   $(this).closest("tr").remove();
+  sum_pnk();
  });
 
  $('#dynamic_form').on('submit', function(event){
@@ -248,6 +255,7 @@ $(document).on('change','.hh_id',function () {
          var ctpn_dongia=$('#ctpn_dongia'+sub_hh_id).val();
           var ctpn_tt = ctpn_soluong*ctpn_dongia;
         $('#ctpn_tt'+sub_hh_id).val(ctpn_tt);
+        sum_pnk();
     }); 
        
         var sl=$('#ctpn_soluong'+sub_hh_id).val();
@@ -261,7 +269,17 @@ $(document).on('change','.hh_id',function () {
       });
     });
 
+function sum_pnk(){
+  var sum=0;
+  $('.ctpn_tt').each(function(){
+     var value=$(this).val();
+    if(value.length !=0){
+      sum+=parseFloat(value);
 
+    }
+  });
+  $('#sum').val(sum);
+}
 </script>
 
 @endsection

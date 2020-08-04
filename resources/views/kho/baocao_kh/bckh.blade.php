@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                       Báo cáo nhập xuất tồn theo nhà cung cấp
+                       Báo cáo nhập xuất theo khách hàng
                         </header>
                          @if(count($errors)>0)
                         <span class="text-alert">
@@ -15,18 +15,25 @@
                          @endif
                         
                         <div class="panel-body">
-                              <form role="form" method="post" id="dynamic_form" action="{{URL::to('/banhang/pdf-bcncc')}}" > 
+                              <form role="form" method="post" id="dynamic_form" action="{{URL::to('/banhang/pdf-bckh')}}" > 
                                 @csrf
                             <div class="position-center">
-                                     <div class="form-group">
-                                    <label for="exampleInputPassword1">Nhà cung cấp</label>
-                                      <select name="ncc_id" class="form-control input-sm m-bot15" id="ncc_id">
-                                        @foreach($ncc as $key => $dsncc)
-                                            <option value="{{$dsncc->ncc_id}}">{{$dsncc->ncc_ten}}</option>
-                                        @endforeach  
-                                    </select>
+                                <div class="form-group">
+                                    <label for="kh_sdt">Số điện thoại:</label>
+                                    <input type="text" name="kh_sdt" class="form-control" id="kh_sdt" >
+                                   
                                 </div>
-                                
+                                  <div  class="form-group">
+                                    <label for="kh_ten">Khách hàng:</label>
+                        
+                                 
+                                  <input type="text" name="kh_ten" class="form-control" id="kh_ten" readonly="" >
+                                </div>
+                               
+                                  
+                        
+                                 
+                                     <input type="hidden" name="kh_id" class="form-control" id="kh_id" >
                                  <label>Từ ngày: </label>
                                    <input type="date" class="form-control" id="tungay" name="tungay">
                                   
@@ -45,7 +52,7 @@
              
                            </table>
                            
-                              <input  type='submit' name='taobaocaoncc' id='taobaocaoncc' class='btn btn-info' value="Tạo báo cáo"> 
+                              <input  type='submit' name='taobaocaokh' id='taobaocaokh' class='btn btn-info' value="Tạo báo cáo"> 
                                </form>
                         </div>
                     </section>
@@ -53,7 +60,30 @@
             </div>
         </div>
 <script type="text/javascript">
-$('#taobaocaoncc').hide();
+   $(document).ready(function(){
+        fetch_customer_data();
+        function fetch_customer_data(query = ''){
+            $.ajax({
+                url:"{{ route('taobaocaokh.timsdt_bc_kh') }}",
+                method:'GET',
+                data:{query:query},
+                dataType:'json',
+                success:function(data){
+                
+                    $('#kh_ten').val(data.kh_ten);
+                    $('#kh_id').val(data.kh_id);
+                
+           
+                }
+            })
+        }
+
+        $(document).on('keyup', '#kh_sdt', function(){
+            var query = $(this).val();
+            fetch_customer_data(query);
+        });
+    });
+   $('#taobaocaokh').hide();
      $('#save').on('click', function(event){
         event.preventDefault();
        var a= $('#dynamic_form').serialize();
@@ -62,14 +92,14 @@ $('#taobaocaoncc').hide();
           $.ajax({
 
         type:'post',
-        url:'{!!URL::to('banhang/xem-bcncc')!!}',
+        url:'{!!URL::to('banhang/xem-bckh')!!}',
        data:$('#dynamic_form').serialize(),
         success:function(data){
           $("#table").html(data);
 
-          $('#taobaocaoncc').show();
+          $('#taobaocaokh').show();
           if($('#check').val()=='Ngày không hợp lệ'){
-              $('#taobaocaoncc').hide();
+              $('#taobaocaokh').hide();
           }
         },
         error:function(){
@@ -78,6 +108,5 @@ $('#taobaocaoncc').hide();
       });
          
  });
-  
 </script>
 @endsection

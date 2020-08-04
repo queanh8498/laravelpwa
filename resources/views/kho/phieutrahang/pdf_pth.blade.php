@@ -15,20 +15,26 @@
         </style>
 </head>
 <body>
-   <h1><center>Phiếu khách trả hàng</center></h1>
- <h4><center>Sổ tiền mặt Tân Thành</center></h4>
- <?php 
+      <h1><center>Phiếu khách trả hàng</center></h1>
+  <?php 
   $date=date("d-m-Y", strtotime($pth->pth_ngaylap));
  ?>
-  <h5><center>Ngày lập: {{$date}}</center></h5>
-  <p>Tên nhân viên lập phiếu: {{$pth->User->name}}</p>
-  <p>Mã phiếu khách trả hàng: PTH00{{$pth->pth_id}}</p>
-  <p>Khách trả hàng: {{$pth->dondathang->khachhang->kh_ten}}</p>
-  <p>Địa chỉ khách trả hàng: {{$pth->dondathang->khachhang->kh_diachi}}</p>
-  <p>Phiếu trả cho đơn hàng: DDH00{{$pth->ddh_id}}</p>
+  <span><center>Sổ Tiền Mặt Tân Thành -- Ngày: {{ $date }}</center></span> 
+    <br>
+    <table width=100%>
+        <tr>
+            <td><i>Khách trả hàng: </i><strong>{{$pth->dondathang->khachhang->kh_ten}}</strong></td>
+            <td style="text-align: right;"><i>Địa chỉ khách trả hàng: </i><strong> {{$pth->dondathang->khachhang->kh_diachi}}</strong></td>
+        </tr>
+        <tr>
+           <td><i>Phiếu trả cho đơn hàng: </i><strong>DDH00{{$pth->ddh_id}}</strong></td>
+        </tr>
+    </table>
+    
   <br>
+ 
   
-            <table class="table-styling">
+            <table border="1" width=100%>
                 <thead>
                     <tr>
                               <th>STT</th>
@@ -43,7 +49,7 @@
                 <tbody>
         <?php $i=1;$total=0; ?>
           @foreach($ctth as $key => $dsctpth)
-          <tr>
+          <tr align=center>
              <td> {{$i++}}</td>
             <td>{{$dsctpth->hh_ten}}</td>
             <td>{{$dsctpth->ncc_ten}}</td>
@@ -63,8 +69,7 @@
         </tr>
           </tbody>
       </table>
-      <p>------------------------------------------------------------------------------------------------------------------------</p>
-
+    <hr style="color: black; margin-top: 150px;" />
           <table>
                 <thead>
                     <tr>

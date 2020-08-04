@@ -39,6 +39,7 @@ class HanghoaController extends Controller
    
         $hh =new hanghoa;
      	$hh->hh_ten=$request->hh_ten;
+        $hh->hh_donvitinh=$request->hh_donvitinh;
      	$hh->nhom_id=$request->nhom_id;
      	$hh->kho_id=$request->kho_id;
         $hh->hh_soluong=0;
@@ -86,6 +87,7 @@ class HanghoaController extends Controller
      	]);
      	$hh=hanghoa::find($hh_id);
      	$hh->hh_ten=$request->hh_ten;
+        $hh->hh_donvitinh=$request->hh_donvitinh;
      	$hh->nhom_id=$request->nhom_id;
      	$hh->kho_id=$request->kho_id;
      	$hh->hh_dongia=$request->hh_dongia;
@@ -132,7 +134,7 @@ class HanghoaController extends Controller
   }
    public function getxoa_hh($hh_id){
         $hh=hanghoa::find($hh_id);
-        $hanghoa->delete();
+        $hh->delete();
         return redirect('banhang/danhsach-hh')->with('thongbao','Bạn đã xóa thành công');
     }
     

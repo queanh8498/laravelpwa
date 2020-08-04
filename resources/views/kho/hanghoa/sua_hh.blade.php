@@ -21,7 +21,7 @@
                                     {{ csrf_field() }}
                              <div class="form-group">
                                     <label for="exampleInputEmail1">Tên hàng hóa</label>
-                                    <input type="text" data-validation="length" data-validation-length="min10"  data-validation-error-msg="Làm ơn điền ít nhất 10 ký tự" name="hh_ten" class="form-control" id="exampleInputEmail1" placeholder="Tên hàng hóa" value="{{$hh->hh_ten}}" >
+                                    <input type="text" data-validation="length" data-validation-length="min3"  data-validation-error-msg="Làm ơn điền ít nhất 3 ký tự" name="hh_ten" class="form-control" id="exampleInputEmail1" placeholder="Tên hàng hóa" value="{{$hh->hh_ten}}" >
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleInputEmail1">Hình ảnh</label>
@@ -33,6 +33,11 @@
                                     <label for="exampleInputEmail1">Đơn giá</label>
                                     <input type="text" data-validation="number" data-validation-error-msg="Làm ơn điền đơn giá" name="hh_dongia" class="form-control" id="exampleInputEmail1" placeholder="Giá sản phẩm" value="{{$hh->hh_dongia}}" >
                                 </div>
+                                  <div class="form-group">
+                                    <label for="exampleInputEmail1">Đơn vị tính</label>
+                                    <input type="text" data-validation="length" data-validation-length="min1"  data-validation-error-msg="Làm ơn điền ít nhất 1 ký tự" name="hh_donvitinh" class="form-control" id="exampleInputEmail1" placeholder="Đơn vị tính" value="{{$hh->hh_donvitinh}}" >
+                                </div>
+                            
                
                                    <div class="form-group">
                                     <label for="exampleInputPassword1">Kho</label>

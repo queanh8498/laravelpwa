@@ -10,7 +10,7 @@ class hanghoa extends Model
     const     UPDATED_AT    = 'hh_ngaycapnhat';
 
     protected $table        = 'hanghoa';
-    protected $fillable     = ['hh_ten', 'hh_dongia', 'hh_hinh','hh_soluong','hh_thongtin','hh_ngaytaomoi','hh_ngaycapnhat','nhom_id','kho_id','bctk_id'];
+    protected $fillable     = ['hh_ten', 'hh_dongia', 'hh_hinh','hh_soluong','hh_thongtin','hh_ngaytaomoi','hh_ngaycapnhat','nhom_id','kho_id','hh_donvitinh'];
     protected $guarded      = ['hh_id'];
 
     protected $primaryKey   = 'hh_id';

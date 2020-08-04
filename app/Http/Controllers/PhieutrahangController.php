@@ -21,7 +21,8 @@ use App\chitietdathang;
 use Barryvdh\DomPDF\Facade as PDF;
 use Validator;
 session_start();
-
+use Carbon\Carbon;
+use DateTime;
 class PhieutrahangController extends Controller
 {
        public function getdanhsach_pth(){
@@ -35,25 +36,34 @@ class PhieutrahangController extends Controller
     	return view('kho.phieutrahang.tao_pth')->with('kh',$kh);
     }
     public function ddh($kh_id){
+
          if($kh_id!=0)
        {
-        
+        $current_day = Carbon::now('Asia/Ho_Chi_Minh');
+        $a = $current_day;
+        $current_day=$a->format("Y-m-d");
         $ddh=dondathang::with('khachhang')->where('kh_id',$kh_id)->get();
         if(!$ddh->isEmpty()){
-      foreach ($ddh as $dondathang) {
+        
+      foreach ($ddh as $dondathang) {      
+      $b=$dondathang->ddh_ngaylap->addDays(7)->format("Y-m-d");
+        if($b>$a){ 
+       
         echo ' <input type="checkbox"  value="'.$dondathang->ddh_id.'">
          <label >DDH00'.$dondathang->ddh_id.'</label><br> ';
+       }
+      
       }
-        
       }
       else{
-        echo "<div style='color:red;'>Không có đơn hàng</div>";
+        echo "<div style='color:red;'>Không có đơn hàng mới trong 7 ngày</div>";
       }
        
        }
         else{
-  echo "<div style='color:red;'>Không có đơn hàng</div>";
+  echo "<div style='color:red;'>Không có đơn hàng mới trong 7 ngày</div>";
       }
+
 
      }
  public function checkddh(Request $request){
@@ -91,7 +101,7 @@ class PhieutrahangController extends Controller
        </td> ";
         $output .= "
       
-       <td><input type='text' name='ctth_soluong[]' class='form-control ctth_soluong' id='ctth_soluong".$count."'  value='".$value->ctdh_soluong."' >
+       <td><input type='text' name='ctth_soluong[]' class='form-control ctth_soluong' id='ctth_soluong".$count."'   >
        </td> ";
 
         $output .= "
@@ -99,13 +109,18 @@ class PhieutrahangController extends Controller
        <td><input type='text' name='ctth_dongia[]' class='form-control ctth_dongia' id='ctth_dongia".$count."'  value='".$value->ctdh_dongia."'  ></td> ";
           $output .= "
      
-       <td><input type='text' name='ctth_tt[]' class='form-control ctth_tt' id='ctth_tt".$count."'  value='".$value->ctdh_soluong*$value->ctdh_dongia."'   ></td> ";
+       <td><input type='text' name='ctth_tt[]' class='form-control ctth_tt' id='ctth_tt".$count."'  value='0'   ></td> ";
           $output .= " <td></td></tr>";
 
       
        }
        $output.=" </tbody>
                <tfoot>
+                  <tr>
+                <td colspan='5' class='text-right' >  <strong>Tính tổng:</strong> </td>
+                <td><input type='text' name='sum' id='sum' class='form-control' readonly='' value='0'></td>
+                  <td></td>
+              </tr>
                 <tr>
                                 <td colspan='6' align='right'>&nbsp;</td>
                                 <td>
