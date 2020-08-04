@@ -106,6 +106,7 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::post('/khachhang/update/{id}','KhachhangController@update')->name('khachhang.update');
 	Route::get('/khachhang/chitiet/{id}','KhachhangController@getdetail')->name('khachhang.chitiet');
 	Route::post('/khachhang/search/{id}', 'KhachhangController@search')->name('khachhang.search');
+	Route::get('/pdf-chitietcongno-kh/{id}', 'KhachhangController@pdf_chitietcongno_kh');
 	Route::resource('/khachhang', 'KhachhangController');
 
 	//dondathang

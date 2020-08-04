@@ -13,6 +13,7 @@ use App\dondathang;
 use App\hanghoa;
 use Carbon\Carbon;
 use DateTime;
+use Barryvdh\DomPDF\Facade as PDF;
 
 session_start();
 
@@ -152,6 +153,27 @@ class KhachhangController extends Controller
         Session::flash('alert-info','Cập nhật thành công !');
         return redirect()->route('khachhang.index');
     }
+	public function pdf_chitietcongno_kh($id) {
+        $kh = khachhang::find($id);
+        $chitiet_kh = DB::select('SELECT *,kh.kh_ten FROM dondathang dh 
+                                JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
+                                join khachhang kh on kh.kh_id = dh.kh_id
+                                WHERE dh.kh_id='.$id);
+        
+        $dh_first=DB::select('SELECT dh.ddh_ngaylap as ngaylap FROM dondathang dh 
+                            JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
+                            join khachhang kh on kh.kh_id = dh.kh_id
+                            WHERE dh.ddh_id=1 and dh.kh_id='.$id);
+        
+        $data = [
+            'kh' => $kh,
+            'chitiet_kh' => $chitiet_kh,
+            'dh_first' => $dh_first,
+        ];
+        $pdf = PDF::loadView('khachhang.pdf_chitietcongno_kh',$data);
+        return $pdf->stream();
+}
+
 
 }
 
