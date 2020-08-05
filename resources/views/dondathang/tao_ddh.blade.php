@@ -10,7 +10,7 @@ td {
 }
 
 </style>
-<a class="btn btn-light" onclick='show(1);'>Tạo khách hàng mới</a>
+<a class="btn btn-light" onclick='show(1);'><i class="glyphicon glyphicon-plus"></i> Tạo khách hàng mới</a>
   <br/>
 	@if(count($errors)>0)
 		<span class="text-alert">
@@ -351,7 +351,7 @@ td {
         tiendagiam=tong-giamchietkhau;
         congnocu=$('#ddh_congnocu').val();
         khachdatra=$(this).val();
-        congnomoi=tiendagiam+(congnocu-khachdatra);
+        congnomoi=tiendagiam-khachdatra;
         $('#ddh_congnomoi').val(congnomoi);
     });
 

@@ -57,8 +57,8 @@
                 <td>{{ $dsctdh->hh_donvitinh }}</td>
                 <td>{{ 1 }}</td>
                 <td>{{ $dsctdh->ctdh_soluong}}</td>
-                <td>{{ number_format($dsctdh->ctdh_dongia,0,',',',') }} VND</td>
-                <td>{{ number_format($dsctdh->ctdh_soluong * $dsctdh->ctdh_dongia, 0,',',',') }} VND</td>
+                <td>{{ number_format($dsctdh->ctdh_dongia,0,',',',') }} đ</td>
+                <td>{{ number_format($dsctdh->ctdh_soluong * $dsctdh->ctdh_dongia, 0,',',',') }} đ</td>
                 <td>{{ 0 }}</td>
             </tr>
             @endforeach
@@ -70,8 +70,8 @@
                 <td>{{ 'Đồng' }}</td>
                 <td></td>
                 <td>{{ -1 }}</td>
-                <td>{{ number_format($ddh3->TienGiamChietKhau,0,',',',') }} VND</td>          
-                <td>{{ number_format(-$ddh3->TienGiamChietKhau,0,',',',') }} VND</td>
+                <td>{{ number_format($ddh3->TienGiamChietKhau,0,',',',') }} đ</td>          
+                <td>{{ number_format(-$ddh3->TienGiamChietKhau,0,',',',') }} đ</td>
                 <td>{{ 0 }}</td>
             </tr>
             @endforeach
@@ -82,19 +82,19 @@
         @foreach($ddh2 as $ddh2)
         <tr>
             <th>Tổng cộng:</th>
-            <td>{{ number_format($ddh2->TongCong, 0, ',' , ',') }} VND</td>
+            <td>{{ number_format($ddh2->TongCong, 0, ',' , ',') }} đ</td>
         </tr>
         <tr>
             <th>Tiền cũ:</th>
-            <td>{{ number_format($ddh2->ddh_congnocu, 0, ',' , ',') }} VND</td>
+            <td>{{ number_format($ddh2->ddh_congnocu, 0, ',' , ',') }} đ</td>
         </tr>
         <tr>
             <th>Trả:</th>
-            <td>{{ number_format($ddh2->ddh_datra, 0, ',' , ',') }} VND</td>
+            <td>{{ number_format($ddh2->ddh_datra, 0, ',' , ',') }} đ</td>
         </tr>
         <tr>
             <th>Còn lại:</th>
-            <td>{{ number_format($ddh2->ConLai, 0, ',' , ',') }} VND</td>
+            <td>{{ number_format($ddh2->ConLai, 0, ',' , ',') }} đ</td>
         </tr>
         @endforeach
     </table>

@@ -16,9 +16,9 @@
                         <th>Trạng thái:</th>
                         <td>
                             @if(($ddh->ddh_trangthai)==0)
-                                {{ 'Chưa xử lý ' }}
+                                {{ 'Chưa giao hàng ' }}
                             @else
-                                {{ 'Đã xử lý' }}
+                                {{ 'Đã giao hàng' }}
                             @endif
                         </td>
                     </tr>
@@ -115,10 +115,10 @@
                     </tr>
                     <tr>
                         <th>
-                            Công nợ cần thu: 
+                            Còn lại: 
                         </th>
                         <td>
-                            {{ number_format($ddh2->CongNoCanThu, 0, ',' , ',') }} VND
+                            {{ number_format($ddh2->ConLai, 0, ',' , ',') }} VND
                         </td>
                     </tr>
                     @endforeach

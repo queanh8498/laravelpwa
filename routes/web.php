@@ -114,6 +114,7 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::get('/chitietdondathang/{ddh_id}','DonDatHangController@chitietdondathang');
 	Route::get('/taodondathang','DonDatHangController@tao_dondathang')->name('taodondathang');
 	Route::get('/pdf-ddh/{ddh_id}', 'DonDatHangController@pdf_ddh');
+	Route::get('/pdf-pxk/{ddh_id}', 'DonDatHangController@pdf_pxk');
 	Route::get('/pdf-phieukynhan/{ddh_id}', 'DonDatHangController@pdf_phieukynhan');
 	Route::get('/dongia1','DonDatHangController@dongia');
 	Route::get('/hanghoa1','DonDatHangController@hanghoa');
