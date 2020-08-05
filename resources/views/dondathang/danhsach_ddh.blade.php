@@ -46,7 +46,10 @@
                                         <i class="fa fa-eye text-success text-active"></i>
                                     </a> &nbsp;
                                     <a href=" {{URL::to('/banhang/pdf-ddh/'.$ddh->ddh_id)}}" class="fa fa-print" ></a>
-                                </td>
+                                
+									<a href="{{URL::to('/banhang/pdf-phieukynhan/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class="">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i> </td>
+								</td>
                             </tr>
                         @endforeach
                     </tbody>

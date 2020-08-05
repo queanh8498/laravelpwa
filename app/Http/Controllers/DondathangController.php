@@ -283,4 +283,31 @@ class DondathangController extends Controller
 
         return redirect()->route('taodondathang');
     }
+	public function pdf_phieukynhan($ddh_id) {
+        $ddh = dondathang::find($ddh_id);
+
+        //chi tiet thong tin khách hàng của đơn hàng đó 
+        $chitiet_kh= DB::table('khachhang')->select('khachhang.kh_ten', 'khachhang.kh_diachi','khachhang.kh_sdt')
+        ->join('dondathang', 'dondathang.kh_id', '=', 'khachhang.kh_id')
+        ->where('dondathang.ddh_id', $ddh_id)
+        ->first();   
+
+//            'SELECT *, ct.ctdh_soluong * ct.ctdh_dongia - ct.ctdh_soluong * ct.ctdh_dongia * dh.ddh_giamchietkhau/100 AS tongtien
+
+        $chitiet_ddh = DB::select(
+            'SELECT *, ct.ctdh_soluong * ct.ctdh_dongia AS tongtien
+            FROM dondathang dh 
+            JOIN chitietdathang ct on dh.ddh_id=ct.ddh_id
+            JOIN hanghoa hh ON hh.hh_id=ct.hh_id
+            WHERE dh.ddh_id='.$ddh_id);
+
+        $data = [
+            'ddh' => $ddh,
+            'chitiet_kh' => $chitiet_kh,
+            'chitiet_ddh' => $chitiet_ddh,
+            
+        ];
+        $pdf = PDF::loadView('dondathang.pdf_phieukynhan',$data);
+        return $pdf->stream();
+}
 }

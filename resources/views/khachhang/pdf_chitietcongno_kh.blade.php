@@ -36,8 +36,8 @@
     
     <table width=100%>
         <tr>
-            <td><i>Từ ngày: </i><strong> {{ $date }}</strong></td>
-            <td style="text-align: right;"><i>Đến ngày: </i><strong>{{ $now }}</strong></td>
+            <td><i>Từ ngày: </i><strong> {{ $date ?? '00-00-00'}}</strong></td>
+            <td style="text-align: right;"><i>Đến ngày: </i><strong>{{ $now ?? '00-00-00' }}</strong></td>
 
         </tr>
     </table>
