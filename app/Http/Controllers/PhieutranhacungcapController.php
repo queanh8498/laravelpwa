@@ -72,6 +72,15 @@ class PhieutranhacungcapController extends Controller
         $hh_id = $request->hh_id;
       $ctncc_soluong = $request->ctncc_soluong;
       $ctncc_dongia=$request->ctncc_dongia;
+        for($count1 = 0; $count1 < count($hh_id); $count1++)
+      {
+        $product= DB::table('hanghoa')->where('hh_id',$hh_id[$count1])->get();
+           foreach ($product as $key => $value) {
+             $value1=$value->hh_soluong-$ctncc_soluong[$count1];
+                $data1 = array();
+             $data1['hh_soluong'] =$value1;
+              DB::table('hanghoa')->where('hh_id',$hh_id[$count1] )->update($data1); 
+      }}
    for($count = 0; $count < count($hh_id); $count++)
       {
        $data = array(
@@ -134,4 +143,4 @@ class PhieutranhacungcapController extends Controller
     }
  
 
-
+   

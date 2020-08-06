@@ -42,7 +42,7 @@ class PhieutrahangController extends Controller
         $current_day = Carbon::now('Asia/Ho_Chi_Minh');
         $a = $current_day;
         $current_day=$a->format("Y-m-d");
-        $ddh=dondathang::with('khachhang')->where('kh_id',$kh_id)->get();
+        $ddh=dondathang::with('khachhang')->where([['kh_id',$kh_id],['ddh_trangthai',1]])->get();
         if(!$ddh->isEmpty()){
         
       foreach ($ddh as $dondathang) {      
@@ -121,6 +121,7 @@ class PhieutrahangController extends Controller
                 <td><input type='text' name='sum' id='sum' class='form-control' readonly='' value='0'></td>
                   <td></td>
               </tr>
+              
                 <tr>
                                 <td colspan='6' align='right'>&nbsp;</td>
                                 <td>
@@ -162,16 +163,29 @@ class PhieutrahangController extends Controller
       }
     
       $pth =new phieutrahang;
-    
       $pth->ddh_id=$value;
       $pth->id=$request->nv_id;
       date_default_timezone_set('Asia/Ho_Chi_Minh');
       $pth->pth_ngaylap = now();
       $pth->pth_trangthai=1;
       $pth->save();
+
+      $ddh_trangthai= dondathang::find($value);
+      $ddh_trangthai->ddh_trangthai=2;
+      $ddh_trangthai->save();
+
        $hh_id = $request->hh_id;
       $ctth_soluong = $request->ctth_soluong;
       $ctth_dongia=$request->ctth_dongia;
+        for($count1 = 0; $count1 < count($hh_id); $count1++)
+      {
+        $product= DB::table('hanghoa')->where('hh_id',$hh_id[$count1])->get();
+           foreach ($product as $key => $value) {
+             $value1=$value->hh_soluong+$ctth_soluong[$count1];
+                $data1 = array();
+             $data1['hh_soluong'] =$value1;
+              DB::table('hanghoa')->where('hh_id',$hh_id[$count1] )->update($data1); 
+      }}
    for($count = 0; $count < count($hh_id); $count++)
       {
        $data = array(
@@ -260,3 +274,4 @@ class PhieutrahangController extends Controller
 }
     
 }
+ 
