@@ -26,6 +26,204 @@ class HanghoaController extends Controller
         $ncc=nhacungcap::all();
         return view('kho.hanghoa.tao_hh',['khohang'=>$khohang],['ncc'=>$ncc]);
     }
+	  public function gettinhtrang($tinhtrang){
+          $output='';
+       if($tinhtrang==1){
+        $hh=DB::table('hanghoa')
+        ->join('nhomhanghoa','hanghoa.nhom_id','=','nhomhanghoa.nhom_id')
+        ->join('khohang','hanghoa.kho_id','=','khohang.kho_id')
+        ->where('hanghoa.hh_soluong','>=',10)->get();
+              $output.="<thead>
+          <tr>
+           
+            <th>Tên sản phẩm</th>
+             <th>Mã sản phẩm</th>
+            <th>Kho</th>
+            <th>Nhóm</th>
+            <th>Số lượng</th>
+            <th width='200px'>Tình trạng hàng hóa</th>
+    
+          </tr>
+        </thead>
+        <tbody>";
+        foreach($hh as $key => $dshh){
+             $output.='
+              <td>'.$dshh->hh_ten.'</td>
+             <td>HH00'. $dshh->hh_id.'</td>
+               <td>'.$dshh->kho_ten.'</td>
+                  <td>'.$dshh->nhom_ten.'</td>
+            <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td>';
+
+            if($dshh->hh_soluong>=10){
+      $output.=   '<td><button class="button button1">Còn hàng</button></td>';}
+                               if($dshh->hh_soluong>=1 && $dshh->hh_soluong<=9){
+     $output.= ' <td><button  class="button button2">Sắp hết hàng</button></td>';}
+                          if($dshh->hh_soluong==0){
+       $output.= ' <td><button class="button button3">Hết hàng</button></td>';}
+        
+        $output.='</tr>
+             ';
+        }
+          $output.='</tbody>';
+            echo $output;
+       }
+       elseif ($tinhtrang==2){
+          $hh=DB::table('hanghoa')
+           ->join('khohang','hanghoa.kho_id','=','khohang.kho_id')
+           ->join('nhomhanghoa','hanghoa.nhom_id','=','nhomhanghoa.nhom_id')
+          ->whereBetween('hanghoa.hh_soluong',[1,9])->get();
+              $output.="<thead>
+          <tr>
+           
+            <th>Tên sản phẩm</th>
+             <th>Mã sản phẩm</th>
+            <th>Kho</th>
+            <th>Nhóm</th>
+            <th>Số lượng</th>
+            <th width='200px'>Tình trạng hàng hóa</th>
+    
+          </tr>
+        </thead>
+        <tbody>";
+        foreach($hh as $key => $dshh){
+             $output.='
+              <td>'.$dshh->hh_ten.'</td>
+             <td>HH00'. $dshh->hh_id.'</td>
+               <td>'.$dshh->kho_ten.'</td>
+                  <td>'.$dshh->nhom_ten.'</td>
+            <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td>';
+
+            if($dshh->hh_soluong>=10){
+      $output.=   '<td><button class="button button1">Còn hàng</button></td>';}
+                               if($dshh->hh_soluong>=1 && $dshh->hh_soluong<=9){
+     $output.= ' <td><button  class="button button2">Sắp hết hàng</button></td>';}
+                          if($dshh->hh_soluong==0){
+       $output.= ' <td><button class="button button3">Hết hàng</button></td>';}
+        
+        $output.='</tr>
+             ';
+        }
+          $output.='</tbody>';
+            echo $output;
+       }
+        elseif ($tinhtrang==3){
+          $hh=DB::table('hanghoa')
+           ->join('khohang','hanghoa.kho_id','=','khohang.kho_id')
+           ->join('nhomhanghoa','hanghoa.nhom_id','=','nhomhanghoa.nhom_id')
+          ->where('hanghoa.hh_soluong','=',0)->get();
+              $output.="<thead>
+          <tr>
+           
+            <th>Tên sản phẩm</th>
+             <th>Mã sản phẩm</th>
+            <th>Kho</th>
+            <th>Nhóm</th>
+            <th>Số lượng</th>
+            <th width='200px'>Tình trạng hàng hóa</th>
+    
+          </tr>
+        </thead>
+        <tbody>";
+        foreach($hh as $key => $dshh){
+             $output.='
+              <td>'.$dshh->hh_ten.'</td>
+             <td>HH00'. $dshh->hh_id.'</td>
+               <td>'.$dshh->kho_ten.'</td>
+                  <td>'.$dshh->nhom_ten.'</td>
+            <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td>';
+
+            if($dshh->hh_soluong>=10){
+      $output.=   '<td><button class="button button1">Còn hàng</button></td>';}
+                               if($dshh->hh_soluong>=1 && $dshh->hh_soluong<=9){
+     $output.= ' <td><button  class="button button2">Sắp hết hàng</button></td>';}
+                          if($dshh->hh_soluong==0){
+       $output.= ' <td><button class="button button3">Hết hàng</button></td>';}
+        
+        $output.='</tr>
+             ';
+        }
+          $output.='</tbody>';
+            echo $output;
+       }
+       elseif  ($tinhtrang==0){
+                 $hh=hanghoa::all();
+      
+               $output.="<thead>
+          <tr>
+           
+            <th>Tên sản phẩm</th>
+             <th>Mã sản phẩm</th>
+            <th>Kho</th>
+            <th>Nhóm</th>
+            <th>Số lượng</th>
+            <th width='200px'>Tình trạng hàng hóa</th>
+    
+          </tr>
+        </thead>
+        <tbody>";
+        foreach($hh as $key => $dshh){
+             $output.='
+              <td>'.$dshh->hh_ten.'</td>
+             <td>HH00'. $dshh->hh_id.'</td>
+               <td>'.$dshh->khohang->kho_ten.'</td>
+                  <td>'.$dshh->nhomhanghoa->nhom_ten.'</td>
+            <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td>';
+
+            if($dshh->hh_soluong>=10){
+      $output.=   '<td><button class="button button1">Còn hàng</button></td>';}
+                               if($dshh->hh_soluong>=1 && $dshh->hh_soluong<=9){
+     $output.= ' <td><button  class="button button2">Sắp hết hàng</button></td>';}
+                          if($dshh->hh_soluong==0){
+       $output.= ' <td><button class="button button3">Hết hàng</button></td>';}
+        
+        $output.='</tr>
+             ';
+        }
+          $output.='</tbody>';
+              echo $output;
+       }
+
+    }
+      public function getton_hh(){
+        $hh=hanghoa::all();
+      
+         $output='';
+            $output.="<thead>
+          <tr>
+           
+            <th>Tên sản phẩm</th>
+             <th>Mã sản phẩm</th>
+            <th>Kho</th>
+            <th>Nhóm</th>
+            <th>Số lượng</th>
+            <th width='200px'>Tình trạng hàng hóa</th>
+    
+          </tr>
+        </thead>
+        <tbody>";
+        foreach($hh as $key => $dshh){
+             $output.='
+              <td>'.$dshh->hh_ten.'</td>
+             <td>HH00'. $dshh->hh_id.'</td>
+               <td>'.$dshh->khohang->kho_ten.'</td>
+                  <td>'.$dshh->nhomhanghoa->nhom_ten.'</td>
+            <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td>';
+
+            if($dshh->hh_soluong>=10){
+      $output.=   '<td><button class="button button1">Còn hàng</button></td>';}
+                               if($dshh->hh_soluong>=1 && $dshh->hh_soluong<=9){
+     $output.= ' <td><button  class="button button2">Sắp hết hàng</button></td>';}
+                          if($dshh->hh_soluong==0){
+       $output.= ' <td><button class="button button3">Hết hàng</button></td>';}
+        
+        $output.='</tr>
+             ';
+        }
+          $output.='</tbody>';
+         
+     
+       return view('kho.hanghoa.ton_hh')->with('hh',$hh)->with('output',$output);
+    }
    public function posttao_hh(Request $request){
    		$this->validate($request,[
    				'hh_ten'=> 'unique:hanghoa,hh_ten',

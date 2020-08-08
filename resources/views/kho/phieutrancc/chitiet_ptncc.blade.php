@@ -58,6 +58,7 @@
           <tr>
             <th>STT</th>
             <th>Tên hàng hóa</th>
+            <th>Đơn vị tính</th>
             <th>Số lượng</th>
             <th width="12%">Đơn giá</th>
             <th>Thành tiền</th>
@@ -70,6 +71,7 @@
           <tr>
             <td>{{$i++}}</td>
             <td>{{$dsctptncc->hh_ten}}</td>
+             <td>{{$dsctptncc->hh_donvitinh}}</td>
             <td>{{$dsctptncc->ctncc_soluong}}</td>
             <td>{{number_format($dsctptncc->ctncc_dongia,0,',','.') }}</td>
             <td>{{number_format($dsctptncc->ctncc_soluong*$dsctptncc->ctncc_dongia,0,',','.')}}</td>

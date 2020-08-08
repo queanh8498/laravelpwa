@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Báo cáo tồn kho tức thời</title>
+    <title>BÁO CÁO TỒN KHO TỨC THỜI</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>body{
             font-family: DejaVu Sans;
@@ -20,8 +20,8 @@
   $date=date("d-m-Y", strtotime($date));
  
  ?>
-   <h1><center>Báo cáo tồn kho tức thời</center></h1>
- <span><center>Sổ Tiền Mặt Tân Thành -- Ngày: {{ $date }}</center></span> 
+   <h1><center>BÁO CÁO TỒN KHO TỨC THỜI</center></h1>
+ <span><center>Sổ Tiền Mặt Tân Thành -- Ngày:{{ $date }}</center></span> 
   
    <table width=100%>
         <tr>
@@ -54,8 +54,9 @@
                <td>{{$value->hh_ten}}</td>
               <td>{{$value->hh_donvitinh}}</td>
                <td>{{$value->hh_soluong}}</td>
-                <td>{{$value->hh_dongia}}</td>
-           <td>{{$value->hh_soluong*$value->hh_dongia}}</td>
+                <td> {{number_format($value->hh_dongia,0,',','.')}}</td>
+           <td> {{number_format($value->hh_soluong*$value->hh_dongia,0,',','.')}}</td>
+          
                @endforeach
                 </tbody>
               </table>

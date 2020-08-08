@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Phiếu trả nhà cung cấp-PTNCC00{{$ptncc->ptncc_id}}</title>
+    <title>PHIẾU TRẢ NHÀ CUNG CẤP-PTNCC00{{$ptncc->ptncc_id}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>body{
             font-family: DejaVu Sans;
@@ -15,11 +15,11 @@
         </style>
 </head>
 <body>
-        <h1><center>Phiếu trả nhà cung cấp</center></h1>
+        <h1><center>PHIẾU TRẢ NHÀ CUNG CẤP</center></h1>
   <?php 
   $date=date("d-m-Y", strtotime($ptncc->ptncc_ngaylap));
  ?>
-  <span><center>Sổ Tiền Mặt Tân Thành -- Ngày: {{ $date }}</center></span> 
+  <span><center>Sổ Tiền Mặt Tân Thành -- Ngày:{{ $date }}</center></span> 
     <br>
     <table width=100%>
         <tr>
@@ -39,6 +39,7 @@
                     <tr>
                                <th>STT</th>
                               <th>Tên hàng hóa</th>
+                               <th>Đơn vị tính</th>
                               <th>Số lượng</th>
                               <th width="12%">Đơn giá</th>
                               <th>Thành tiền</th>
@@ -50,6 +51,7 @@
           <tr align=center>
             <td>{{$i++}}</td>
             <td>{{$dsctptncc->hh_ten}}</td>
+              <td>{{$dsctptncc->hh_donvitinh}}</td>
             <td>{{$dsctptncc->ctncc_soluong}}</td>
             <td>{{number_format($dsctptncc->ctncc_dongia,0,',','.') }}</td>
             <td>{{number_format($dsctptncc->ctncc_soluong*$dsctptncc->ctncc_dongia,0,',','.')}}</td>
@@ -58,11 +60,10 @@
              ?>
           </tr>
           @endforeach
-          <tr>
-                <td colspan="5">
-                    <p>Tổng tiền: {{number_format($total,0,',','.').' VNĐ'}}</p>
-                </td>
-        </tr>
+         <tr>
+            <th colspan="5">Tổng tiền</th>
+            <th>{{number_format($total,0,',','.') }}</th>
+            </tr>
           </tbody>
       </table>
      <hr style="color: black; margin-top: 150px;" />

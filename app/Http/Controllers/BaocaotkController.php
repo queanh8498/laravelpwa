@@ -75,10 +75,11 @@ $khohang=khohang::find($request->kho_id);
                 <td>'.$value->hh_ten.'</td>
                 <td>'.$value->hh_donvitinh.'</td>
                 <td>'.$value->hh_soluong.'</td>
-                <td>'.$value->hh_dongia.'</td>
-                <td>'.$value->hh_soluong*$value->hh_dongia.'</td></tr>';
+                <td>'.number_format($value->hh_dongia,0,',','.').'</td>
+                <td>'.number_format($value->hh_soluong*$value->hh_dongia,0,',','.').'</td></tr>';
                
-             
+           
+              
               
           }
           $output.= "</tbody>";

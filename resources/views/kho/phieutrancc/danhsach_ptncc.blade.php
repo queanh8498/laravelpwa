@@ -40,7 +40,8 @@
              <td>
               <a href="{{URL::to('/banhang/chitiet-ptncc/'.$dsptncc->ptncc_id)}}"   class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-eye text-success text-active"></i></a>
-                  <a href=" {{URL::to('/banhang/pdf-ptncc/'.$dsptncc->ptncc_id)}}" class="fa fa-print" ></a>
+                  <a href=" {{URL::to('/banhang/pdf-ptncc/'.$dsptncc->ptncc_id)}}" class="active styling-edit" ui-toggle-class="" >
+                    <i class="fa fa-print"></i></a>
             </td>
           </tr>
           @endforeach

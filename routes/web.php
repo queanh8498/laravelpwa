@@ -57,6 +57,8 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::post('/sua-hh/{hh_id}','HanghoaController@postsua_hh');
 	Route::get('/nhh-hh-theoncc','HanghoaController@nhh_hh_theoncc');
 	Route::get('xoa-hh/{hh_id}','HanghoaController@getxoa_hh');
+	 Route::get('/ton-hh','HanghoaController@getton_hh');
+    Route::get('/tinhtrang/{tinhtrang}','HanghoaController@gettinhtrang');
 	//phieunhapkho
 	Route::get('/danhsach-pnk','PhieunhapkhoController@getdanhsach_pnk');
 	Route::get('/chitiet-pnk/{pnk_id}','PhieunhapkhoController@getchitiet_pnk');

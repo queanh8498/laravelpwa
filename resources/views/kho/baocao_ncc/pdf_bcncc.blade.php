@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Báo cáo nhập xuất tồn theo nhà cung cấp</title>
+    <title>BÁO CÁO NHẬP XUẤT TỒN THEO NHÀ CUNG CẤP</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>body{
             font-family: DejaVu Sans;
@@ -20,9 +20,9 @@
   $date=date("d-m-Y", strtotime($from));
   $date1=date("d-m-Y", strtotime($to));
  ?>
-   <h1><center>Báo cáo nhập xuất tồn theo nhà cung cấp</center></h1>
+   <h1><center>BÁO CÁO NHẬP XUẤT TỒN THEO NHÀ CUNG CẤP</center></h1>
  <h4><center>Sổ tiền mặt Tân Thành</center></h4>
-   <h4><center>Từ ngày: {{$date}} - Đến ngày: {{$date1}}</center></h4>
+   <h4><center>Từ ngày:{{$date}} - Đến ngày:{{$date1}}</center></h4>
        <table width=100%>
         <tr>
             <td><i>Nhà cung cấp: </i><strong>{{$ncc->ncc_ten}}</strong></td>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Phiếu khách trả hàng-PTH00{{$pth->pth_id}}</title>
+    <title>PHIẾU KHÁCH TRẢ HÀNG-PTH00{{$pth->pth_id}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>body{
             font-family: DejaVu Sans;
@@ -15,11 +15,11 @@
         </style>
 </head>
 <body>
-      <h1><center>Phiếu khách trả hàng</center></h1>
+      <h1><center>PHIẾU KHÁCH TRẢ HÀNG</center></h1>
   <?php 
   $date=date("d-m-Y", strtotime($pth->pth_ngaylap));
  ?>
-  <span><center>Sổ Tiền Mặt Tân Thành -- Ngày: {{ $date }}</center></span> 
+  <span><center>Sổ Tiền Mặt Tân Thành -- Ngày:{{ $date }}</center></span> 
     <br>
     <table width=100%>
         <tr>
@@ -39,6 +39,7 @@
                     <tr>
                               <th>STT</th>
                              <th>Tên hàng hóa</th>
+                              <th>Đơn vị tính</th>
                               <th>Nhà cung cấp</th>
                               <th>Nhóm hàng hóa</th>
                               <th>Số lượng</th>
@@ -52,6 +53,7 @@
           <tr align=center>
              <td> {{$i++}}</td>
             <td>{{$dsctpth->hh_ten}}</td>
+            <td>{{$dsctpth->hh_donvitinh}}</td>
             <td>{{$dsctpth->ncc_ten}}</td>
             <td>{{$dsctpth->nhom_ten}}</td>
             <td>{{$dsctpth->ctth_soluong}}</td>
@@ -62,11 +64,10 @@
              ?>
           </tr>
           @endforeach
-          <tr>
-                <td colspan="7">
-                    <p>Tổng tiền: {{number_format($total,0,',','.').' VNĐ'}}</p>
-                </td>
-        </tr>
+           <tr>
+            <th colspan="7">Tổng tiền</th>
+            <th>{{number_format($total,0,',','.') }}</th>
+            </tr>
           </tbody>
       </table>
     <hr style="color: black; margin-top: 150px;" />

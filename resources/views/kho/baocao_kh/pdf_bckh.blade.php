@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Báo cáo nhập xuất  theo khách hàng </title>
+    <title>BÁO CÁO NHẬP XUẤT THEO KHÁCH HÀNG </title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>body{
             font-family: DejaVu Sans;
@@ -20,9 +20,9 @@
   $date=date("d-m-Y", strtotime($from));
   $date1=date("d-m-Y", strtotime($to));
  ?>
-   <h1><center>Báo cáo nhập xuất theo khách hàng</center></h1>
+   <h1><center>BÁO CÁO NHẬP XUẤT THEO KHÁCH HÀNG </center></h1>
  <h4><center>Sổ tiền mặt Tân Thành</center></h4>
-   <h4><center>Từ ngày: {{$date}} - Đến ngày: {{$date1}}</center></h4>
+   <h4><center>Từ ngày:{{$date}} - Đến ngày:{{$date1}}</center></h4>
   <table width=100%>
         <tr>
             <td><i>Khách hàng: </i><strong>{{$kh->kh_ten}}</strong></td>
@@ -33,26 +33,16 @@
             <table border="1" width=100%  >
                <thead>
                 <tr>
-                  <th rowspan="2" > Mã hàng hóa</th>
-                  <th rowspan="2" >Tên hàng hóa</th>
-                  <th rowspan="2"> Đơn vị</th>
-                  <th  colspan="2"> Khách trả hàng</th>
-                 <th  colspan="2"> Khách mua hàng </th>
-                  <th  colspan="2">Tổng</th>
+                  <th > Mã hàng hóa</th>
+                  <th >Tên hàng hóa</th>
+                  <th> Đơn vị</th>
+                  <th >Số lượng hàng khách mua </th>
+                 <th  >Số lượng hàng khách trả </th>
+                  <th >Tổng</th>
               
                 
                 </tr>
-                <tr>    
-                
-                <th >Số lượng</th>
-                 <th >Đơn giá</th>  
-                  <th >Số lượng</th>
-                 <th >Đơn giá</th>  
-                  <th >Số lượng</th>
-                 <th>Đơn giá</th>  
-                
-                         
-                </tr>
+               
              
                </thead>
                <tbody>
@@ -79,32 +69,33 @@
                ->where([['hanghoa.hh_id',$value->hh_id],['dondathang.kh_id',$kh->kh_id]])
                ->whereBetween('dondathang.ddh_ngaylap', [$from,$to])->groupBy('hanghoa.hh_id')->get();
               ?>
-               @if(!$data2->isEmpty())
-                @foreach ($data2 as $key2 => $value2)
-                    
-                   <td>{{$value2->quantity}}</td>
-                   <td>{{number_format($value2->total,0,',','.')}}</td>
-                     <?php $tck=$tck-$value2->quantity;?>
-                   @endforeach
-                    @else
-
-                        <td>0</td>
-                        <td>0</td>
-                    @endif
-                     @if(!$data3->isEmpty())
+                 @if(!$data3->isEmpty())
                 @foreach ($data3 as $key3 => $value3)
                     
                    <td>{{$value3->quantity}}</td>
-                   <td>{{number_format($value3->total,0,',','.')}}</td>
+              
                      <?php $tck=$tck+$value3->quantity;?>
                    @endforeach
                     @else
 
-                        <td>0</td>
+                      
                         <td>0</td>
                     @endif
+               @if(!$data2->isEmpty())
+                @foreach ($data2 as $key2 => $value2)
+                    
+                   <td>{{$value2->quantity}}</td>
+                
+                     <?php $tck=$tck-$value2->quantity;?>
+                   @endforeach
+                    @else
+
+                     
+                        <td>0</td>
+                    @endif
+                  
                     <td>{{$tck}}</td>
-                    <td>{{number_format($tck*$value->hh_dongia,0,',','.')}}</td>
+                  
                @endforeach
                 </tbody>
               </table>

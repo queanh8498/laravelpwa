@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Phiếu nhập kho-PNK00{{$pnk->pnk_id}}</title>
+    <title>PHIẾU NHẬP KHO-PNK00{{$pnk->pnk_id}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <style>body{
             font-family: DejaVu Sans;
@@ -15,12 +15,12 @@
         </style>
 </head>
 <body>
-   <h1><center>Phiếu nhập kho</center></h1>
+   <h1><center>PHIẾU NHẬP KHO</center></h1>
  <?php 
 
   $date=date("d-m-Y", strtotime($pnk->pnk_ngaynhapkho));
  ?>
-  <span><center>Sổ Tiền Mặt Tân Thành -- Ngày: {{ $date }}</center></span> 
+  <span><center>Sổ Tiền Mặt Tân Thành -- Ngày:{{ $date }}</center></span> 
     <br>
     <table width=100%>
         <tr>
@@ -29,6 +29,7 @@
         </tr>
         <tr>
            <td><i>Nhà cung cấp: </i><strong>{{$pnk->nhacungcap->ncc_ten}}</strong></td>
+            <td style="text-align: right;"><i>Địa chỉ nhà cung cấp: </i><strong> {{$pnk->nhacungcap->ncc_diachi}}</strong></td>
         </tr>
     </table>
     
@@ -64,12 +65,11 @@
              ?>
           </tr>
           @endforeach
-          <tr >
-           
-                <td colspan="7">
-                    <p>Tổng tiền: {{number_format($total,0,',','.').' VNĐ'}}</p>
-                </td>
-        </tr>
+         
+         <tr>
+            <th colspan="6">Tổng tiền</th>
+            <th>{{number_format($total,0,',','.') }}</th>
+            </tr>
           </tbody>
       </table>
       <hr style="color: black; margin-top: 150px;" />

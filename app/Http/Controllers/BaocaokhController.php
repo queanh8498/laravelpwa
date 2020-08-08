@@ -98,24 +98,14 @@ else{
  
                <thead>
                 <tr>
-                   <th rowspan="2"> Mã hàng hóa</th>
-                    <th rowspan="2">Tên hàng hóa</th>
-                    <th rowspan="2"> Đơn vị</th>
-                       <th  colspan="2"> Khách trả hàng</th>
-                        <th  colspan="2"> Khách mua hàng </th>
-                      <th  colspan="2">Tổng</th>
+                   <th > Mã hàng hóa</th>
+                    <th>Tên hàng hóa</th>
+                    <th> Đơn vị</th>
+                       <th  >Số lượng hàng khách mua </th>
+                        <th >Số lượng hàng khách trả hàng </th>
+                      <th  >Tổng</th>
                 </tr>
-                <tr>    
-                
               
-                  <th>Số lượng</th>
-                 <th>Đơn giá</th>  
-                  <th>Số lượng</th>
-                 <th>Đơn giá</th>  
-                  <th>Số lượng</th>
-                 <th>Đơn giá</th>  
-                         
-                </tr>
              
                </thead>
                <tbody>';
@@ -138,35 +128,35 @@ else{
                ->select(DB::raw('sum(ctdh_soluong) as quantity,sum(ctdh_soluong*ctdh_dongia) as total'))
                ->where([['hanghoa.hh_id',$value->hh_id],['dondathang.kh_id',$request->kh_id]])
                ->whereBetween('dondathang.ddh_ngaylap', [$from,$to])->groupBy('hanghoa.hh_id')->get();
-        
-              if(!$data2->isEmpty()){
-                foreach ($data2 as $key2 => $value2) {
-                    
-            $output.=  '<td>'.$value2->quantity.'</td>
-                        <td>'.number_format($value2->total,0,',','.').'</td>';
-                      $tck=$tck-$value2->quantity;
-                    }}
-                    else{
-
-            $output.=  '<td>0</td>
-                        <td>0</td>';
-                    }
-                     if(!$data3->isEmpty()){
+             if(!$data3->isEmpty()){
                 foreach ($data3 as $key3 => $value3) {
                     
             $output.=  '<td>'.$value3->quantity.'</td>
-                        <td>'.number_format($value3->total,0,',','.').'</td>';
+                     ';
                       $tck=$tck+$value3->quantity;
                     }}
                     else{
 
             $output.=  '<td>0</td>
-                        <td>0</td>';
+                       ';
                     }
-              $output.='<td>'.$tck.'</td>
+              if(!$data2->isEmpty()){
+                foreach ($data2 as $key2 => $value2) {
+                    
+            $output.=  '<td>'.$value2->quantity.'</td>'
+    ;
+                    $tck=$tck-$value2->quantity;
+                    }}
+                    else{
+
+            $output.=  '<td>0</td>
+                      ';
+                    }
+                
+              $output.='<td>'.$tck.'</td>';
               
              
-               <td>'.number_format($tck*$value->hh_dongia,0,',','.').'</td></tr>';
+           
           
              
           }

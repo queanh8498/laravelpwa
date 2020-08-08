@@ -60,6 +60,7 @@
           <tr>
             <th>STT</th>
             <th>Tên hàng hóa</th>
+            <th>Đơn vị tính</th>
             <th>Nhà cung cấp</th>
             <th>Nhóm hàng hóa</th>
             <th>Số lượng</th>
@@ -75,6 +76,7 @@
           <tr>
              <td> {{$i++}}</td>
             <td>{{$dsctpth->hh_ten}}</td>
+            <td>{{$dsctpth->hh_donvitinh}}</td>
             <td>{{$dsctpth->ncc_ten}}</td>
             <td>{{$dsctpth->nhom_ten}}</td>
             <td>{{$dsctpth->ctth_soluong}}</td>
