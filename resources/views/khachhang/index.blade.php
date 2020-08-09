@@ -72,6 +72,9 @@ tr:hover {background-color: #f5f5f5;}
                         <i class="fa fa-edit fa-lg" aria-hidden="true"></i></a>
 						<a href=" {{URL::to('/banhang/pdf-chitietcongno-kh/'.$kh->kh_id)}}" class="active styling-edit" ui-toggle-class="">
                         <i class="fa fa-print fa-lg" ></i></a>
+						
+						<a href="{{ URL::to('/banhang/excel-chitietcongno-kh/'.$kh->kh_id) }}" class="active styling-edit" ui-toggle-class="">
+                        <i class="fa fa-file-excel-o" title="Xuất Excel chi tiết công nợ"></i></a>
 					</td>
                 </tr>
             @endforeach

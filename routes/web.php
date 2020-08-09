@@ -116,6 +116,7 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::get('/khachhang/chitiet/{id}','KhachhangController@getdetail')->name('khachhang.chitiet');
 	Route::post('/khachhang/search/{id}', 'KhachhangController@search')->name('khachhang.search');
 	Route::get('/pdf-chitietcongno-kh/{id}', 'KhachhangController@pdf_chitietcongno_kh');
+	Route::get('/excel-chitietcongno-kh/{id}', 'KhachhangController@excel_chitietcongno_kh')->name('khachhang.chitiet.excel');
 	Route::resource('/khachhang', 'KhachhangController');
 
 	//dondathang

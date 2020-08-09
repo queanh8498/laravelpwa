@@ -72,11 +72,7 @@ tr:hover {background-color: #f5f5f5;}
             </div>
 
            </form>
-
-           
-       </div>
-            
-           
+       </div>      
         </div>
     <br />
 	
@@ -89,7 +85,7 @@ tr:hover {background-color: #f5f5f5;}
                   <th>NGÀY TỚI HẠN</th>
 				   <!-- NỢ THEO ĐƠN = CÔNG NỢ MỚI -->
                   <th>NỢ ĐƠN</th>
-				  <th>TỔNG NỢ THEO ĐƠN</th>
+				  <!-- <th>TỔNG NỢ THEO ĐƠN</th> -->
                 </tr>
             </thead>
             
@@ -133,15 +129,14 @@ tr:hover {background-color: #f5f5f5;}
                     @endif
 					<!-- end -->
                     <td>{{ number_format($ctkh->ddh_congnomoi,0,',',',') }} VNĐ</td>
-					<?php $tongCNtheoDH = $ctkh->ddh_congnomoi + $ctkh->ddh_congnocu;?>
-                    <td>{{ number_format($tongCNtheoDH,0,',',',') }} VNĐ</td>
+					<!-- <?php //$tongCNtheoDH = $ctkh->ddh_congnomoi + $ctkh->ddh_congnocu;?> -->
+                    <!-- <td> number_format($tongCNtheoDH,0,',',',')  VNĐ</td> -->
 					
                     <?php $sum += $ctkh->ddh_congnomoi;?>
                 </tr>
             @endforeach
             <tr>
             <td ><b>TỔNG CÔNG NỢ:</b></td>
-            <td ></td>
             <td ></td>
             <td ></td>
             <td ></td>

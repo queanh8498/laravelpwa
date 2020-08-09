@@ -8,10 +8,10 @@ table,th,tr {
   color: rgb(0, 0, 0);
   text-align:center;
 }
-h3{ text-align:center; 
+h3{ text-align:center;
     padding-bottom:20px;
 }
-h4{ text-align:center; 
+h4{ text-align:center;
     padding-bottom:20px;
     color: red;
 }
@@ -42,34 +42,34 @@ tr:hover {background-color: #f5f5f5;
 
     <div class="container-fluid" id="container">
 
-    <!-- form search -->
+       <a type="button" class="btn btn-dark" href="{{ route('khachhang.chitiet',['id'=>$id]) }}">TRỞ VỀ</a>
 
-        <!-- <div class="row">
-
+       <!-- <h3>Từ {{ $from_date }} đến {{ $to_date }}</h3> -->
+       <div class="row">
+       <!-- new -->
+       <div class="">
            <form method="POST" action="{{ route('khachhang.search',['id'=>$id]) }}">
+           <!-- <input type="text" name="search" class="form-control m-input" placeholder="Enter Country Name" /> -->
            {{ csrf_field() }}
-            
-           <div class="col-md-3">
-                <input type="date" name="from_date" id="from_date" class="form-control"/>
+           <div class="col-sm-5">
+                Từ :<input type="date" name="from_date" id="from_date" class="form-control" value="{{ old('from_date',$from_date) }}"/>
             </div>
-            <div class="col-md-3">
-                <input type="date" name="to_date" id="to_date" class="form-control"/>
+            <div class="col-sm-5">
+                Đến :<input type="date" name="to_date" id="to_date" class="form-control" value="{{ old('to_date',$to_date) }}" />
             </div>
             <div class="col-md-1">
                 <input type="hidden" name="kh_id" id="kh_id" class="form-control" value="<?php echo $id;?>">
             </div>
-            <button type="submit">Submit</button>
-            <a href="{{ route('khachhang.chitiet',['id'=>$id]) }}">Back</a>
 
-           </form>
-       </div> -->
-
-       <a type="button" class="btn btn-dark" href="{{ route('khachhang.chitiet',['id'=>$id]) }}">Back</a>
-       
-       <h3>Từ {{ $from_date }} đến {{ $to_date }}</h3>
-       
-
+            <div class="col-md-1">
+                <br><button class="btn btn-outline-dark" type="submit">Tìm kiếm</button>
+            </div>
+        </form>
+       </div>
         </div>
+        </div>
+        <!-- endnew -->
+
     <br />
         <table class="table table-hover table-sm" id="tableMain">
             <thead>
@@ -81,10 +81,10 @@ tr:hover {background-color: #f5f5f5;
                   <!-- <th>CÔNG NỢ CŨ</th> -->
 
                   <!-- NỢ THEO ĐƠN = CÔNG NỢ MỚI -->
-                  <th>NỢ ĐƠN</th>                  
+                  <th>NỢ ĐƠN</th>
                 </tr>
             </thead>
-            
+
             <tbody>
             <?php $sum=0; ?>
             @foreach($chitiet_kh_date as $ctkh)
@@ -141,7 +141,7 @@ tr:hover {background-color: #f5f5f5;
             </tbody>
         </table>
 
-        
+
     </div>
 
     @endif

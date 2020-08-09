@@ -15,6 +15,8 @@ use Carbon\Carbon;
 use DateTime;
 use Barryvdh\DomPDF\Facade as PDF;
 
+use App\Exports\Congno_Khachhang_Export;
+use Maatwebsite\Excel\Facades\Excel;
 session_start();
 
 class KhachhangController extends Controller
@@ -172,6 +174,28 @@ class KhachhangController extends Controller
         ];
         $pdf = PDF::loadView('khachhang.pdf_chitietcongno_kh',$data);
         return $pdf->stream();
+}
+	public function excel_chitietcongno_kh($id) {
+
+        //$dd($kh);
+        $chitiet_kh = DB::select('SELECT dh.ddh_id,dh.ddh_ngaylap, dh.ddh_datra,bc.bccn_soducongno FROM dondathang dh 
+                                JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
+                                join khachhang kh on kh.kh_id = dh.kh_id
+                                WHERE dh.kh_id='.$id);
+        
+        
+        $kh = khachhang::find($id);
+        
+        // $data = new Congno_Khachhang_Export([
+        //     'chitiet_kh' => $chitiet_kh,
+        //     //'dh_first' => $dh_first,
+        //     'kh' => $kh,
+        // ]);
+       // dd($kh);
+        
+        return Excel::download(new Congno_Khachhang_Export($kh,$chitiet_kh), 'congno_kh.xlsx');
+        //return Excel::download(['kh' => $kh,'chitiet_kh' => $chitiet_kh], 'congno_kh.xlsx');
+
 }
 
 
