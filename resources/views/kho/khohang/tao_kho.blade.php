@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                           Tạo kho 
+                            Thông tin kho 
                         </header>
                          @if(count($errors)>0)
                         <span class="text-alert">

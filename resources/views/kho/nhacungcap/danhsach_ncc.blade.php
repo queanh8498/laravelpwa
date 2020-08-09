@@ -4,7 +4,7 @@
     <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Liệt kê danh mục nhà cung cấp
+     Danh sách nhà cung cấp
     </div>
   
                          @if(session('thongbao'))

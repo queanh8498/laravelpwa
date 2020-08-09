@@ -4,7 +4,7 @@
     <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Liệt kê danh mục kho xuất hàng
+      Danh sách kho xuất hàng
     </div>
   
                          @if(session('thongbao'))

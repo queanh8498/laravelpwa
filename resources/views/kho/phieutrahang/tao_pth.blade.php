@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                           Tạo phiếu trả hàng
+                           Thông tin phiếu trả hàng
                         </header>
                          @if(count($errors)>0)
                         <span class="text-alert">
@@ -69,6 +69,17 @@
             </div>
         </div>
 <script type="text/javascript">
+  function formatNumber(nStr, decSeperate, groupSeperate) {
+            nStr += '';
+            x = nStr.split(decSeperate);
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
+            }
+            return x1 + x2;
+        }
 $(document).ready(function(){
 
  $('#dynamic_form').on('submit', function(event){
@@ -152,6 +163,7 @@ $(document).ready(function(){
          $('.ctth_tt').prop('disabled', true);
            $('.ddh_id').prop('disabled', true);
             $('.hh_ten').prop('disabled', true);
+             $('.ctth_dongiath').prop('disabled', true);
         $("input[type='checkbox'][name='check']").change(function() {
            
            var check=$(this).val();
@@ -170,30 +182,33 @@ $(document).ready(function(){
              $('#ctth_soluong'+check).prop('disabled', false);
              $('#ctth_dongia'+check).prop("readonly", true);
              $('#ctth_tt'+check).prop("readonly", true);
-              var sum1=parseInt($('#sum').val())+parseInt($('#ctth_tt'+check).val());
-            $('#sum').val(sum1);
+              var sum1=parseCurrency($('#sum').val())+parseCurrency($('#ctth_tt'+check).val());
+            $('#sum').val(formatNumber(sum1, '.', ','));
              $(document).on('change','.ctth_soluong',function () {
           if(parseInt($('#ctth_soluong'+check).val())>parseInt($('#ctdh_soluong'+check).val())){
-              alert('Số lượng trả hàng vượt quá quy định');
-              $('#ctth_soluong'+check).val($('#ctdh_soluong'+check).val());
+              alert('Số lượng trả phải nhỏ hơn hoặc bằng số lượng đã mua ');
+              $('#ctth_soluong'+check).val(0);
           }
         else{
          var ctth_soluong=$('#ctth_soluong'+check).val();
          var ctth_dongia=$('#ctth_dongia'+check).val();
           var ctth_tt = ctth_soluong*ctth_dongia;
-        $('#ctth_tt'+check).val(ctth_tt);
-         sum_pnk();
+        $('#ctth_tt'+check).val(formatNumber(ctth_tt, '.', ','));
+        sum_pnk();
+
     }
          
     }); }else{
-                 var sum2=parseInt($('#sum').val())-parseInt($('#ctth_tt'+check).val());
-            $('#sum').val(sum2);
+                 var sum2=parseCurrency($('#sum').val())-parseCurrency($('#ctth_tt'+check).val());
+            $('#sum').val(formatNumber(sum2, '.', ','));
              
                $('#hh_id'+check).prop('disabled', true);
              $('#ctth_soluong'+check).prop('disabled', true);
             $('#ctdh_soluong'+check).prop('disabled', true);
              $('#ctth_dongia'+check).prop('disabled', true);
              $('#ctth_tt'+check).prop('disabled', true);
+              $('#ctth_tt'+check).val(0);
+              $('#ctth_soluong'+check).val(0);
                $('#ddh_id'+check).prop('disabled', true);
 
              }
@@ -230,21 +245,22 @@ $(document).ready(function(){
         });
     });
 
+function parseCurrency( num ) {
+    return parseFloat( num.replace( /,/g, '') );
+}
 
-    
-   function sum_pnk(){
+ function sum_pnk(){
   var sum=0;
   $('.ctth_tt').each(function(){
-     var value=$(this).val();
+     var value= parseCurrency($(this).val());
     if(value.length !=0){
       sum+=parseFloat(value);
 
     }
   });
-  $('#sum').val(sum);
-}      
+  $('#sum').val(formatNumber(sum, '.', ','));
+}
 
- 
-  
+
 </script>
 @endsection

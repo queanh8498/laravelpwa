@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                           Tạo phiếu nhập kho
+                          Thông tin phiếu nhập kho
                         </header>
                          @if(count($errors)>0)
                         <span class="text-alert">
@@ -51,9 +51,9 @@
                    <th width="20%">Nhóm hàng hóa</th>
                     <th width="20%">Tên hàng hóa</th>
                     <th width="10%">Số lượng</th>
-                      <th width="10%">Đơn giá</th>
-                       <th width="10%">Thành tiền</th>
-                    <th width="10%">Hành động</th>
+                      <th width="15%">Đơn giá</th>
+                       <th width="15%">Thành tiền</th>
+                    <th width="5%">Hành động</th>
                 </tr>
                </thead>
                <tbody>
@@ -88,7 +88,17 @@
         </div>
 
 <script>
-
+ function formatNumber(nStr, decSeperate, groupSeperate) {
+            nStr += '';
+            x = nStr.split(decSeperate);
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
+            }
+            return x1 + x2;
+        }
 $(document).ready(function(){
 
  var count = 1;
@@ -100,8 +110,9 @@ $(document).ready(function(){
   html = '<tr>';
      html += '<td><select name="nhom_id[]" class="form-control nhom_id" id="nhom_id'+count+'" data-sub_nhom_id="'+count+'">   <option value="">--Chọn nhóm hàng hóa--</option></select></td>';
         html += '<td><select name="hh_id[]" class="form-control hh_id" id="hh_id'+count+'" data-sub_hh_id="'+count+'"><option value="" >--Chọn hàng hóa--</option></select></td>';
-        html += '<td><input type="text" name="ctpn_soluong[]" class="form-control ctpn_soluong" id="ctpn_soluong'+count+'"  placeholder="nhập số lượng" ></td>';
-        html += '<td><input type="text"  name="ctpn_dongia[]" class="form-control ctpn_dongia"  id="ctpn_dongia'+count+'" value="0" readonly=""></td>';
+        html += '<td><input type="number" name="ctpn_soluong[]" class="form-control ctpn_soluong" id="ctpn_soluong'+count+'"  placeholder="nhập số lượng" ></td>';
+        html += '<input type="hidden"  name="ctpn_dongia[]" class="form-control ctpn_dongia"  id="ctpn_dongia'+count+'" value="0" readonly="">';
+         html += '<td><input type="text"  name="ctpn_dongiaht[]" class="form-control ctpn_dongiaht"  id="ctpn_dongiaht'+count+'" value="0" readonly="" ></td>';
           html += '<td><input type="text"  name="ctpn_tt[]" class="form-control ctpn_tt"  id="ctpn_tt'+count+'" value="0" readonly="" ></td>';
         if(number > 1)
         {
@@ -248,37 +259,41 @@ $(document).on('change','.hh_id',function () {
       //    console.log(data.hh_dongia);
 
           // here price is coloumn name in products table data.coln name
-  
+    $('.ctpn_dongiaht').prop('disabled', true);
         $('#ctpn_dongia'+sub_hh_id).val(data.hh_dongia);
+        $('#ctpn_dongiaht'+sub_hh_id).val(formatNumber(data.hh_dongia, '.', ','));
         $(document).on('change','.ctpn_soluong',function () {
          var ctpn_soluong=$('#ctpn_soluong'+sub_hh_id).val();
          var ctpn_dongia=$('#ctpn_dongia'+sub_hh_id).val();
           var ctpn_tt = ctpn_soluong*ctpn_dongia;
-        $('#ctpn_tt'+sub_hh_id).val(ctpn_tt);
+        $('#ctpn_tt'+sub_hh_id).val(formatNumber(ctpn_tt, '.', ','));
         sum_pnk();
     }); 
        
         var sl=$('#ctpn_soluong'+sub_hh_id).val();
         var dg=$('#ctpn_dongia'+sub_hh_id).val();
         var t = sl*dg;
-        $('#ctpn_tt'+sub_hh_id).val(t);
+        $('#ctpn_tt'+sub_hh_id).val(formatNumber(t, '.', ','));
         },
         error:function(){
 
         }
       });
     });
+function parseCurrency( num ) {
+    return parseFloat( num.replace( /,/g, '') );
+}
 
 function sum_pnk(){
   var sum=0;
   $('.ctpn_tt').each(function(){
-     var value=$(this).val();
+     var value= parseCurrency($(this).val());
     if(value.length !=0){
       sum+=parseFloat(value);
 
     }
   });
-  $('#sum').val(sum);
+  $('#sum').val(formatNumber(sum, '.', ','));
 }
 </script>
 

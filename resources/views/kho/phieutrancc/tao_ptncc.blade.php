@@ -4,7 +4,7 @@
             <div class="col-lg-12">
                     <section class="panel">
                         <header class="panel-heading">
-                           Tạo phiếu trả hàng
+                           Thông tin phiếu trả nhà cung cấp
                         </header>
                          @if(count($errors)>0)
                         <span class="text-alert">
@@ -45,7 +45,7 @@
                 <tr>
                       <th with="5%"></th>
                     <th with="15%">Tên hàng hóa</th>
-                    <th with="10%">Số lượng</th>
+                    <th with="10%">Số lượng đã nhập</th>
                      <th with="10%">Số lượng trả</th>
                       <th  with="10%" >Đơn giá</th>
                        <th   with="10%" >Thành tiền</th>
@@ -83,6 +83,17 @@
         </div>
 
 <script type="text/javascript">
+   function formatNumber(nStr, decSeperate, groupSeperate) {
+            nStr += '';
+            x = nStr.split(decSeperate);
+            x1 = x[0];
+            x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
+            }
+            return x1 + x2;
+        }
   $(document).ready(function(){
 
  $('#dynamic_form').on('submit', function(event){
@@ -132,8 +143,9 @@ count++;
         html += '<td><input type="text" name="hh_ten[]" class="form-control hh_ten" id="hh_ten'+count+'" value="{{$value->hh_ten}}"></td>';
         html += '<input type="hidden" name="hh_id[]" class="form-control hh_id" id="hh_id'+count+'" data-sub_hh_id="'+count+'" value="{{$value->hh_id}}">';
         html += '<td><input type="text" name="ctpn_soluong[]" class="form-control ctpn_soluong" id="ctpn_soluong'+count+'"  value="{{$value->ctpn_soluong}}"></td>';
-         html += '<td><input type="text" name="ctncc_soluong[]" class="form-control ctncc_soluong" id="ctncc_soluong'+count+'"  ></td>';
-        html += '<td><input type="text"  name="ctncc_dongia[]" class="form-control ctncc_dongia"  id="ctncc_dongia'+count+'" value="{{$value->ctpn_dongia}}" ></td>';
+         html += '<td><input type="number" name="ctncc_soluong[]" class="form-control ctncc_soluong" id="ctncc_soluong'+count+'"  ></td>';
+        html += '<input type="hidden"  name="ctncc_dongia[]" class="form-control ctncc_dongia"  id="ctncc_dongia'+count+'" value="{{$value->ctpn_dongia}}" >';
+         html += '<td><input type="text"  name="ctncc_dongiaht[]" class="form-control ctncc_dongiaht"  id="ctncc_dongiaht'+count+'" value="{{number_format($value->ctpn_dongia,0,",",",")}}" ></td>';
          html += '<td><input type="text"  name="ctptncc_tt[]" class="form-control ctptncc_tt"  id="ctptncc_tt'+count+'" value="0"  ></td>';
           html += '<td></td></tr> @endforeach';
      
@@ -145,6 +157,7 @@ count++;
     $('.ctpn_soluong').prop('disabled', true);
     $('.ctncc_soluong').prop('disabled', true);
     $('.ctncc_dongia').prop('disabled', true);
+     $('.ctncc_dongiaht').prop('disabled', true);
     $('.ctptncc_tt').prop('disabled', true);
      $("input[type='checkbox'][name='check']").change(function() {
            
@@ -164,47 +177,54 @@ count++;
              $('#ctncc_soluong'+check).prop('disabled', false);
              $('#ctncc_dongia'+check).prop("readonly", true);
              $('#ctptncc_tt'+check).prop("readonly", true);
-              var sum1=parseInt($('#sum').val())+parseInt($('#ctptncc_tt'+check).val());
-            $('#sum').val(sum1);
+             
+              var sum1=parseCurrency($('#sum').val())+parseCurrency($('#ctptncc_tt'+check).val());
+            $('#sum').val(formatNumber(sum1, '.', ','));
                    $(document).on('change','.ctncc_soluong',function () {
             
           if(parseInt($('#ctncc_soluong'+check).val())>parseInt($('#ctpn_soluong'+check).val())){
-              alert('Số lượng trả hàng vượt quá quy định');
-              $('#ctncc_soluong'+check).val($('#ctpn_soluong'+check).val());
+              alert('Số lượng trả phải nhỏ hơn hoặc bằng số lượng đã nhập');
+              $('#ctncc_soluong'+check).val(0);
           }
         else{
          var ctncc_soluong=$('#ctncc_soluong'+check).val();
          var ctncc_dongia=$('#ctncc_dongia'+check).val();
           var ctptncc_tt = ctncc_soluong*ctncc_dongia;
-        $('#ctptncc_tt'+check).val(ctptncc_tt);
+        $('#ctptncc_tt'+check).val(formatNumber(ctptncc_tt, '.', ','));
              sum_pnk();
       }
          
     });
            }
              else{
-            var sum2=parseInt($('#sum').val())-parseInt($('#ctptncc_tt'+check).val());
-            $('#sum').val(sum2);
+            var sum2=parseCurrency($('#sum').val())-parseCurrency($('#ctptncc_tt'+check).val());
+            $('#sum').val(formatNumber(sum2, '.', ','));
             $('#hh_id'+check).prop('disabled', true);
             $('#ctpn_soluong'+check).prop('disabled', true);
             $('#ctncc_soluong'+check).prop('disabled', true);
             $('#ctncc_dongia'+check).prop('disabled', true);
             $('#ctptncc_tt'+check).prop('disabled', true);
+             $('#ctptncc_tt'+check).val(0);
+              $('#ctncc_soluong'+check).val(0);
              }
    
   });
 });
-   function sum_pnk(){
+ function parseCurrency( num ) {
+    return parseFloat( num.replace( /,/g, '') );
+}
+
+function sum_pnk(){
   var sum=0;
   $('.ctptncc_tt').each(function(){
-     var value=$(this).val();
+     var value= parseCurrency($(this).val());
     if(value.length !=0){
       sum+=parseFloat(value);
 
     }
   });
-  $('#sum').val(sum);
-}      
+  $('#sum').val(formatNumber(sum, '.', ','));
+}
   
 </script>
 @endsection

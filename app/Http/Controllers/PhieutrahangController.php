@@ -77,7 +77,7 @@ class PhieutrahangController extends Controller
                 <tr>
                       <th with='5%'></th>
                     <th with='15%'>Tên hàng hóa</th>
-                    <th with='10%'>Số lượng</th>
+                    <th with='10%'>Số lượng đã mua</th>
                      <th with='10%'>Số lượng trả</th>
                       <th  with='10%' >Đơn giá</th>
                        <th   with='10%' >Thành tiền</th>
@@ -101,12 +101,15 @@ class PhieutrahangController extends Controller
        </td> ";
         $output .= "
       
-       <td><input type='text' name='ctth_soluong[]' class='form-control ctth_soluong' id='ctth_soluong".$count."'   >
+       <td><input type='number' name='ctth_soluong[]' class='form-control ctth_soluong' id='ctth_soluong".$count."' value='0'  >
        </td> ";
 
         $output .= "
      
-       <td><input type='text' name='ctth_dongia[]' class='form-control ctth_dongia' id='ctth_dongia".$count."'  value='".$value->ctdh_dongia."'  ></td> ";
+       <input type='hidden' name='ctth_dongia[]' class='form-control ctth_dongia' id='ctth_dongia".$count."'  value='".$value->ctdh_dongia."'> ";
+       $output .= "
+     
+       <td><input type='text' name='ctth_dongiath[]' class='form-control ctth_dongiath' id='ctth_dongiath".$count."'  value='".number_format($value->ctdh_dongia,0,',',',')."'  ></td> ";
           $output .= "
      
        <td><input type='text' name='ctth_tt[]' class='form-control ctth_tt' id='ctth_tt".$count."'  value='0'   ></td> ";

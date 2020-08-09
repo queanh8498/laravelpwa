@@ -4,7 +4,7 @@
     <div class="table-agile-info">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Liệt kê phiếu khách trả hàng
+     Danh sách phiếu khách trả hàng
     </div>
   
                          @if(session('thongbao'))
