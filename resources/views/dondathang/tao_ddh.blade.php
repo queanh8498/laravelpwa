@@ -29,7 +29,7 @@ td {
 		@endif
 	@endforeach
 	</div>
-<br />
+    <br />
     <div class="row">
         <div class="col-lg-12">
             <section class="panel">
@@ -38,85 +38,94 @@ td {
                 </header>
                 
                 <div class="panel-body">
-				<!-- #table1 -->
-		 <div id="table1"> 
-                <form method="post" id="" action="{{ route('taodondathang.store_kh_moi') }}">
-                    {{ csrf_field() }}
+				    <!-- #table1 -->
+                    <div id="table1"> 
+                        <form method="post" id="" action="{{ route('taodondathang.store_kh_moi') }}">
+                            {{ csrf_field() }}
+                            <div class="row">
+                                <div class="col-sm-1">
+                                </div> 
+                                <div class="col-sm-5">
+                                    <label>Tên Khách hàng:</label>
+                                    <input type="text"  class="form-control" name="kh_ten_" id="kh_ten_" value="">
+                                </div> 
+                                <div class="col-sm-5">
+                                    <label>Số điện thoại:</label>
+                                    <input type="text"  class="form-control" name="kh_sdt_" id="kh_sdt_" value="">    
+                                </div>
+                            </div>
 
-                    <div class="row">
-                        <div class="col-sm-1">
-                        </div> 
+                            <div class="row">
+                                <div class="col-sm-1">
+                                </div>
+                                <div class="col-sm-10">
+                                    <label>Địa chỉ:</label>
+                                    <input type="text"  class="form-control" name="kh_diachi_" id="kh_diachi_" value="">    
+                                </div>
+                                <div class="col-sm-1">
+                                </div>
+                            </div>
 
-                        <div class="col-sm-5">
-                            <label>Tên Khách hàng:</label>
-                            <input type="text"  class="form-control" name="kh_ten_" id="kh_ten_" value="">
-                        </div> 
-                        <div class="col-sm-5">
-                            <label>Số điện thoại:</label>
-                            <input type="text"  class="form-control" name="kh_sdt_" id="kh_sdt_" value="">    
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-1">
-                        </div>
+                            <div class="col-sm-1">
+                            </div>
 
-                        <div class="col-sm-10">
-                            <label>Địa chỉ:</label>
-                            <input type="text"  class="form-control" name="kh_diachi_" id="kh_diachi_" value="">    
-                        </div>
-
-                        <div class="col-sm-1">
-                        </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-sm-1">
+                                </div>
+                                <div class="col-sm-8">
+                                    <button class="btn btn-dark btn-sm btn-block" type="submit">LƯU KHÁCH HÀNG MỚI</button>
+                                </div>
+                                <div class="col-sm-2">
+                                    <a class="btn btn-light btn-sm btn-block" onclick='show(2);'>ẨN</a>
+                                </div>
+                                <div class="col-sm-1">
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                    <div class="col-sm-1">
+                    <!-- #table2 -->
+                    <div id="table2">  
                     </div>
-            <br>
-            <div class="row">
-                        <div class="col-sm-1">
-                        </div>
-                        <div class="col-sm-8">
-                            <button class="btn btn-dark btn-sm btn-block" type="submit">LƯU KHÁCH HÀNG MỚI</button>
-                        </div>
-                        <div class="col-sm-2">
-                            <a class="btn btn-light btn-sm btn-block" onclick='show(2);'>ẨN FORM</a>
-                        </div>
-                        <div class="col-sm-1">
-                        </div>
-                    </div>
-                </form>
-        </div>
-		 <!-- #table2 -->
-        <div id="table2">  </div>
                     <form id="dynamic_form" method="post">
                         {{ csrf_field() }}
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
                                     <label for="kh_sdt">SDT:</label>
-                                    <input type="text" name="kh_sdt" class="form-control" id="kh_sdt" >
-                                   
+                                    <input type="text" name="kh_sdt" class="form-control" id="kh_sdt" >             
                                 </div>
                                 <div class="col-md-6">
                                     <label for="kh_ten">Khách hàng:</label>
                                     <input type="text" name="kh_ten" class="form-control" id="kh_ten" readonly >
-                                    <!-- <input type="text" name="kh_id" class="form-control" id="kh_id" value=" <script> console.log(kh_ten) </script>" > -->
-                                    <!-- <span id="kh_ten"></span> -->
+                                        <!-- <input type="text" name="kh_id" class="form-control" id="kh_id" value=" <script> console.log(kh_ten) </script>" > -->
+                                        <!-- <span id="kh_ten"></span> -->
                                 </div>
                                 <div class="col-md-6">
                                     <input type="hidden" name="kh_id" class="form-control" id="kh_id" >
                                 </div>
-                            </div>
+                            </div>         
                         </div>
+                                
                         <div class="form-group">
                             <label for="id">Nhân viên</label>
-                            @if(isset(Auth::user()->name))
-                                <input type="text"  class="form-control" value="{{Auth::user()->name}}" readonly="" >
-                                <input type="hidden" id="id" name="id" value="{{Auth::user()->id}}" >
-                            @endif
+                                @if(isset(Auth::user()->name))
+                                    <input type="text"  class="form-control" value="{{Auth::user()->name}}" readonly="" >
+                                    <input type="hidden" id="id" name="id" value="{{Auth::user()->id}}" >
+                                @endif
                         </div>
+                                
                         <div class="form-group">
-                            <label for="ddh_ngaylap">Ngày lập</label>
-                            <input type="date" name="ddh_ngaylap" class="form-control" id="ddh_ngaylap" >
+                            <div class="row">
+                                <div class="col-md-6">
+                                        <label for="ddh_ngaylap">Ngày lập</label>
+                                        <input type="date" name="ddh_ngaylap" class="form-control" id="ddh_ngaylap" >
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="ddh_thoihan">Thời hạn</label>
+                                    <input type="number" name="ddh_thoihan" class="form-control" id="ddh_thoihan" value="30" >
+                                </div>
+                            </div>              
                         </div>
 
                         <table class="table table-bordered table-striped" id="user_table">
@@ -124,43 +133,62 @@ td {
                                 <tr>
                                     <th width="20%">Nhóm hàng hóa</th>
                                     <th width="20%">Tên hàng hóa</th>
-                                    <th width="10%">Số lượng</th>
-                                    <th width="10%">Đơn giá</th>
-                                    <th width="10%">Thành tiền</th>
-                                    <th width="10%">Hành động</th>
+                                    <th width="10%">Số lượng trong kho</th>
+                                    <th width="7%">Số lượng</th>
+                                    <!-- <th width="15%">Đơn giá</th> -->
+                                    <th width="15%">Đơn giá</th>
+                                    <!-- <th width="15%">Thành tiền</th> -->
+                                    <th width="15%">Thành tiền</th>
+                                    <th width="7%">Hành động</th>
                                 </tr>
                             </thead>
+
                             <tbody>
 
                             </tbody>
+                                    
                             <tfoot>
                                 <tr>
-                                    <td colspan="4" class="text-right">
+                                    <td colspan="5" class="text-right">
                                         <strong>Total:</strong> 
                                     </td>
+                                    <!-- <td> -->
+                                        <input type="hidden" id="estimated_ammount" class="estimated_ammount" value="0" readonly>
+                                    <!-- </td> -->
                                     <td colspan="2">
-                                        <input type="number" id="estimated_ammount" class="estimated_ammount" value="0" readonly>
+                                        <input type="text" id="estimated_ammount_dinhdang" class="estimated_ammount_dinhdang" value="0" readonly>
                                     </td>
                                 </tr>
                             </tfoot>
-    
                         </table>
-
+                
                         <div class="form-group">
-                            <label for="ddh_giamchietkhau">Giảm chiết khấu</label>
-                            <input type="text" name="ddh_giamchietkhau" class="form-control" id="ddh_giamchietkhau">
-                        </div>
-                        <div class="form-group">
-                            <label for="ddh_congnocu">Công nợ cũ</label>
-                            <input type="text" name="ddh_congnocu" class="form-control" id="ddh_congnocu" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="ddh_datra">Khách đã trả</label>
-                            <input type="text" name="ddh_datra" class="form-control" id="ddh_datra">
-                        </div>
-                        <div class="form-group">
-                            <label for="ddh_congnomoi">Công nợ mới</label>
-                            <input type="text" name="ddh_congnomoi" class="form-control" id="ddh_congnomoi">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="ddh_giamchietkhau">Chiết khấu (%)</label>
+                                    <input type="text" name="ddh_giamchietkhau" class="form-control" id="ddh_giamchietkhau">
+                                </div>
+                                <div>
+                                    <!-- <label for="ddh_congnocu">Công nợ cũ</label> -->
+                                    <input type="hidden" name="ddh_congnocu" class="form-control" id="ddh_congnocu" readonly>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="ddh_congnocu_dinhdang">Công nợ cũ</label>
+                                    <input type="text" name="ddh_congnocu_dinhdang" class="form-control" id="ddh_congnocu_dinhdang" readonly>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="ddh_datra">Khách đã trả</label>
+                                    <input type="text" name="ddh_datra" class="form-control" id="ddh_datra">
+                                </div>
+                                <div>
+                                    <!-- <label for="ddh_congnomoi">Công nợ mới</label> -->
+                                    <input type="hidden" name="ddh_congnomoi" class="form-control" id="ddh_congnomoi" readonly>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="ddh_congnomoi_dinhdang">Công nợ mới</label>
+                                    <input type="text" name="ddh_congnomoi_dinhdang" class="form-control" id="ddh_congnomoi_dinhdang" readonly>
+                                </div>
+                            </div>
                         </div>
                         @csrf
                         <span id="result"></span>
@@ -172,7 +200,22 @@ td {
     </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script> 
+<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="simple.money.format.js"></script>
+
 <script>
+    
+    function formatNumber(nStr, decSeperate, groupSeperate) {
+        nStr += '';
+        x = nStr.split(decSeperate);
+        x1 = x[0];
+        x2 = x.length > 1 ? '.' + x[1] : '';
+        var rgx = /(\d+)(\d{3})/;
+        while (rgx.test(x1)) {
+            x1 = x1.replace(rgx, '$1' + groupSeperate + '$2');
+        }
+        return x1 + x2;
+    }
         
     $(document).ready(function(){
         var count = 1;
@@ -182,9 +225,12 @@ td {
             html += '<td><select name="nhom_id[]" class="form-control nhom_id" data-sub_nhom_id="'+count+'">   <option value="">--Chọn nhóm hàng hóa--</option>@foreach($nhom as $key => $dsnhom)'+
                 '<option value="{{ $dsnhom->nhom_id }}"> {{ $dsnhom->nhom_ten }} </option>@endforeach</select></td>';
             html += '<td><select name="hh_id[]" class="form-control hh_id" id="hh_id'+count+'" data-sub_hh_id="'+count+'"><option value="" >--Chọn hàng hóa--</option></select></td>';
+            html += '<td><input type="text"  name="hh_soluong[]" class="form-control hh_soluong readonly=""  id="hh_soluong'+count+'" value="0" readonly=""></td>';
             html += '<td><input type="text" name="ctdh_soluong[]" class="form-control ctdh_soluong" id="ctdh_soluong'+count+'"  placeholder="nhập số lượng" ></td>';
-            html += '<td><input type="text"  name="ctdh_dongia[]" class="form-control ctdh_dongia readonly=""  id="ctdh_dongia'+count+'" value="0" readonly=""></td>';
-            html += '<td><input type="text"  name="ctdh_tt[]" class="form-control ctdh_tt"  id="ctdh_tt'+count+'" value="0" readonly="" ></td>';
+            html += '<input type="hidden"  name="ctdh_dongia[]" class="form-control ctdh_dongia readonly=""  id="ctdh_dongia'+count+'" value="0" readonly="">';
+            html += '<td><input type="text"  name="ctdh_dongia_dinhdang[]" class="form-control ctdh_dongia_dinhdang readonly=""  id="ctdh_dongia_dinhdang'+count+'" value="0" readonly=""></td>';
+            html += '<input type="hidden"  name="ctdh_tt[]" class="form-control ctdh_tt"  id="ctdh_tt'+count+'" value="0" readonly="" >';
+            html += '<td><input type="text"  name="ctdh_tt_dinhdang[]" class="form-control ctdh_tt_dinhdang"  id="ctdh_tt_dinhdang'+count+'" value="0" readonly="" ></td>';
             if(number > 1){
                 html += '<td><button type="button" name="remove" id="" class="btn btn-danger remove">Giảm</button></td></tr>';
                 $('tbody').append(html);
@@ -194,6 +240,7 @@ td {
                 html += '<td><button type="button" name="add" id="add" class="btn btn-success">Thêm</button></td></tr>';
                 $('tbody').html(html);
             }
+
         }
 
         $(document).on('click', '#add', function(){
@@ -287,12 +334,25 @@ td {
                 //here price is coloumn name in products table data.coln name
   
                 $('#ctdh_dongia'+sub_hh_id).val(data.hh_dongia);
+                $('#ctdh_dongia_dinhdang'+sub_hh_id).val(formatNumber(data.hh_dongia, '.', ','));
+                $('#ctdh_dongia_dinhdang').prop('disabled', true);
+
+                $('#hh_soluong'+sub_hh_id).val(data.hh_soluong);
                 $(document).on('change','.ctdh_soluong',function () {
-                    var ctdh_soluong=$('#ctdh_soluong'+sub_hh_id).val();
-                    var ctdh_dongia=$('#ctdh_dongia'+sub_hh_id).val();
-                    var ctdh_tt = ctdh_soluong*ctdh_dongia;
-                    $('#ctdh_tt'+sub_hh_id).val(ctdh_tt);
-                    total_ammount_price();
+                    if(parseInt($('#ctdh_soluong'+sub_hh_id).val())>parseInt($('#hh_soluong'+sub_hh_id).val())){
+                        alert('Số lượng bạn chọn mua vượt quá số lượng trong kho');
+                        $('#ctdh_soluong'+sub_hh_id).val($('#hh_soluong'+sub_hh_id).val());
+                    }
+                    else{
+                        var ctdh_soluong=$('#ctdh_soluong'+sub_hh_id).val();
+                        var ctdh_dongia=$('#ctdh_dongia'+sub_hh_id).val();
+                        var ctdh_tt = ctdh_soluong*ctdh_dongia;
+
+                        $('#ctdh_tt'+sub_hh_id).val(ctdh_tt);
+                        $('#ctdh_tt_dinhdang'+sub_hh_id).val(formatNumber(ctdh_tt, '.', ','));
+                        $('#ctdh_tt_dinhdang').prop('disabled', true);
+                        total_ammount_price();
+                    }
                 }); 
        
                 var sl=$('#ctdh_soluong'+sub_hh_id).val();
@@ -304,6 +364,7 @@ td {
             }
         });
     });
+
 
     $(document).ready(function(){
         fetch_customer_data();
@@ -318,6 +379,9 @@ td {
                     $('#kh_ten').val(data.kh_ten);
                     $('#kh_id').val(data.kh_id);
                     $('#ddh_congnocu').val(data.ddh_congnocu);
+                    $('#ddh_congnocu_dinhdang').val(formatNumber(data.ddh_congnocu, '.', ','));
+                    $('#ddh_congnocu_dinhdang').prop('disabled', true);
+                    
                     //var kh_ten = document.getElementById('kh_ten').value;
                     // var kh_ten=$('#kh_ten').text(data.kh_ten).val();
                     // document.getElementById('kh_ten').value=$('#kh_ten').val(kh_ten);
@@ -343,8 +407,12 @@ td {
             }
         });
         $('#estimated_ammount').val(sum);
+        $('#estimated_ammount_dinhdang').val(formatNumber(sum, '.', ','));
+        $('#estimated_ammount_dinhdang').prop('disabled', true);
     }
-
+    // var a = $('#estimated_ammount').val(sum);
+    //     $('#estimated_ammount_dinhdang').val(formatNumber(a, '.', ','));
+        
     $(document).on('change','#ddh_datra',function () {
         tong=$(estimated_ammount).val();
         giamchietkhau=$(estimated_ammount).val()*($(ddh_giamchietkhau).val()/100);
@@ -353,6 +421,8 @@ td {
         khachdatra=$(this).val();
         congnomoi=tiendagiam-khachdatra;
         $('#ddh_congnomoi').val(congnomoi);
+        $('#ddh_congnomoi_dinhdang').val(formatNumber(congnomoi, '.', ','));
+        $('#ddh_congnomoi_dinhdang').prop('disabled', true);
     });
 
 </script>

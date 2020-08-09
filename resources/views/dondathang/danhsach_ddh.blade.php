@@ -32,7 +32,7 @@
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Liệt kê danh mục đơn đặt hàng 
+                Liệt kê đơn hàng 
             </div>
             <div class="table-responsive">
                 <table class="table table-striped b-t b-light" id="dataTables-example">
@@ -66,10 +66,10 @@
                                 </td>
                                 <td>{{ number_format($ddh->ddh_congnocu + $ddh->ddh_congnomoi, 0, ',' , ',') }} đ</td>
                                 <td width="15%">
-                                    <a href="{{URL::to('/banhang/chitietdondathang/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-eye text-active"></i></a> &nbsp;
-                                    <a href=" {{URL::to('/banhang/pdf-ddh/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class="" ><i class="fa fa-print" aria-hidden="true"></i></a>&nbsp;
-                                    <a href="{{URL::to('/banhang/pdf-pxk/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-home" aria-hidden="true"></i></a>&nbsp;
-                                    <a href="{{URL::to('/banhang/pdf-phieukynhan/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-pencil" aria-hidden="true"></i></a>&nbsp;
+                                    <a href="{{URL::to('/banhang/chitietdondathang/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-eye text-active" title="Xem chi tiết"></i></a> &nbsp;
+                                    <a href=" {{URL::to('/banhang/pdf-ddh/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class="" ><i class="fa fa-print" aria-hidden="true" title="Phiếu bán hàng"></i></a>&nbsp;
+                                    <a href="{{URL::to('/banhang/pdf-pxk/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-home" aria-hidden="true"  title="Phiếu xuất kho"></i></a>&nbsp;
+                                    <a href="{{URL::to('/banhang/pdf-phieukynhan/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-pencil" aria-hidden="true"  title="Phiếu lưu ký nhận"></i></a>&nbsp;
                                 </td>
                             </tr>
                         @endforeach

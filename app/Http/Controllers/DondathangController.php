@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use Validator;
+use Carbon\Carbon;
+use Datetime;
+use Session;
 use Illuminate\Support\Facades\Redirect;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\KhachHang;
@@ -19,9 +23,7 @@ use App\NhomHangHoa;
 use App\PhieuXuatKho;
 use App\KhoHang;
 use App\NhaCungCap;
-use Validator;
-use Carbon\Carbon;
-use Session;
+
 
 session_start();
 
@@ -93,7 +95,7 @@ class DondathangController extends Controller
     public function dongia(Request $request){
   
         //it will get price if its id match with product id
-        $p=hanghoa::select('hh_dongia')->where('hh_id',$request->id)->first();
+        $p=hanghoa::select('hh_dongia', 'hh_soluong')->where('hh_id',$request->id)->first();
         
         return response()->json($p);
     }
@@ -119,7 +121,9 @@ class DondathangController extends Controller
             $rules = array(
                 'nhom_id.*'=>'required',
                 'hh_id.*'=>'required',
-                'ctdh_soluong.*'  => 'required'
+                'ctdh_soluong.*'  => 'required',
+                'ddh_ngaylap' => 'required',
+                'ddh_datra' => 'required',
             );
 
             $error = Validator::make($request->all(), $rules);
@@ -147,7 +151,9 @@ class DondathangController extends Controller
             
             $bccn = new baocaocongno();
             $bccn->ddh_id=$ddh->ddh_id;
-            $bccn->bccn_hanno = date('Y-m-d', strtotime($request->ddh_ngaylap. ' + 30 days'));
+            $songay_chono=$request->ddh_thoihan;
+            $bccn->bccn_hanno = $request->ddh_ngaylap;
+            $bccn->bccn_hanno = $bccn->bccn_hanno->addDays($songay_chono);
             $bccn->bccn_soducongno = $request->ddh_congnomoi;
             $bccn->save();
 
@@ -164,7 +170,7 @@ class DondathangController extends Controller
             //them vô kho 
             $pxk = new phieuxuatkho();
             $pxk->pxk_id=$request->pxk_id;
-            $pxk->kho_id = $get_kho->kho_id;
+            //$pxk->kho_id = $get_kho->kho_id;
             $pxk->id = $request->id;
             $pxk->pxk_ngayxuatkho = Carbon::now('Asia/Ho_Chi_Minh');
             $pxk->ddh_id=$ddh->ddh_id;
@@ -173,7 +179,7 @@ class DondathangController extends Controller
             for($count1 = 0; $count1 < count($hh_id); $count1++){
                 $product= DB::table('hanghoa')->where('hh_id',$hh_id[$count1])->get();
                 foreach ($product as $key => $value){
-                    $value1=$value->hh_soluong+$ctdh_soluong[$count1];
+                    $value1=$value->hh_soluong-$ctdh_soluong[$count1];
                     $data1 = array();
                     $data1['hh_soluong'] =$value1;
                     DB::table('hanghoa')->where('hh_id',$hh_id[$count1] )->update($data1); 
