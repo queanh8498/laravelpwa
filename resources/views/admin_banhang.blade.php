@@ -80,7 +80,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <aside>
     <div id="sidebar" class="nav-collapse">
         <!-- sidebar menu start-->
-        <div class="leftside-navigation">
+            <div class="leftside-navigation">
             <ul class="sidebar-menu" id="nav-accordion">
                 <li>
                     <a class="active" href="{{URL::to('banhang/tongquanbanhang')}}">
@@ -88,6 +88,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <span>Tổng quan</span>
                     </a>
                 </li>
+                  @if(Auth::user()->quyen==5||Auth::user()->quyen==6||Auth::user()->quyen==8||Auth::user()->quyen==9)
                        <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
@@ -108,6 +109,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                       
                     </ul>
                 </li>
+                 @endif
+                   @if(Auth::user()->quyen==1||Auth::user()->quyen==4||Auth::user()->quyen==6||Auth::user()->quyen==9)
                   <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
@@ -116,12 +119,44 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <ul class="sub">
                         <li><a href="{{URL::to('banhang/khachhang')}}">Khách hàng</a></li>
                         <li><a href="{{URL::to('banhang/danhsachdondathang')}}">Đơn hàng</a></li>
-                       <li><a href="{{URL::to('banhang/ton-hh')}}">Hàng hóa còn tồn kho</a></li>
+                          <li><a href="{{URL::to('banhang/ton-hh')}}">Hàng hóa còn tồn kho</a></li>
                    
                         
                       
                     </ul>
                 </li>
+                   @endif
+                    @if(Auth::user()->quyen==3||Auth::user()->quyen==4||Auth::user()->quyen==8||Auth::user()->quyen==9)
+                       <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Quản lý công nợ</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="#">Báo cáo công nợ</a></li>
+                     
+                   
+                        
+                      
+                    </ul>
+                </li>
+                @endif
+                       @if(Auth::user()->quyen==9)
+                       <li class="sub-menu">
+                    <a href="javascript:;">
+                        <i class="fa fa-book"></i>
+                        <span>Quản lý nhân viên</span>
+                    </a>
+                    <ul class="sub">
+                        <li><a href="{{URL::to('banhang/danhsach-nv')}}">Nhân viên</a></li>
+                     
+                   
+                        
+                      
+                    </ul>
+                </li>
+                @endif
+                
                   
              
   </ul>            </div>

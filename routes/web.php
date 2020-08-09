@@ -33,6 +33,13 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::get('/sua-kho/{kho_id}','KhohangController@getsua_kho');
 	Route::post('/sua-kho/{kho_id}','KhohangController@postsua_kho');
 	Route::get('xoa-kho/{kho_id}','KhohangController@getxoa_kho');
+	//nhanvien
+	Route::get('/danhsach-nv','NhanvienController@getdanhsach_nv');
+	Route::get('/tao-nv','NhanvienController@gettao_nv');
+	Route::post('/tao-nv','NhanvienController@posttao_nv');
+	Route::get('/sua-nv/{nv_id}','NhanvienController@getsua_nv');
+	Route::post('/sua-nv/{nv_id}','NhanvienController@postsua_nv');
+	Route::get('/xoa-nv/{nv_id}','NhanvienController@getxoa_nv');
 	//nhacungcap
 	Route::get('/danhsach-ncc','NhacungcapController@getdanhsach_ncc');
 	Route::get('/tao-ncc','NhacungcapController@gettao_ncc');
