@@ -3,11 +3,16 @@
 
 
 <style>
-
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    font-size: 1em;
+    color: #101010;
+}
 table,th,tr {
   background-color: white ;
-  color: rgb(0, 0, 0);
+  color: black;
   text-align:center;
+  font-family: Arial;
+  border: 1px solid #ddd;
 }
 h3{ text-align:center; 
     padding-bottom:20px;
@@ -16,7 +21,9 @@ h4{ text-align:center;
     padding-bottom:20px;
     color: red;
 }
-
+h5{ text-align:center;
+    padding-bottom:20px;
+}
 .datarow{ text-align:center;}
 
 tr:hover {background-color: #f5f5f5;}
@@ -37,12 +44,14 @@ tr:hover {background-color: #f5f5f5;}
     @if (empty($chitiet_kh))
     @else
 
-<h3>THÔNG TIN CHI TIẾT KHÁCH HÀNG {{$a}}</h3>
-<h3>Thông tin các Đơn hàng</h3>
+<h3>THÔNG TIN CHI TIẾT KHÁCH HÀNG</h3>
+<h5>Khách Hàng: {{$a}}</h5>
 
     <div class="container-fluid" id="container">
+    <a type="button" class="btn btn-dark" href="{{ route('khachhang.index') }}">Trở về</a>
+<br><hr>
 	 <div class="row">
-        
+      
         @if(count($errors)>0)
         <span class="text-alert">
             @foreach($errors->all() as $err)
@@ -57,10 +66,10 @@ tr:hover {background-color: #f5f5f5;}
            {{ csrf_field() }}
           
            <div class="col-sm-5">
-                Từ :<input type="date" name="from_date" id="from_date" class="form-control" />
+                <b>Từ :</b><input type="date" name="from_date" id="from_date" class="form-control" />
             </div>
             <div class="col-sm-5">
-                Đến :<input type="date" name="to_date" id="to_date" class="form-control"  />
+                <b>Đến :</b><input type="date" name="to_date" id="to_date" class="form-control"  />
             </div>
         
             <div class="col-md-1">
@@ -75,11 +84,19 @@ tr:hover {background-color: #f5f5f5;}
        </div>      
         </div>
     <br />
-	
-        <table class="table table-hover table-sm" id="tableMain">
+
+    <div class="table-agile-info">
+  <div class="panel panel-default">
+
+    <div class="panel-heading" style="font-size:25px">
+      <b>Thông tin các Đơn hàng</b>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered b-t b-dark" id="tableMain">
             <thead>
                 <tr>
-                  <th>MÃ ĐƠN HÀNG</th>
+                  <th>MÃ ĐƠN</th>
                   <th>NHÂN VIÊN </th>
                   <th>NGÀY LẬP ĐƠN</th>
                   <th>NGÀY TỚI HẠN</th>
@@ -136,18 +153,16 @@ tr:hover {background-color: #f5f5f5;}
                 </tr>
             @endforeach
             <tr>
-            <td ><b>TỔNG CÔNG NỢ:</b></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
+            <td colspan="4"><b>TỔNG CÔNG NỢ:</b></td>
+            
             <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
-			<td ></td>
             </tr>
             </tbody>
         </table>
-
         
     </div>
+    </div>
+</div>
 
     @endif
 

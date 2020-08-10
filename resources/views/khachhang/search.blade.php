@@ -3,10 +3,16 @@
 
 <style>
 
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    font-size: 1em;
+    color: #101010;
+}
 table,th,tr {
   background-color: white ;
   color: rgb(0, 0, 0);
   text-align:center;
+  font-family: Arial;
+
 }
 h3{ text-align:center;
     padding-bottom:20px;
@@ -14,6 +20,9 @@ h3{ text-align:center;
 h4{ text-align:center;
     padding-bottom:20px;
     color: red;
+}
+h5{ text-align:center;
+    padding-bottom:20px;
 }
 
 .datarow{ text-align:center;}
@@ -37,14 +46,14 @@ tr:hover {background-color: #f5f5f5;
     @if (empty($chitiet_kh_date))
     @else
 
-<h3>THÔNG TIN CHI TIẾT KHÁCH HÀNG {{$a}}</h3>
-<h3>Thông tin các Đơn hàng</h3>
+<h3>THÔNG TIN CHI TIẾT KHÁCH HÀNG</h3>
+<h5>Khách Hàng: {{$a}}</h5>
 
     <div class="container-fluid" id="container">
-
-       <a type="button" class="btn btn-dark" href="{{ route('khachhang.chitiet',['id'=>$id]) }}">TRỞ VỀ</a>
-
+       <a type="button" class="btn btn-dark" href="{{ route('khachhang.chitiet',['id'=>$id]) }}">Trở về</a>
+       <a type="button" class="btn btn-dark" href="{{ route('khachhang.chitiet.excel.time', ['id'=>$id,'from_date'=>$from_date,'to_date'=>$to_date]) }}">Xuất Excel</a>
        <!-- <h3>Từ {{ $from_date }} đến {{ $to_date }}</h3> -->
+       <br><hr>
        <div class="row">
        <!-- new -->
        <div class="">
@@ -52,10 +61,10 @@ tr:hover {background-color: #f5f5f5;
            <!-- <input type="text" name="search" class="form-control m-input" placeholder="Enter Country Name" /> -->
            {{ csrf_field() }}
            <div class="col-sm-5">
-                Từ :<input type="date" name="from_date" id="from_date" class="form-control" value="{{ old('from_date',$from_date) }}"/>
+                <b>Từ :</b><input type="date" name="from_date" id="from_date" class="form-control" value="{{ old('from_date',$from_date) }}"/>
             </div>
             <div class="col-sm-5">
-                Đến :<input type="date" name="to_date" id="to_date" class="form-control" value="{{ old('to_date',$to_date) }}" />
+                <b>Đến :</b><input type="date" name="to_date" id="to_date" class="form-control" value="{{ old('to_date',$to_date) }}" />
             </div>
             <div class="col-md-1">
                 <input type="hidden" name="kh_id" id="kh_id" class="form-control" value="<?php echo $id;?>">
@@ -71,7 +80,15 @@ tr:hover {background-color: #f5f5f5;
         <!-- endnew -->
 
     <br />
-        <table class="table table-hover table-sm" id="tableMain">
+    <div class="table-agile-info">
+  <div class="panel panel-default">
+
+    <div class="panel-heading" style="font-size:25px">
+      <b>Thông tin các Đơn hàng</b>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-bordered" id="tableMain">
             <thead>
                 <tr>
                   <th>MÃ ĐƠN HÀNG</th>
@@ -126,24 +143,18 @@ tr:hover {background-color: #f5f5f5;
                     @endif
                     <!-- end -->
                         <td>{{ number_format($ctkh->ddh_congnomoi,0,',',',') }} VNĐ</td>
-
                     <?php $sum += $ctkh->ddh_congnomoi;?>
                 </tr>
             @endforeach
             <tr>
-            <td ><b>TỔNG CÔNG NỢ:</b></td>
-            <td ></td>
-            <td ></td>
-            <td ></td>
+            <td colspan="4"><b>TỔNG CÔNG NỢ:</b></td>
             <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
-            <td ></td>
             </tr>
             </tbody>
         </table>
-
-
     </div>
-
+    </div>
+</div>
     @endif
 
 

@@ -17,6 +17,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 
   
 use App\Exports\Congno_Khachhang_Export;
+use App\Exports\Congno_KH_Time_Export;
 use Maatwebsite\Excel\Facades\Excel;
   
 
@@ -199,6 +200,32 @@ class KhachhangController extends Controller
         
         return Excel::download(new Congno_Khachhang_Export($kh,$chitiet_kh), 'congno_kh.xlsx');
         //return Excel::download(['kh' => $kh,'chitiet_kh' => $chitiet_kh], 'congno_kh.xlsx');
+
+}
+    public function excel_chitietcongno_kh_time($id, $from_date, $to_date) {
+
+        //dd($from_date);
+        //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
+        $to_date_1 = date('Y-m-d', strtotime($to_date. ' + 1 days'));
+        //dd($to_date_1);
+
+        //lấy ngày hiện tại -> format lại
+        $current_day = Carbon::now('Asia/Ho_Chi_Minh');
+        $a = $current_day;
+        $current_day=$a->format("Y-m-d");
+        //lấy ngày hiện tại + 5 -> format lại
+        $current_day_add=$a->addDays(5);
+        $b = $current_day_add;
+        $current_day_add=$b->format("Y-m-d");
+
+        $chitiet_kh_date = DB::select('SELECT *,kh.kh_ten FROM dondathang dh 
+                                JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
+                                join khachhang kh on kh.kh_id = dh.kh_id
+                                WHERE dh.kh_id='.$id.' AND dh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'" ');
+    
+        $kh = khachhang::find($id);
+
+        return Excel::download(new Congno_KH_Time_Export($kh,$chitiet_kh_date,$current_day,$current_day_add,$from_date,$to_date), 'congno_kh_time.xlsx');
 
 }
 

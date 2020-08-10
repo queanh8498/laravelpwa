@@ -9,10 +9,16 @@
 
 <style>
 
-table,th,tr {
-  background-color: white ;
-  color: rgb(0, 0, 0);
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
+    font-size: 1em;
+    color: #101010;
+}
+.table,th,tr {
+  background-color: ;
+  color: black;
   text-align:center;
+  font-family: Arial;
+  border: 1px solid #ddd;
 }
 
 .datarow{ text-align:center;}
@@ -33,15 +39,15 @@ tr:hover {background-color: #f5f5f5;}
 <div class="table-agile-info">
   <div class="panel panel-default">
 
-    <div class="panel-heading">
-      Liệt kê danh mục Khách Hàng
+    <div class="panel-heading" style="font-size:25px">
+      <b>Danh Sách Khách Hàng</b>
     </div>
 
     <div class="table-responsive">
-        <table class="table table-hover table-sm" id="dataTables-example">
+        <table class="table table-bordered b-t b-dark" id="dataTables-example">
             <thead>
                 <tr>
-                  <th>MÃ KHÁCH HÀNG</th> 
+                  <th>MÃ KH</th> 
                   <th>HỌ TÊN</th>
                   <th>ĐỊA CHỈ </th>
                   <th>SÔ ĐIỆN THOẠI</th>
@@ -65,13 +71,13 @@ tr:hover {background-color: #f5f5f5;}
                     @endif
                     <td>
                         <a href="{{URL::to('banhang/khachhang/chitiet/'.$kh->kh_id)}}" class="active styling-edit" ui-toggle-class="">
-                            <i class="fa fa-eye text-success text-active"></i></a>
+                            <i class="fa fa-eye text-success text-active" title="Chi tiết khách hàng"></i></a>
                     </td>
                     <td>
                         <a href="{{URL::to('banhang/khachhang/edit/'.$kh->kh_id)}}" class="active styling-edit" ui-toggle-class="">
-                        <i class="fa fa-edit fa-lg" aria-hidden="true"></i></a>
+                        <i class="fa fa-edit fa-lg" aria-hidden="true" title="Chỉnh sửa thông tin khách hàng"></i></a>
 						<a href=" {{URL::to('/banhang/pdf-chitietcongno-kh/'.$kh->kh_id)}}" class="active styling-edit" ui-toggle-class="">
-                        <i class="fa fa-print fa-lg" ></i></a>
+                        <i class="fa fa-print fa-lg" title="Xuất phiếu chi tiết công nợ"></i></a>
 						
 						<a href="{{ URL::to('/banhang/excel-chitietcongno-kh/'.$kh->kh_id) }}" class="active styling-edit" ui-toggle-class="">
                         <i class="fa fa-file-excel-o" title="Xuất Excel chi tiết công nợ"></i></a>
