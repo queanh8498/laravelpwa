@@ -9,6 +9,8 @@ use App\Http\Requests;
 use Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\nhacungcap;
+use App\Exports\Baocaoncc_Export;
+use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
 session_start();
 
@@ -41,7 +43,26 @@ class BaocaonccController extends Controller
  $pdf->setPaper('A4','landscape');
     return $pdf->stream();
     }
- 
+ public function excel_bcncc(Request $request){
+
+      $from=date("Y-m-d H:i:s", strtotime($request->tungay));
+      $to=date("Y-m-d H:i:s", strtotime($request->denngay));
+      $data= DB::table('hanghoa')
+       ->join('nhomhanghoa','nhomhanghoa.nhom_id','=','hanghoa.nhom_id')
+       ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
+       ->where('nhacungcap.ncc_id',$request->ncc_id)
+       ->get();
+       $ncc=nhacungcap::find($request->ncc_id);
+        $data4 = [
+        'from' => $from,
+        'to'  => $to,
+        'ncc'=>$ncc,
+        'data'=>$data,
+    ];
+   
+   
+    return Excel::download(new Baocaoncc_Export($from,$to,$data,$ncc), 'Baocao_nhacungcap.xlsx');
+    }
       public function postxem_bcncc(Request $request){
 
      

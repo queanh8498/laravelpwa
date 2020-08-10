@@ -25,7 +25,7 @@
     <table width=100%>
         <tr>
             <td><i>Kho nhập: </i><strong>{{$pnk->khohang->kho_ten}}</strong></td>
-            <td style="text-align: right;"><i>Địa chỉ: </i><strong>{{$pnk->khohang->kho_diachi}}</strong></td>
+            <td style="text-align: right;"><i>Địa chỉ kho nhập: </i><strong>{{$pnk->khohang->kho_diachi}}</strong></td>
         </tr>
         <tr>
            <td><i>Nhà cung cấp: </i><strong>{{$pnk->nhacungcap->ncc_ten}}</strong></td>

@@ -10,6 +10,8 @@ use Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\khachhang;
 use Barryvdh\DomPDF\Facade as PDF;
+use App\Exports\Baocaokh_Export;
+use Maatwebsite\Excel\Facades\Excel;
 session_start();
 
 class BaocaokhController extends Controller
@@ -52,7 +54,27 @@ class BaocaokhController extends Controller
             echo json_encode($data);
         }
     }
+    public function excel_bckh(Request $request){
+
+      $from=date("Y-m-d H:i:s", strtotime($request->tungay));
+      $to=date("Y-m-d H:i:s", strtotime($request->denngay));
+        $data= DB::table('chitietdathang')
+       ->join('hanghoa','hanghoa.hh_id','=','chitietdathang.hh_id')
+       ->join('dondathang','dondathang.ddh_id','=','chitietdathang.ddh_id')
+       ->where('dondathang.kh_id',$request->kh_id)
+       ->groupBy('hanghoa.hh_id')
+       ->get();
+       $kh=khachhang::find($request->kh_id);
+        $data4 = [
+        'from' => $from,
+        'to'  => $to,
+        'kh'=>$kh,
+        'data'=>$data,
+    ];
    
+   
+    return Excel::download(new Baocaokh_Export($from,$to,$data,$kh), 'Baocao_khachhang.xlsx');
+    }
     public function postpdf_bckh(Request $request){
 
       $from=date("Y-m-d H:i:s", strtotime($request->tungay));

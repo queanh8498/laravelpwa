@@ -52,7 +52,9 @@
              
                            </table>
                            
-                              <input  type='submit' name='taobaocaokh' id='taobaocaokh' class='btn btn-info' value="Tạo báo cáo"> 
+                              <input  type='submit' name='taobaocaokh' id='taobaocaokh' class='btn btn-info' value="Xuất Pdf"> 
+                                <button  type="submit" name="baocaokh" id='baocaokh' class="btn btn-info" formaction="{{URL::to('/banhang/excel-bckh')}}">Xuất Excel</button>
+                             
                                </form>
                         </div>
                     </section>
@@ -84,6 +86,7 @@
         });
     });
    $('#taobaocaokh').hide();
+   $('#baocaokh').hide();
      $('#save').on('click', function(event){
         event.preventDefault();
        var a= $('#dynamic_form').serialize();
@@ -98,8 +101,10 @@
           $("#table").html(data);
 
           $('#taobaocaokh').show();
+          $('#baocaokh').show();
           if($('#check').val()=='Ngày không hợp lệ'){
               $('#taobaocaokh').hide();
+              $('#baocaokh').hide();
           }
         },
         error:function(){

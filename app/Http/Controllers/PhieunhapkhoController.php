@@ -15,6 +15,8 @@ use App\khohang;
 use App\phieunhapkho;
 use App\chitietphieunhap;
 use Barryvdh\DomPDF\Facade as PDF;
+use App\Exports\Phieunhapkho_Export;
+use Maatwebsite\Excel\Facades\Excel;
 use Validator;
 session_start();
 
@@ -177,6 +179,24 @@ function insert(Request $request)
     //     ->with('danhsachloai', $ds_loai);
      $pdf = PDF::loadView('kho.phieunhapkho.pdf_pnk',$data);
      return $pdf->stream();
+}
+ public function excel_pnk($pnk_id) 
+{
+  $pnk = phieunhapkho::find($pnk_id);
+    $ctpn=DB::table('chitietphieunhap')
+     ->join('hanghoa','hanghoa.hh_id','=','chitietphieunhap.hh_id')
+     ->join('nhomhanghoa','hanghoa.nhom_id','=','nhomhanghoa.nhom_id')
+    ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
+     ->where('chitietphieunhap.pnk_id',$pnk_id)->get();
+   
+    /* Code dành cho việc debug
+    - Khi debug cần hiển thị view để xem trước khi Export PDF
+    */
+    // return view('backend.sanpham.pdf')
+    //     ->with('danhsachsanpham', $ds_sanpham)
+    //     ->with('danhsachloai', $ds_loai);
+      return Excel::download(new Phieunhapkho_Export($pnk,$ctpn), 'phieunhapkho.xlsx');
+  
 }
     
 }

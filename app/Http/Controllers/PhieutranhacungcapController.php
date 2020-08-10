@@ -20,6 +20,8 @@ use App\chitietphieunhap;
 use App\chitietdathang;
 use App\phieutrancc;
 use App\chitiettrancc;
+use App\Exports\Phieutranhacungcap_Export;
+use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
 use Validator;
 session_start();
@@ -138,6 +140,28 @@ class PhieutranhacungcapController extends Controller
     //     ->with('danhsachloai', $ds_loai);
      $pdf = PDF::loadView('kho.phieutrancc.pdf_ptncc',$data);
      return $pdf->stream();
+}
+  public function excel_ptncc($ptncc_id) 
+{
+    $ptncc=phieutrancc::find($ptncc_id);
+   $ctncc=DB::table('chitiettrancc')
+     ->join('hanghoa','hanghoa.hh_id','=','chitiettrancc.hh_id')
+     ->join('nhomhanghoa','hanghoa.nhom_id','=','nhomhanghoa.nhom_id')
+    ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
+   ->where('chitiettrancc.ptncc_id',$ptncc_id)->get();
+    $data = [
+        'ptncc' => $ptncc,
+        'ctncc'  => $ctncc,
+    ];
+
+   
+    /* Code dành cho việc debug
+    - Khi debug cần hiển thị view để xem trước khi Export PDF
+    */
+    // return view('backend.sanpham.pdf')
+    //     ->with('danhsachsanpham', $ds_sanpham)
+    //     ->with('danhsachloai', $ds_loai);
+    return Excel::download(new Phieutranhacungcap_Export($ptncc,$ctncc), 'phieutranhacungcap.xlsx');
 }
     
     }

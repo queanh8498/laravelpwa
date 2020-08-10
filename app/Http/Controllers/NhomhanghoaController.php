@@ -27,7 +27,7 @@ class NhomhanghoaController extends Controller
             <th>Tên nhóm hàng hóa</th>
             <th>Ngày tạo</th>
             <th>Ngày cập nhật</th>
-            <th style='width:30px;''></th>
+            <th style='width:60px;'>Hành động</th>
           </tr>
         </thead>
         <tbody>";
@@ -65,7 +65,7 @@ class NhomhanghoaController extends Controller
             <th>Tên nhóm hàng hóa</th>
             <th>Ngày tạo</th>
             <th>Ngày cập nhật</th>
-            <th style='width:30px;''></th>
+            <th style='width:60px;'>Hành động</th>
           </tr>
         </thead>
         <tbody>";
@@ -80,9 +80,9 @@ class NhomhanghoaController extends Controller
              <td>';
         
         $output.='<a href="banhang/sua-nhom/'.$dsnhom->nhom_id.'" class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                <i class="fa fa-pencil-square-o text-success text-active" title="Chỉnh sửa thông tin nhóm hàng hóa"></i></a>
                  <a onclick= "return confirm(\'Bạn có chắc là muốn xóa hàng hóa này không ?\')" href="banhang/xoa-nhom/'.$dsnhom->nhom_id.'" class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-times text-danger text"></i>
+                <i class="fa fa-times text-danger text" title="Xóa nhóm hàng hóa"></i>
             </td>
           </tr>';}
           $output.=" </tbody>";
@@ -99,7 +99,7 @@ class NhomhanghoaController extends Controller
             <th>Tên nhóm hàng hóa</th>
             <th>Ngày tạo</th>
             <th>Ngày cập nhật</th>
-            <th style='width:30px;''></th>
+          <th style='width:60px;'>Hành động</th>
           </tr>
         </thead>
         <tbody>";

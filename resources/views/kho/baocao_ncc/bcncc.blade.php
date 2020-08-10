@@ -45,7 +45,9 @@
              
                            </table>
                            
-                              <input  type='submit' name='taobaocaoncc' id='taobaocaoncc' class='btn btn-info' value="Tạo báo cáo"> 
+                              <input  type='submit' name='taobaocaoncc' id='taobaocaoncc' class='btn btn-info' value="Xuất Pdf">
+                               <button  type="submit" name="baocaoncc" id='baocaoncc' class="btn btn-info" formaction="{{URL::to('/banhang/excel-bcncc')}}">Xuất Excel</button>
+                             
                                </form>
                         </div>
                     </section>
@@ -54,6 +56,7 @@
         </div>
 <script type="text/javascript">
 $('#taobaocaoncc').hide();
+$('#baocaoncc').hide();
      $('#save').on('click', function(event){
         event.preventDefault();
        var a= $('#dynamic_form').serialize();
@@ -68,8 +71,10 @@ $('#taobaocaoncc').hide();
           $("#table").html(data);
 
           $('#taobaocaoncc').show();
+          $('#baocaoncc').show();
           if($('#check').val()=='Ngày không hợp lệ'){
               $('#taobaocaoncc').hide();
+               $('#baocaoncc').hide();
           }
         },
         error:function(){

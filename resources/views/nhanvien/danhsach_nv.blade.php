@@ -13,7 +13,7 @@
                             </span>
                         @endif
     <div class="table-responsive">
-<table class="table table-striped b-t b-light" id="dataTables-example">
+<table class= "table table-bordered table-striped" id="dataTables-example">
         <thead>
           <tr>
             
@@ -25,7 +25,7 @@
                 <th>Số điện thoại</th>
               <th>Quyền</th>
               
-            <th style="width:30px;"></th>
+            <th style="width:60px;">Hành động</th>
           </tr>
         </thead>
         <tbody>
@@ -56,9 +56,9 @@
 
              <td>
               <a href="{{URL::to('banhang/sua-nv/'.$dsnv->id)}}" class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                <i class="fa fa-pencil-square-o text-success text-active"  title="Chỉnh sửa thông tin nhân viên"></i></a>
                  <a onclick="return confirm('Bạn có chắc là muốn xóa nhân viên này không ?')" href="{{URL::to('/banhang/xoa-nv/'.$dsnv->id)}}" class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-times text-danger text"></i> </a>
+                <i class="fa fa-times text-danger text"  title="Xóa nhân viên"></i> </a>
             </td>
           </tr>
           @endforeach

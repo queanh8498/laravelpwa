@@ -13,7 +13,7 @@
                             </span>
                         @endif
     <div class="table-responsive">
-<table class="table table-striped b-t b-light" id="dataTables-example">
+<table class= "table table-bordered table-striped"  id="dataTables-example">
         <thead>
           <tr>
             
@@ -22,7 +22,7 @@
             <th>Kho nhập</th>
             <th>Nhà cung cấp</th>
             <th>Ngày nhập kho</th>
-            <th style="width:60px;"></th>
+            <th>Hành động</th>
           </tr>
         </thead>
         <tbody>
@@ -37,9 +37,11 @@
             <td>{{ $dspnk->pnk_ngaynhapkho}}</td>
              <td>
               <a href="{{URL::to('/banhang/chitiet-pnk/'.$dspnk->pnk_id)}}"  class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-eye text-success text-active"></i></a>
+                <i class="fa fa-eye text-success text-active" title="Xem chi tiết phiếu nhập kho"></i></a>
                 <a href=" {{URL::to('/banhang/pdf-pnk/'.$dspnk->pnk_id)}}" class="active styling-edit" ui-toggle-class=""  >
-                  <i class="fa fa-print"></i></a>
+                  <i class="fa fa-print" title="Xuất pdf phiếu nhập kho"></i></a>
+                    <a href="{{ URL::to('/banhang/excel-pnk/'.$dspnk->pnk_id) }}" class="active styling-edit" ui-toggle-class="">
+                        <i class="fa fa-file-excel-o" title="Xuất excel phiếu nhập kho"></i></a>
             </td>
           </tr>
           @endforeach

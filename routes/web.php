@@ -74,6 +74,7 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::get('/hanghoa','PhieunhapkhoController@hanghoa');
 	Route::get('/nhh-theoncc','PhieunhapkhoController@nhh_theoncc');
 	Route::get('/pdf-pnk/{pnk_id}', 'PhieunhapkhoController@pdf_pnk');
+	Route::get('/excel-pnk/{pnk_id}', 'PhieunhapkhoController@excel_pnk');
     Route::post('/dynamic-field/insert', 'PhieunhapkhoController@insert')->name('dynamic-field.insert');
 
 //phieutrahang
@@ -83,6 +84,7 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::get('/ddh/{kh_id}','PhieutrahangController@ddh');
 	Route::get('/checkddh','PhieutrahangController@checkddh');
 	Route::get('/pdf-pth/{pth_id}', 'PhieutrahangController@pdf_pth');
+	Route::get('/excel-pth/{pth_id}', 'PhieutrahangController@excel_pth');
 	Route::get('/taopth/timsdt_khpth','PhieutrahangController@timsdt_khpth')->name('taopth.timsdt_khpth');
 	Route::post('/dynamic-field/insertddh', 'PhieutrahangController@insertddh')->name('dynamic-field.insertddh');
 //phieutrancc
@@ -90,20 +92,21 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::get('/tao-ptncc/{pnk_id}','PhieutranhacungcapController@gettao_ptncc');
 	Route::post('/dynamic-field/insertncc', 'PhieutranhacungcapController@insertncc')->name('dynamic-field.insertncc');
 	Route::get('/danhsach-ptncc','PhieutranhacungcapController@getdanhsach_ptncc');
+	Route::get('/excel-ptncc/{ptncc_id}', 'PhieutranhacungcapController@excel_ptncc');
 	Route::get('/chitiet-ptncc/{ptncc_id}','PhieutranhacungcapController@getchitiet_ptncc');
 //baocao nhap-xuat-ton theo ncc
-
+	Route::post('/excel-bcncc', 'BaocaonccController@excel_bcncc');
 	Route::get('/tao-bcncc','BaocaonccController@gettao_bcncc');
 	Route::post('/xem-bcncc','BaocaonccController@postxem_bcncc');
 	Route::post('/pdf-bcncc','BaocaonccController@postpdf_bcncc');
 //baocao nhap-xuat theo khách hàng
-
+	Route::post('/excel-bckh', 'BaocaokhController@excel_bckh');
 	Route::get('/tao-bckh','BaocaokhController@gettao_bckh');
 	Route::post('/xem-bckh','BaocaokhController@postxem_bckh');
 	Route::post('/pdf-bckh','BaocaokhController@postpdf_bckh');
 	Route::get('/taobaocaokh/timsdt_bc_kh','BaocaokhController@timsdt_bc_kh')->name('taobaocaokh.timsdt_bc_kh');
 //baocao ton kho tuc thoi 
-
+	Route::post('/excel-bctk', 'BaocaotkController@excel_bctk');
 	Route::get('/tao-bctk','BaocaotkController@gettao_bctk');
 	Route::post('/xem-bctk','BaocaotkController@postxem_bctk');
 	Route::post('/pdf-bctk','BaocaotkController@postpdf_bctk');

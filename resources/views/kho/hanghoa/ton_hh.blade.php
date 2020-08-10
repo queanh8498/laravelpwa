@@ -40,7 +40,7 @@
                                             
                                     </select>
                                 </div>
-      <table class="table table-striped b-t b-light" id="dataTables-example">
+      <table class= "table table-bordered table-striped" id="dataTables-example">
       
       <?php echo $output; ?>
         

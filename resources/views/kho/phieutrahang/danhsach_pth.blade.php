@@ -13,7 +13,7 @@
                             </span>
                         @endif
     <div class="table-responsive">
-<table class="table table-striped b-t b-light" id="dataTables-example">
+<table class= "table table-bordered table-striped"  id="dataTables-example">
         <thead>
           <tr>
             
@@ -23,7 +23,7 @@
             <th>Số điện thoại Khách hàng</th>
             <th>Ngày lập</th>
          
-            <th style="width:60px;"></th>
+            <th >Hành động</th>
           </tr>
         </thead>
         <tbody>
@@ -39,8 +39,10 @@
              
              <td>
               <a href="{{URL::to('/banhang/chitiet-pth/'.$dspth->pth_id)}}"   class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-eye text-success text-active"></i></a>
-                  <a href=" {{URL::to('/banhang/pdf-pth/'.$dspth->pth_id)}}" class="active styling-edit" ui-toggle-class=""  ><i class="fa fa-print"></i></a>
+                <i class="fa fa-eye text-success text-active" title="Xem chi tiết phiếu trả hàng"></i></a>
+                  <a href=" {{URL::to('/banhang/pdf-pth/'.$dspth->pth_id)}}" class="active styling-edit" ui-toggle-class=""  ><i class="fa fa-print" title="Xuất pdf phiếu trả hàng"></i></a>
+                    <a href="{{ URL::to('/banhang/excel-pth/'.$dspth->pth_id) }}" class="active styling-edit" ui-toggle-class="">
+                        <i class="fa fa-file-excel-o" title="Xuất excel phiếu trả hàng"></i></a>
             </td>
           </tr>
           @endforeach

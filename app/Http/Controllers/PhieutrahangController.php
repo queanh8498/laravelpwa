@@ -18,6 +18,8 @@ use App\phieutrahang;
 use App\chitiettrahang;
 use App\chitietphieunhap;
 use App\chitietdathang;
+use App\Exports\Phieutrahang_Export;
+use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade as PDF;
 use Validator;
 session_start();
@@ -276,5 +278,27 @@ class PhieutrahangController extends Controller
      return $pdf->stream();
 }
     
+        public function excel_pth($pth_id) 
+{
+   $pth = phieutrahang::find($pth_id);
+      $ctth=DB::table('chitiettrahang')
+     ->join('hanghoa','hanghoa.hh_id','=','chitiettrahang.hh_id')
+     ->join('nhomhanghoa','hanghoa.nhom_id','=','nhomhanghoa.nhom_id')
+    ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
+   ->where('chitiettrahang.pth_id',$pth_id)->get();
+    $data = [
+        'pth' => $pth,
+        'ctth'  => $ctth,
+    ];
+
+   
+    /* Code dành cho việc debug
+    - Khi debug cần hiển thị view để xem trước khi Export PDF
+    */
+    // return view('backend.sanpham.pdf')
+    //     ->with('danhsachsanpham', $ds_sanpham)
+    //     ->with('danhsachloai', $ds_loai);
+     return Excel::download(new Phieutrahang_Export($pth,$ctth), 'phieutrahang.xlsx');
+}
 }
  

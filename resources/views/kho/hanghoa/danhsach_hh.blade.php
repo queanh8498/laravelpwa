@@ -13,7 +13,7 @@
                             </span>
                         @endif
     <div class="table-responsive">
-<table class="table table-striped b-t b-light" id="dataTables-example">
+<table class= "table table-bordered table-striped"  id="dataTables-example">
         <thead>
           <tr>
             <th>Tên hàng hóa</th>  
@@ -26,7 +26,7 @@
             <th>Số lượng</th>
             <th>Ngày tạo mới</th>
             <th>Ngày cập nhật</th>
-            <th style="width:30px;"></th>
+            <th style="width:60px;">Hành động</th>
           </tr>
         </thead>
         <tbody>
@@ -43,9 +43,9 @@
             <td>{{$dshh->hh_ngaycapnhat }}</td>
              <td>
               <a href="{{URL::to('/banhang/sua-hh/'.$dshh->hh_id)}}" class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                <i class="fa fa-pencil-square-o text-success text-active" title="Chỉnh sửa thông tin hàng hóa"></i></a>
                   <a onclick="return confirm('Bạn có chắc là muốn xóa hàng hóa này không ?')" href="{{URL::to('/banhang/xoa-hh/'.$dshh->hh_id)}}" class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-times text-danger text"></i>
+                <i class="fa fa-times text-danger text" title="Xóa hàng hóa"></i>
               </a>
             </td>
           </tr>

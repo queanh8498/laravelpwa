@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Redirect;
 use App\khohang;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
+use App\Exports\Baocaotk_Export;
+use Maatwebsite\Excel\Facades\Excel;
 use DateTime;
 session_start();
 
@@ -41,6 +43,25 @@ $khohang=khohang::find($request->kho_id);
      $pdf = PDF::loadView('kho.baocao_tk.pdf_bctk',$data4);
  $pdf->setPaper('A4','landscape');
     return $pdf->stream();
+    }
+     public function excel_bctk(Request $request){
+
+      $current_day = Carbon::now('Asia/Ho_Chi_Minh');
+      
+       $date=date("Y-m-d H:i:s", strtotime($current_day));
+   
+          $data= DB::table('hanghoa')
+       ->where('kho_id',$request->kho_id)
+       ->get();
+$khohang=khohang::find($request->kho_id);
+        $data4 = [
+        'date' => $date,
+        'khohang'=>$khohang,
+        'data'=>$data,
+    ];
+   
+   
+    return Excel::download(new Baocaotk_Export($date,$data,$khohang), 'Baocao_tonkho.xlsx');
     }
       public function postxem_bctk(Request $request){
 

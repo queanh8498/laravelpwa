@@ -13,7 +13,7 @@
                             </span>
                         @endif
     <div class="table-responsive">
-<table class="table table-striped b-t b-light" id="dataTables-example">
+<table class= "table table-bordered table-striped"  id="dataTables-example">
         <thead>
           <tr>
             
@@ -21,7 +21,7 @@
             <th>Tên nhà cung cấp</th>
             <th>Địa chỉ nhà cung cấp</th>
             <th>Số điện thoại nhà cung cấp</th>
-            <th style="width:30px;"></th>
+            <th style="width:60px;">Hành động</th>
           </tr>
         </thead>
         <tbody>
@@ -34,9 +34,9 @@
              <td>{{ $dsncc->ncc_sdt}}</td>
              <td>
               <a  href="{{URL::to('/banhang/sua-ncc/'.$dsncc->ncc_id)}}" class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-pencil-square-o text-success text-active"></i></a>
+                <i class="fa fa-pencil-square-o text-success text-active" title="Chỉnh sửa thông tin nhà cung cấp"></i></a>
                  <a onclick="return confirm('Bạn có chắc là muốn xóa nhà cung cấp này không ?')" href="{{URL::to('/banhang/xoa-ncc/'.$dsncc->ncc_id)}}" class="active styling-edit" ui-toggle-class="">
-                <i class="fa fa-times text-danger text"></i> </a>
+                <i class="fa fa-times text-danger text" title="Xóa nhà cung cấp"></i> </a>
             </td>
           </tr>
           @endforeach
