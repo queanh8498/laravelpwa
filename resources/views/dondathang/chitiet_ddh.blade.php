@@ -4,7 +4,7 @@
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">
-                Thông tin chi tiết
+                Thông tin đơn hàng
             </div>
            
             <div class="table-responsive">

@@ -199,10 +199,6 @@ td {
         </div>
     </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js"></script> 
-<script src="//code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-<script src="simple.money.format.js"></script>
-
 <script>
     
     function formatNumber(nStr, decSeperate, groupSeperate) {

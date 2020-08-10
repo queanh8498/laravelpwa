@@ -39,8 +39,67 @@ class DondathangController extends Controller
         LEFT JOIN baocaocongno bccn ON ddh.ddh_id = bccn.ddh_id
         GROUP BY ddh.ddh_id, kh.kh_ten, nv.name, ddh.ddh_ngaylap, ddh.ddh_trangthai, ddh.ddh_giamchietkhau, ddh.ddh_congnocu, ddh.ddh_congnomoi, bccn.bccn_hanno, ddh.ddh_datra');
         
+        //lấy ngày hiện tại -> format lại
+        $current_day = Carbon::now('Asia/Ho_Chi_Minh');
+        $a = $current_day;
+        $current_day=$a->format("Y-m-d");
+        //lấy ngày hiện tại + 5 -> format lại
+        $current_day_add=$a->addDays(5);
+        $b = $current_day_add;
+        $current_day_add=$b->format("Y-m-d");
+
+
         return view('dondathang.danhsach_ddh')
-            ->with('danhsach_ddh', $danhsach_ddh);
+            ->with('danhsach_ddh', $danhsach_ddh)
+            ->with('current_day', $current_day)
+            ->with('current_day_add', $current_day_add);
+    }
+
+    public function timkiem(Request $request){
+        $this->validate($request,[
+            'from_date'=> 'required',
+            'to_date'=>'required'
+        ],
+        [
+            'from_date.required'=>'Bạn chưa nhập ngày bắt đầu',
+            'to_date.required'=>'Bạn chưa nhập ngày kết thúc'
+        ]);
+        //******search from date to date
+        $from_date = $request->input('from_date');
+        $to_date = $request->input('to_date');
+
+        //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
+        $to_date_1 = date('Y-m-d', strtotime($to_date. ' + 1 days'));
+        //dd($to_date_1);
+
+        //lấy ngày hiện tại -> format lại
+        $current_day = Carbon::now('Asia/Ho_Chi_Minh');
+        $a = $current_day;
+        $current_day=$a->format("Y-m-d");
+        //lấy ngày hiện tại + 5 -> format lại
+        $current_day_add=$a->addDays(5);
+        $b = $current_day_add;
+        $current_day_add=$b->format("Y-m-d");
+
+        $chitiet_ddh_date = DB::select(
+            'SELECT ddh.ddh_id, kh.kh_ten, nv.name, ddh.ddh_ngaylap, ddh.ddh_trangthai, ddh.ddh_giamchietkhau, ddh.ddh_congnocu, ddh	.ddh_congnomoi, bccn.bccn_hanno, ddh.ddh_datra, SUM((ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh		.ctdh_dongia * ddh.ddh_giamchietkhau/100)) AS TongCong
+            FROM dondathang ddh
+            JOIN chitietdathang ctdh ON ctdh.ddh_id = ddh.ddh_id
+            JOIN nhanvien nv ON ddh.id = nv.id
+            JOIN khachhang kh ON ddh.kh_id = kh.kh_id
+            LEFT JOIN baocaocongno bccn ON ddh.ddh_id = bccn.ddh_id
+            WHERE ddh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'"
+            GROUP BY ddh.ddh_id, kh.kh_ten, nv.name, ddh.ddh_ngaylap, ddh.ddh_trangthai, ddh.ddh_giamchietkhau, ddh.ddh_congnocu, ddh.ddh_congnomoi, bccn.bccn_hanno, ddh.ddh_datra');
+        // dd($chitiet_kh_date);
+
+        return view('dondathang.timkiem')
+        ->with('chitiet_ddh_date', $chitiet_ddh_date)
+        ->with('current_day', $current_day)
+        ->with('current_day_add', $current_day_add)
+        ->with('from_date', $from_date)
+        ->with('to_date', $to_date)
+        ->with('thongbao','Thành công');
+
     }
 
     public function chitietdondathang($ddh_id){

@@ -14,18 +14,19 @@
             border-right: 1px solid #ccc;
         }
     </style>
-<a type="button" name="taoddh" class="btn btn-success" href="{{URL::to('banhang/taodondathang')}}"> <i class="glyphicon glyphicon-plus"></i> Tạo đơn hàng</a><br><br>
+
+    <a type="button" name="taoddh" class="btn btn-success" href="{{ URL::to('banhang/taodondathang') }}"> <i class="glyphicon glyphicon-plus"></i> Tạo đơn hàng</a><br><br>
     
     <div class="flash-message">
-        @foreach(['warning','success','info','danger'] as $msg)
-            @if(Session::has('alert-' . $msg))
-                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                </p>
-            @endif
-        @endforeach
+    @foreach(['warning','success','info','danger'] as $msg)
+        @if(Session::has('alert-' . $msg))
+            <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        @endif
+    @endforeach
     </div>
-
+    
     <div class="container-fluid">
         <div class="row">
             <div class="">
@@ -33,10 +34,10 @@
                     {{ csrf_field() }}
             
                     <div class="col-sm-5">
-                        Từ :<input type="date" name="from_date" id="from_date" class="form-control" />
+                        Từ :<input type="date" name="from_date" id="from_date" class="form-control" value="{{ old('from_date',$from_date) }}" />
                     </div>
                     <div class="col-sm-5">
-                        Đến :<input type="date" name="to_date" id="to_date" class="form-control"  />
+                        Đến :<input type="date" name="to_date" id="to_date" class="form-control"  value="{{ old('to_date',$to_date) }}"/>
                     </div>
                 
                     <!-- <div class="col-md-1">
@@ -71,12 +72,12 @@
                             <th>Công nợ cũ</th>
                             <th>Công nợ mới</th>
                             <th>Tổng nợ</th>
-                            <th style="width:30px; border-right: none;">Chi tiết</th>
+                            <th style="width:30px;">Chi tiết</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach($danhsach_ddh as $ddh)
+                        @foreach($chitiet_ddh_date as $ddh)
                             <tr>
                                 <td>{{ $ddh->ddh_id }}</td>
                                 <td>{{ $ddh->kh_ten }}</td>
