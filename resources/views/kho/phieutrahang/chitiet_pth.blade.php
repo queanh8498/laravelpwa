@@ -10,7 +10,7 @@
     
     <div class="table-responsive">
                       
-      <table class="table table-striped b-t b-light">
+      <table class= "table table-bordered table-striped">
         <thead>
           <tr>
            
@@ -55,7 +55,7 @@
                             </span>
                         @endif                    
     <div class="table-responsive">
-<table class="table table-striped b-t b-light" >
+<table class= "table table-bordered table-striped" >
         <thead>
           <tr>
             <th>STT</th>
@@ -88,26 +88,62 @@
           </tr>
           @endforeach
         </tbody>
+
+
+         <table align="right" width="400" height="200" style="color: #999; font-size: 14.4px; padding: 50px;">
+                  
+                    <tr>
+                        <th>
+                            Tổng tiền: 
+                        </th>
+                        <td>
+                         {{number_format($total,0,',','.')}}
+                        </td>
+                    </tr>
+      
+                    <tr>
+                        <th>
+                            Giảm chiết khấu: 
+                        </th>
+                        <td>
+                          {{$pth->dondathang->ddh_giamchietkhau}}%
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Tiền nợ trên đơn hàng: 
+                        </th>
+                        <td>
+                           {{number_format($pth->pth_tcn,0,',','.')}}
+                        </td>
+                    </tr>
+                     <tr>
+                        <th>
+                            Tiền nợ mới trên đơn hàng: 
+                        </th>
+                        <td>
+                          {{number_format($pth->dondathang->ddh_congnomoi,0,',','.')}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                           Cần trả khách: 
+                        </th>
+                        <td>
+                         {{number_format($pth->pth_ctk,0,',','.')}}
+                        </td>
+                    </tr>
+                 
+                  
+                 
+            </table>
       </table>
     </div>
 
-     <footer class="panel-footer">
-      <div class="row">
-        
-        <div class="col-sm-4 text-center">
-          <small class="text-muted inline m-t-sm m-b-sm" style="font-size: 20px;"><b>Tổng Tiền:</b> </small>
-          
-          <small style="font-size: 20px;">{{number_format($total).' '.'VNĐ'}} </small>
-        
-        </div>
-        
-  
-      </div>
-     
-      
-    </footer>
+
   </div>
 </div>
  
-
+      
+   
 @endsection

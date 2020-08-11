@@ -83,12 +83,14 @@ class PhieutrahangController extends Controller
                      <th with='10%'>Số lượng trả</th>
                       <th  with='10%' >Đơn giá</th>
                        <th   with='10%' >Thành tiền</th>
-                    <th >Hành động</th>
+                    
                 </tr>
                </thead>
                <tbody>";
+                 $value2=0;
   foreach ($ctddh as $key => $value) {
     $count++;
+  
         $output .= "
              <tr>";
                 $output .= "<td><input type='checkbox' name='check' class='check' id='check".$count."' value='".$count."'>
@@ -115,8 +117,13 @@ class PhieutrahangController extends Controller
           $output .= "
      
        <td><input type='text' name='ctth_tt[]' class='form-control ctth_tt' id='ctth_tt".$count."'  value='0'   ></td> ";
-          $output .= " <td></td></tr>";
+          $output .= " </tr>";
 
+          $value1=$value->ddh_giamchietkhau;
+        $value2=$value->ddh_congnomoi;
+        if($value2<0){
+          $value2=0;
+        }
       
        }
        $output.=" </tbody>
@@ -124,17 +131,20 @@ class PhieutrahangController extends Controller
                   <tr>
                 <td colspan='5' class='text-right' >  <strong>Tính tổng:</strong> </td>
                 <td><input type='text' name='sum' id='sum' class='form-control' readonly='' value='0'></td>
-                  <td></td>
+                 
               </tr>
               
-                <tr>
-                                <td colspan='6' align='right'>&nbsp;</td>
-                                <td>
-                   ".csrf_field()."
-                  <input type='submit' name='save' id='save' class='btn btn-primary' value='Lưu'/>
-
-                 </td>
-                </tr>
+                
+                <input type='hidden' name='gck' id='gck' class='form-control' readonly='' value='".$value1."'>
+                
+             
+              <input type='hidden' name='cnc' id='cnc' class='form-control' readonly='' value='".$value2."'>
+                  
+          
+                <input type='hidden' name='ctk' id='ctk' class='form-control' readonly='' value='0'>
+          
+                <input type='hidden' name='cnm' id='cnm' class='form-control' readonly='' value='0'>
+                 
                </tfoot>";
                 $output.="";
         echo $output;
@@ -166,19 +176,29 @@ class PhieutrahangController extends Controller
       {
        $value= $ddh_id[$count1];
       }
-    
+      $value1=DB::table('baocaocongno')->where('ddh_id',$value)->get();
+     
+     
+      
       $pth =new phieutrahang;
       $pth->ddh_id=$value;
       $pth->id=$request->nv_id;
       date_default_timezone_set('Asia/Ho_Chi_Minh');
       $pth->pth_ngaylap = now();
+      $pth->pth_tcn= $request->cnc;
+      $pth->pth_ctk= $request->ctk;
       $pth->pth_trangthai=1;
       $pth->save();
 
       $ddh_trangthai= dondathang::find($value);
       $ddh_trangthai->ddh_trangthai=2;
+      $ddh_trangthai->ddh_congnomoi=$request->cnm;
       $ddh_trangthai->save();
-
+      
+        $datacn = array();
+       $datacn['bccn_soducongno'] =$request->cnm;
+       DB::table('baocaocongno')->where('ddh_id',$value )->update($datacn); 
+     
        $hh_id = $request->hh_id;
       $ctth_soluong = $request->ctth_soluong;
       $ctth_dongia=$request->ctth_dongia;
@@ -224,6 +244,7 @@ class PhieutrahangController extends Controller
         if($request->ajax()){
             $output = '';
             $output1 = '';
+        
             $query = $request->get('query');
             if($query != ''){
                 $data = DB::table('khachhang')
@@ -237,6 +258,8 @@ class PhieutrahangController extends Controller
                 foreach($data as $row){
                     $output .= $row->kh_ten;
                     $output1 .= $row->kh_id;
+                    
+         
                 }
             }
             else{

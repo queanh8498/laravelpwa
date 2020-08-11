@@ -73,7 +73,7 @@
                   <td align="right" valign="middle" width="15">
                     {{number_format($dsctpth->ctth_dongia,0,',','.')}}
                   </td>
-                    <td align="left" width="15" valign="middle">
+                    <td align="right" width="15" valign="middle">
                       {{number_format($dsctpth->ctth_soluong*$dsctpth->ctth_dongia,0,',','.')}}
                     </td>
                <?php
@@ -82,9 +82,72 @@
               
             </tr>
              @endforeach
-               <tr align="center"> 
-            <th style="text-align: center; font-size: 15px" colspan="7"><strong>Tổng tiền</strong></th>
-            <th style="text-align:center;font-size:15px"><strong>{{ number_format($total,0,',',',') }}</strong></th>
+             
+            <tr></tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td colspan="2" class="caption" align="right" style="text-align: center; font-size: 12px">
+               <i>Tổng tiền:</i>
+                </td>
+                 <td align="right" width="15" valign="middle">
+                     {{number_format($total,0,',','.')}}
+                    </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td colspan="2" class="caption" align="right" style="text-align: center; font-size: 12px">
+               <i>Giảm chiết khấu:</i>
+                </td>
+                 <td align="right" width="15" valign="middle">
+                      {{$pth->dondathang->ddh_giamchietkhau}}
+                    </td>
+            </tr>
+             <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td colspan="2" class="caption" align="right" style="text-align: center; font-size: 12px">
+               <i>Tiền nợ:</i>
+                </td>
+                 <td align="right" width="15" valign="middle">
+                     {{number_format($pth->pth_tcn,0,',','.')}}
+                    </td>
+            </tr>
+             <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td colspan="2" class="caption" align="right" style="text-align: center; font-size: 12px">
+               <i>Tiền nợ mới:</i>
+                </td>
+                 <td align="right" width="15" valign="middle">
+                      {{number_format($pth->dondathang->ddh_congnomoi,0,',','.')}}
+                    </td>
+            </tr>
+             <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td colspan="2" class="caption" align="right" style="text-align: center; font-size: 12px">
+               <i>Cần trả khách:</i>
+                </td>
+                 <td align="right" width="15" valign="middle">
+                    {{number_format($pth->pth_ctk,0,',','.')}}
+                    </td>
             </tr>
             <tr></tr>
              <tr>

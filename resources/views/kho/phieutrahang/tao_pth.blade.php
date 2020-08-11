@@ -47,7 +47,9 @@
                                     <!-- <input type="text" name="kh_id" class="form-control" id="kh_id" value=" <script> console.log(kh_ten) </script>" > -->
                                      <input type="hidden" name="kh_id" class="form-control" id="kh_id" >
                             
-                         
+                      
+                                 
+                             
                       
                               <div class="form-group" id="ddh_id">
                                             
@@ -58,6 +60,33 @@
 
                
                  </table>
+                   <div class="form-group" id="ck">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="ddh_giamchietkhau">Chiết khấu (%)</label>
+                                    <input type="text" name="ddh_giamchietkhau" class="form-control" id="ddh_giamchietkhau" readonly="">
+                                </div>
+                                <div>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="ddh_congnocu_dinhdang">Công nợ cũ trên đơn hàng</label>
+                                    <input type="text" name="ddh_congnocu_dinhdang" class="form-control" id="ddh_congnocu_dinhdang" readonly>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="ddh_datra">Cần trả khách</label>
+                                    <input type="text" name="ddh_cantra" class="form-control" id="ddh_cantra" readonly="" value="0">
+                                </div>
+                                <div>
+                                   
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="ddh_congnomoi_dinhdang">Công nợ mới trên đơn hàng</label>
+                                    <input type="text" name="ddh_congnomoi_dinhdang" class="form-control" id="ddh_congnomoi_dinhdang" value="0" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    @csrf
+                          <input type='submit' name='save' id='save' class='btn btn-primary' value='Lưu'/>
                 </form>
                             <div class="position-center">
                              
@@ -69,6 +98,8 @@
             </div>
         </div>
 <script type="text/javascript">
+   $('#ck').hide();
+   $('#save').hide();
   function formatNumber(nStr, decSeperate, groupSeperate) {
             nStr += '';
             x = nStr.split(decSeperate);
@@ -130,6 +161,7 @@ $(document).ready(function(){
                   
                     $('#kh_ten').val(data.kh_ten);
                     $('#kh_id').val(data.kh_id);
+                  
         
            var kh_id=$('#kh_id').val();
             if($('#kh_ten').val()=="Không có khách hàng"){
@@ -143,7 +175,7 @@ $(document).ready(function(){
           if ($(this).is(":checked")) {
              $('#kh_sdt').prop("readonly", true);
              $('#kh_ten').prop("readonly", true);
-            $('input[type="checkbox"]:not(:checked)').attr('disabled', 'disabled');
+             $('input[type="checkbox"]:not(:checked)').attr('disabled', 'disabled');
                var ddh_id=$(this).val();
               
                    $.ajax({
@@ -159,11 +191,23 @@ $(document).ready(function(){
        $('.hh_id').prop('disabled', true);
        $('.ctth_soluong').prop('disabled', true);
        $('.ctdh_soluong').prop('disabled', true);
-        $('.ctth_dongia').prop('disabled', true);
-         $('.ctth_tt').prop('disabled', true);
-           $('.ddh_id').prop('disabled', true);
-            $('.hh_ten').prop('disabled', true);
-             $('.ctth_dongiath').prop('disabled', true);
+       $('.ctth_dongia').prop('disabled', true);
+       $('.ctth_tt').prop('disabled', true);
+       $('.ddh_id').prop('disabled', true);
+       $('.hh_ten').prop('disabled', true);
+       $('.ctth_dongiath').prop('disabled', true);
+       $('#ck').show();
+       $('#save').show();
+       $('#ddh_giamchietkhau').prop('disabled', true);
+       $('#ddh_congnocu_dinhdang').prop('disabled', true);
+       $('#ddh_congnomoi_dinhdang').prop('disabled', true);
+       $('#ddh_cantra').prop('disabled', true);
+       $('#ddh_giamchietkhau').val($('#gck').val());
+      
+       $('#ddh_congnocu_dinhdang').val(formatNumber($('#cnc').val(), '.', ','));
+       
+
+              
         $("input[type='checkbox'][name='check']").change(function() {
            
            var check=$(this).val();
@@ -182,34 +226,85 @@ $(document).ready(function(){
              $('#ctth_soluong'+check).prop('disabled', false);
              $('#ctth_dongia'+check).prop("readonly", true);
              $('#ctth_tt'+check).prop("readonly", true);
-              var sum1=parseCurrency($('#sum').val())+parseCurrency($('#ctth_tt'+check).val());
-            $('#sum').val(formatNumber(sum1, '.', ','));
+             var sum1=parseCurrency($('#sum').val())+parseCurrency($('#ctth_tt'+check).val());
+             $('#sum').val(formatNumber(sum1, '.', ','));
+             var tong=parseCurrency($('#sum').val());
+             var giamchietkhau=parseCurrency($('#sum').val())*($('#gck').val()/100);
+             var cnc=$('#cnc').val();
+             var  ctk=(tong-giamchietkhau)-cnc;
+             if(ctk>=0){
+               $('#ctk').val(ctk);
+             $('#ddh_cantra').val(formatNumber($('#ctk').val(), '.', ','));
+             $('#cnm').val(0);
+             $('#ddh_congnomoi_dinhdang').val(formatNumber($('#cnm').val(), '.', ','));
+            }
+            else{
+                   $('#ctk').val(0);
+                   $('#ddh_cantra').val(formatNumber($('#ctk').val(), '.', ','));
+                   var ctk=ctk*-1;
+                    $('#cnm').val(ctk);
+             $('#ddh_congnomoi_dinhdang').val(formatNumber($('#cnm').val(), '.', ','));
+            }
              $(document).on('change','.ctth_soluong',function () {
-          if(parseInt($('#ctth_soluong'+check).val())>parseInt($('#ctdh_soluong'+check).val())){
-              alert('Số lượng trả phải nhỏ hơn hoặc bằng số lượng đã mua ');
+             if(parseInt($('#ctth_soluong'+check).val())>parseInt($('#ctdh_soluong'+check).val())){
+              alert('Số lượng bạn chọn trả vượt quá số lượng đã mua ');
               $('#ctth_soluong'+check).val(0);
-          }
-        else{
-         var ctth_soluong=$('#ctth_soluong'+check).val();
-         var ctth_dongia=$('#ctth_dongia'+check).val();
-          var ctth_tt = ctth_soluong*ctth_dongia;
-        $('#ctth_tt'+check).val(formatNumber(ctth_tt, '.', ','));
-        sum_pnk();
+             }
+            else{
+             var ctth_soluong=$('#ctth_soluong'+check).val();
+             var ctth_dongia=$('#ctth_dongia'+check).val();
+            var ctth_tt = ctth_soluong*ctth_dongia;
+            $('#ctth_tt'+check).val(formatNumber(ctth_tt, '.', ','));
+            sum_pnk();
+            var tong=parseCurrency($('#sum').val());
+            var giamchietkhau=parseCurrency($('#sum').val())*($('#gck').val()/100);
+            var cnc=$('#cnc').val();
+            var  ctk=(tong-giamchietkhau)-cnc;
+            if(ctk>=0){
+               $('#ctk').val(ctk);
+             $('#ddh_cantra').val(formatNumber($('#ctk').val(), '.', ','));
+             $('#cnm').val(0);
+             $('#ddh_congnomoi_dinhdang').val(formatNumber($('#cnm').val(), '.', ','));
+            }
+            else{
+                   $('#ctk').val(0);
+               $('#ddh_cantra').val(formatNumber($('#ctk').val(), '.', ','));
+                   var ctk=ctk*-1;
+                    $('#cnm').val(ctk);
+             $('#ddh_congnomoi_dinhdang').val(formatNumber($('#cnm').val(), '.', ','));
+            }
+         
 
     }
          
     }); }else{
                  var sum2=parseCurrency($('#sum').val())-parseCurrency($('#ctth_tt'+check).val());
             $('#sum').val(formatNumber(sum2, '.', ','));
-             
-               $('#hh_id'+check).prop('disabled', true);
-             $('#ctth_soluong'+check).prop('disabled', true);
-            $('#ctdh_soluong'+check).prop('disabled', true);
-             $('#ctth_dongia'+check).prop('disabled', true);
-             $('#ctth_tt'+check).prop('disabled', true);
+              var tong=parseCurrency($('#sum').val());
+              var giamchietkhau=parseCurrency($('#sum').val())*($('#gck').val()/100);
+              var cnc=$('#cnc').val();
+              var  ctk=(tong-giamchietkhau)-cnc;
+               if(ctk>=0){
+             $('#ctk').val(ctk);
+             $('#ddh_cantra').val(formatNumber($('#ctk').val(), '.', ','));
+             $('#cnm').val(0);
+             $('#ddh_congnomoi_dinhdang').val(formatNumber($('#cnm').val(), '.', ','));
+            }
+            else{
+                   $('#ctk').val(0);
+                    $('#ddh_cantra').val(formatNumber($('#ctk').val(), '.', ','));
+                   var ctk=ctk*-1;
+                    $('#cnm').val(ctk);
+             $('#ddh_congnomoi_dinhdang').val(formatNumber($('#cnm').val(), '.', ','));
+            }
+              $('#hh_id'+check).prop('disabled', true);
+              $('#ctth_soluong'+check).prop('disabled', true);
+              $('#ctdh_soluong'+check).prop('disabled', true);
+              $('#ctth_dongia'+check).prop('disabled', true);
+              $('#ctth_tt'+check).prop('disabled', true);
               $('#ctth_tt'+check).val(0);
               $('#ctth_soluong'+check).val(0);
-               $('#ddh_id'+check).prop('disabled', true);
+              $('#ddh_id'+check).prop('disabled', true);
 
              }
               

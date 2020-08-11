@@ -10,7 +10,7 @@
     
     <div class="table-responsive">
                       
-      <table class="table table-striped b-t b-light">
+      <table class= "table table-bordered table-striped" >
         <thead>
           <tr>
            
@@ -53,7 +53,7 @@
                             </span>
                         @endif                    
     <div class="table-responsive">
-<table class="table table-striped b-t b-light" >
+<table class= "table table-bordered table-striped" >
         <thead>
           <tr>
             <th>STT</th>

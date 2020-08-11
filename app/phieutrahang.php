@@ -9,7 +9,7 @@ class phieutrahang extends Model
     public    $timestamps   = false;
 
     protected $table        = 'phieutrahang';
-    protected $fillable     = ['pth_ngaylap', 'pth_trangthai','ddh_id','id'];
+    protected $fillable     = ['pth_ngaylap', 'pth_trangthai','ddh_id','id','pth_tcn','pth_ctk'];
     protected $guarded      = ['pth_id'];
     protected $primaryKey   = 'pth_id';
 

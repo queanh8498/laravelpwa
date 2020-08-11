@@ -183,7 +183,7 @@ count++;
                    $(document).on('change','.ctncc_soluong',function () {
             
           if(parseInt($('#ctncc_soluong'+check).val())>parseInt($('#ctpn_soluong'+check).val())){
-              alert('Số lượng trả phải nhỏ hơn hoặc bằng số lượng đã nhập');
+              alert('Số lượng bạn chọn trả vượt quá số lượng đã nhập');
               $('#ctncc_soluong'+check).val(0);
           }
         else{

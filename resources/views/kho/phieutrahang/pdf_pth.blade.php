@@ -64,13 +64,36 @@
              ?>
           </tr>
           @endforeach
-           <tr>
-            <th colspan="7">Tổng tiền</th>
-            <th>{{number_format($total,0,',','.') }}</th>
-            </tr>
+           
           </tbody>
       </table>
-    <hr style="color: black; margin-top: 150px;" />
+       <br/>
+    <table align="right" width=50% cellpadding="5px" >
+       
+        <tr>
+            <th>Tổng tiền:</th>
+            <td>{{number_format($total,0,',','.')}} đ</td>
+        </tr>
+        <tr>
+            <th>Giảm chiết khấu: </th>
+            <td>  {{$pth->dondathang->ddh_giamchietkhau}}%</td>
+        </tr>
+        <tr>
+            <th> Tiền nợ : </th>
+            <td>{{number_format($pth->pth_tcn,0,',','.')}} đ</td>
+        </tr>
+        <tr>
+            <th> Tiền nợ mới:</th>
+            <td>{{number_format($pth->dondathang->ddh_congnomoi,0,',','.')}} đ</td>
+        </tr>
+         <tr>
+            <th> Cần trả khách: </th>
+            <td> {{number_format($pth->pth_ctk,0,',','.')}} đ</td>
+        </tr>
+       
+    </table>
+    <br/>
+    <hr style="color: black; margin-top: 250px;" />
           <table>
                 <thead>
                     <tr>
