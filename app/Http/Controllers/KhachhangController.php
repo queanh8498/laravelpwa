@@ -54,23 +54,41 @@ class KhachhangController extends Controller
 		//lấy ngày hiện tại -> format lại
         $current_day = Carbon::now('Asia/Ho_Chi_Minh');
         $a = $current_day;
-        $current_day=$a->format("Y-m-d");
+        $current_day=$a->format("d-m-Y");
         //lấy ngày hiện tại + 5 -> format lại
-        $current_day_add=$a->addDays(5);
+        $current_day_add=$a->addDays(6);//=>ngày 11 thêm 5 ngày ra ngày 16 => add 6 days
         $b = $current_day_add;
-        $current_day_add=$b->format("Y-m-d");
+        $current_day_add=$b->format("d-m-Y");
 		
-		//dd($current_day); //ok
-       //dd($current_day_add); //ok 
-
        //sau khi format thì đã có thể so sánh được
         //  if( $current_day < $current_day_add){ $t = 1; }
         //  dd($t); 
 
+        //TỚI HẠN LÀ CÓ BCCN_TOIHAN = NOW()
+        $dh_toihan = DB::select('SELECT * FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
+WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) = CURDATE()');
+        
+        //QUÁ HẠN LÀ CÓ BCCN_TOIHAN < NOW()
+        $dh_quahan = DB::select('SELECT * FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
+WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE()');
+
+        //Sắp tới HẠN LÀ CÓ (bccn_toihan > now) and ( NOW() + 5 > BCCN_TOIHAN )
+        $dh_saptoihan = DB::select('SELECT * FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
+        WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) > CURDATE() 
+        AND adddate(CURDATE(),INTERVAL 6 DAY) > DATE(bc.bccn_hanno)');
+
+        //Lọc ĐH đã trả
+        $dh_datra = DB::select('SELECT * FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
+        WHERE dh.kh_id='.$id.' AND dh.ddh_congnomoi=0');
+
         return view('khachhang.chitiet')
         ->with('chitiet_kh', $chitiet_kh)
         ->with('current_day', $current_day)
-        ->with('current_day_add', $current_day_add);   
+        ->with('current_day_add', $current_day_add)
+        ->with('dh_toihan', $dh_toihan)
+        ->with('dh_quahan', $dh_quahan)   
+        ->with('dh_saptoihan', $dh_saptoihan)  
+        ->with('dh_datra', $dh_datra);   
 	}
  public function search($id, Request $request)
    {
@@ -191,13 +209,6 @@ class KhachhangController extends Controller
         
         $kh = khachhang::find($id);
         
-        // $data = new Congno_Khachhang_Export([
-        //     'chitiet_kh' => $chitiet_kh,
-        //     //'dh_first' => $dh_first,
-        //     'kh' => $kh,
-        // ]);
-       // dd($kh);
-        
         return Excel::download(new Congno_Khachhang_Export($kh,$chitiet_kh), 'congno_kh.xlsx');
         //return Excel::download(['kh' => $kh,'chitiet_kh' => $chitiet_kh], 'congno_kh.xlsx');
 
@@ -226,8 +237,7 @@ class KhachhangController extends Controller
         $kh = khachhang::find($id);
 
         return Excel::download(new Congno_KH_Time_Export($kh,$chitiet_kh_date,$current_day,$current_day_add,$from_date,$to_date), 'congno_kh_time.xlsx');
+}
+     
 
 }
-
-}
-
