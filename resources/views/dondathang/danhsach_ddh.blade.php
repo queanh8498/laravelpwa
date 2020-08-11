@@ -1,7 +1,7 @@
 @extends('admin_banhang')
 
 @section('admin_content')
-    <style> 
+     <style> 
         table{  
             border: 1px solid #ccc;
             border-collapse: collapse;
@@ -14,18 +14,16 @@
             border-right: 1px solid #ccc;
         }
     </style>
-<a type="button" name="taoddh" class="btn btn-success" href="{{URL::to('banhang/taodondathang')}}"> <i class="glyphicon glyphicon-plus"></i> Tạo đơn hàng</a><br><br>
-    
+    <a type="button" name="taoddh" class="btn btn-success" href="{{ URL::to('banhang/taodondathang') }}"> <i class="glyphicon glyphicon-plus"></i> Tạo đơn hàng</a><br><br>
     <div class="flash-message">
-        @foreach(['warning','success','info','danger'] as $msg)
-            @if(Session::has('alert-' . $msg))
-                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                </p>
-            @endif
-        @endforeach
+    @foreach(['warning','success','info','danger'] as $msg)
+        @if(Session::has('alert-' . $msg))
+            <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            </p>
+        @endif
+    @endforeach
     </div>
-
     <div class="container-fluid">
         <div class="row">
             <div class="">
@@ -53,7 +51,6 @@
     </div>
 
     <br>
-
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -71,7 +68,7 @@
                             <th>Công nợ cũ</th>
                             <th>Công nợ mới</th>
                             <th>Tổng nợ</th>
-                            <th style="width:30px; border-right: none;">Chi tiết</th>
+                            <th style="width:30px;">Chi tiết</th>
                         </tr>
                     </thead>
 
@@ -91,11 +88,12 @@
                                     @endif
                                 </td>
                                 <td>{{ number_format($ddh->ddh_congnocu + $ddh->ddh_congnomoi, 0, ',' , ',') }} đ</td>
-                                <td width="15%">
+                                <td width="16%">
                                     <a href="{{URL::to('/banhang/chitietdondathang/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-eye text-active" title="Xem chi tiết"></i></a> &nbsp;
                                     <a href=" {{URL::to('/banhang/pdf-ddh/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class="" ><i class="fa fa-print" aria-hidden="true" title="Phiếu bán hàng"></i></a>&nbsp;
                                     <a href="{{URL::to('/banhang/pdf-pxk/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-home" aria-hidden="true"  title="Phiếu xuất kho"></i></a>&nbsp;
                                     <a href="{{URL::to('/banhang/pdf-phieukynhan/'.$ddh->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-pencil" aria-hidden="true"  title="Phiếu lưu ký nhận"></i></a>&nbsp;
+                                    <a href="{{ URL::to('/banhang/excel-ddh/'.$ddh->ddh_id) }}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-file-excel-o" aria-hidden="true" title="Xuất file Excel"></i></a>&nbsp;
                                 </td>
                             </tr>
                         @endforeach

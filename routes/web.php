@@ -136,6 +136,7 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::post('/taodondathang/themkh_moi','DonDatHangController@store_kh_moi')->name('taodondathang.store_kh_moi');
 	Route::post('/dynamic-field/insert1', 'DonDatHangController@insert')->name('dynamic-field.insert1');
 	Route::post('/timkiem','DonDatHangController@timkiem')->name('dondathang.timkiem');
+	Route::get('/excel-ddh/{ddh_id}', 'DonDatHangController@excel_ddh')->name('dondathang.excel');
 
 	//thongke
 	Route::get('/thongke','ThongkeController@thongke');

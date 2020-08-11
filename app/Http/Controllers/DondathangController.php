@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 use DB;
 use Auth;
 use Validator;
@@ -12,6 +13,8 @@ use Datetime;
 use Session;
 use Illuminate\Support\Facades\Redirect;
 use Barryvdh\DomPDF\Facade as PDF;
+use App\Exports\DonHang_ChiTiet_Export;
+use Maatwebsite\Excel\Facades\Excel;
 use App\KhachHang;
 use App\DonDatHang;
 use App\HangHoa;
@@ -144,11 +147,13 @@ class DondathangController extends Controller
         $khachhang = KhachHang::all();
         $nhanvien = User::all();
         $nhom=nhomhanghoa::all();
+        $hanghoa=hanghoa::all();
 
         return view('dondathang.tao_ddh')
             ->with('khachhang', $khachhang)
             ->with('nhanvien', $nhanvien)
-            ->with('nhom', $nhom);
+            ->with('nhom', $nhom)
+            ->with('hanghoa', $hanghoa);
     }
 
     public function dongia(Request $request){
@@ -193,6 +198,14 @@ class DondathangController extends Controller
                 ]); 
             }
             
+            // $validation->validate($request, [
+            //     'ddh_ngaylap' => 'required',
+            //     'ddh_datra' => 'required',
+            // ],[
+            //     'ddh_ngaylap.required' => "Vui lòng chọn ngày",
+            //     'ddh_datra.required' => "Vui lòng nhập số tiền khách trả",  
+            // ]);
+
             //$checkout_code = substr(md5(microtime()),rand(0,26),5);
             $ddh = new dondathang();
             $ddh->ddh_id=$request->ddh_id;
@@ -365,8 +378,9 @@ class DondathangController extends Controller
         //     ->join('chitietphieuxuat', 'chitietphieuxuat.pxk_id', '=', 'phieuxuatkho.pxk_id')
         //     ->join('hanghoa', 'hanghoa.hh_id', '=', 'chitietphieuxuat.hh_id')
         //     ->where('phieuxuatkho.ddh_id',$ddh_id)->get();
-        $pxk= DB::table('khachhang')->select('khachhang.kh_ten', 'khachhang.kh_diachi','khachhang.kh_sdt', 'dondathang.ddh_ngaylap')
+        $pxk= DB::table('khachhang')->select('khachhang.kh_ten', 'khachhang.kh_diachi','khachhang.kh_sdt', 'dondathang.ddh_ngaylap', 'phieuxuatkho.pxk_id', 'dondathang.ddh_id')
             ->join('dondathang', 'dondathang.kh_id', '=', 'khachhang.kh_id')
+            ->join('phieuxuatkho', 'phieuxuatkho.ddh_id', '=', 'dondathang.ddh_id')
             ->where('dondathang.ddh_id', $ddh_id)
             ->first();
 
@@ -379,9 +393,9 @@ class DondathangController extends Controller
             WHERE pxk.ddh_id='.$ddh_id.'');
 
         $ddh3 = DB::select(
-            'SELECT SUM(ccc.TongTien * ccc.ddh_giamchietkhau/100) AS TienGiamChietKhau
+            'SELECT SUM(ccc.TongTien * ccc.ddh_giamchietkhau/100) AS TienGiamChietKhau, ccc.TongCong
             FROM(
-                SELECT SUM(ctpx.ctpx_soluong * ctpx.ctpx_dongia) AS TongTien, ddh.ddh_giamchietkhau
+                SELECT SUM(ctpx.ctpx_soluong * ctpx.ctpx_dongia) AS TongTien, ddh.ddh_giamchietkhau, SUM((ctpx.ctpx_soluong * ctpx.ctpx_dongia)-(ctpx.ctpx_soluong * ctpx.ctpx_dongia * ddh.ddh_giamchietkhau/100)) AS TongCong
                 FROM dondathang ddh
                 JOIN phieuxuatkho pxk ON pxk.ddh_id = ddh.ddh_id
                 JOIN chitietphieuxuat ctpx ON ctpx.pxk_id = pxk.pxk_id
@@ -431,26 +445,65 @@ class DondathangController extends Controller
         $ddh = dondathang::find($ddh_id);
 
         //chi tiet thong tin khách hàng của đơn hàng đó 
-        $chitiet_kh= DB::table('khachhang')->select('khachhang.kh_ten', 'khachhang.kh_diachi','khachhang.kh_sdt')
+        $chitiet_kh= DB::table('khachhang')->select('khachhang.kh_ten', 'khachhang.kh_diachi','khachhang.kh_sdt', 'dondathang.ddh_id','dondathang.ddh_ngaylap')
         ->join('dondathang', 'dondathang.kh_id', '=', 'khachhang.kh_id')
         ->where('dondathang.ddh_id', $ddh_id)
         ->first();   
 
         //'SELECT *, ct.ctdh_soluong * ct.ctdh_dongia - ct.ctdh_soluong * ct.ctdh_dongia * dh.ddh_giamchietkhau/100 AS tongtien
 
-        $chitiet_ddh = DB::select(
-            'SELECT *, ct.ctdh_soluong * ct.ctdh_dongia AS tongtien
-            FROM dondathang dh 
-            JOIN chitietdathang ct on dh.ddh_id=ct.ddh_id
-            JOIN hanghoa hh ON hh.hh_id=ct.hh_id
-            WHERE dh.ddh_id='.$ddh_id);
+    $chitiet_ddh = DB::select(
+        'SELECT *, ct.ctdh_soluong * ct.ctdh_dongia AS tongtien
+        FROM dondathang dh 
+        JOIN chitietdathang ct on dh.ddh_id=ct.ddh_id
+        JOIN hanghoa hh ON hh.hh_id=ct.hh_id
+        WHERE dh.ddh_id='.$ddh_id);
 
-        $data = [
-            'ddh' => $ddh,
-            'chitiet_kh' => $chitiet_kh,
-            'chitiet_ddh' => $chitiet_ddh,          
-        ];
-        $pdf = PDF::loadView('dondathang.pdf_phieukynhan',$data);
-        return $pdf->stream();
+    $data = [
+        'ddh' => $ddh,
+        'chitiet_kh' => $chitiet_kh,
+        'chitiet_ddh' => $chitiet_ddh,
+        
+    ];
+    $pdf = PDF::loadView('dondathang.pdf_phieukynhan',$data);
+    return $pdf->stream();
+    }
+
+    public function excel_ddh($ddh_id) {
+        $ddh = dondathang::find($ddh_id);
+
+        $ddh0 = DB::select(
+            'SELECT ddh.ddh_id, kh.kh_ten, kh.kh_sdt, nv.name, ddh.ddh_ngaylap, ddh.ddh_trangthai, ddh.ddh_congnocu, bccn.bccn_hanno
+            FROM dondathang ddh
+            LEFT JOIN baocaocongno bccn ON ddh.ddh_id = bccn.ddh_id
+            JOIN nhanvien nv ON ddh.id = nv.id
+            JOIN khachhang kh ON ddh.kh_id = kh.kh_id
+            WHERE ddh.ddh_id = '.$ddh_id.'
+            GROUP BY ddh.ddh_id, kh.kh_ten, kh.kh_sdt, nv.name, ddh.ddh_ngaylap, ddh.ddh_trangthai, ddh.ddh_congnocu, bccn.bccn_hanno');
+          
+        $ddh1 = DB::select(
+            'SELECT ddh.ddh_id, hh.hh_id, hh.hh_ten, ctdh.ctdh_soluong, ctdh.ctdh_dongia, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia) AS TongTien, ddh.ddh_giamchietkhau, ddh.ddh_congnocu, ddh.ddh_congnomoi, SUM(ddh.ddh_congnocu + ddh.ddh_congnomoi) AS TongNo, bccn.bccn_hanno
+            FROM dondathang ddh
+            JOIN chitietdathang ctdh ON ctdh.ddh_id = ddh.ddh_id
+            JOIN hanghoa hh ON ctdh.hh_id = hh.hh_id
+            LEFT JOIN baocaocongno bccn ON ddh.ddh_id = bccn.ddh_id
+            WHERE ddh.ddh_id='.$ddh_id.'
+            GROUP BY ddh.ddh_id, hh.hh_id, hh.hh_ten, ctdh.ctdh_soluong, ctdh.ctdh_dongia, ddh.ddh_giamchietkhau, ddh.ddh_congnocu, ddh.ddh_congnomoi, bccn.bccn_hanno ');
+        
+        $ddh2 = DB::select(
+            'SELECT aaa.TongSoLuong, aaa.TongTienHang, aaa.ddh_giamchietkhau, aaa.TongCong, aaa.ddh_datra ,sum(aaa.TongCong+aaa.ddh_congnocu-aaa.ddh_datra) AS ConLai
+            FROM (
+                    SELECT SUM(ctdh.ctdh_soluong) AS TongSoLuong, 
+                          SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia) TongTienHang, 
+                          SUM((ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * ddh.ddh_giamchietkhau/100)) AS TongCong, ddh.ddh_giamchietkhau, ddh.ddh_datra, ddh.ddh_congnocu
+                    FROM dondathang ddh
+                    JOIN chitietdathang ctdh ON ctdh.ddh_id = ddh.ddh_id
+                    JOIN hanghoa hh ON ctdh.hh_id = hh.hh_id
+                    WHERE ddh.ddh_id='.$ddh_id.'
+                    GROUP BY ddh.ddh_giamchietkhau, ddh.ddh_datra, ddh.ddh_congnocu
+                ) AS aaa
+            GROUP BY aaa.TongSoLuong, aaa.TongTienHang, aaa.ddh_giamchietkhau, aaa.TongCong, aaa.ddh_datra ');
+        
+        return Excel::download(new DonHang_ChiTiet_Export($ddh,$ddh0,$ddh1,$ddh2), 'donhang_chitiet.xlsx');
     }
 }

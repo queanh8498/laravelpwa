@@ -1,17 +1,17 @@
 @extends('admin_banhang')
 
 @section('admin_content')
-<style>
-td {
-    vertical-align: top;
-}
-#table1, #table2{
-    display: none;
-}
+    <style>
+        td {
+            vertical-align: top;
+        }
+        #table1, #table2{
+            display: none;
+        }
+    </style>
 
-</style>
-<a class="btn btn-light" onclick='show(1);'><i class="glyphicon glyphicon-plus"></i> Tạo khách hàng mới</a>
-  <br/>
+    <a class="btn btn-light" onclick='show(1);'><i class="glyphicon glyphicon-plus"></i> Tạo khách hàng mới</a>
+    <br/>
 	@if(count($errors)>0)
 		<span class="text-alert">
 		@foreach($errors->all() as $err)
@@ -19,16 +19,16 @@ td {
 			@endforeach
 		</span>
 	@endif
-<br />
-<div class="flash-message">
-	@foreach(['warning','success','info','danger'] as $msg)
-		@if(Session::has('alert-' . $msg))
-			<p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}
-			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-			</p>
-		@endif
-	@endforeach
-	</div>
+    <br />
+    <div class="flash-message">
+        @foreach(['warning','success','info','danger'] as $msg)
+            @if(Session::has('alert-' . $msg))
+                <p class="alert alert-{{ $msg }}">{{ Session::get('alert-' . $msg) }}
+                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                </p>
+            @endif
+        @endforeach
+    </div>
     <br />
     <div class="row">
         <div class="col-lg-12">
@@ -86,6 +86,7 @@ td {
                     </div>
                     <!-- #table2 -->
                     <div id="table2">  
+
                     </div>
                     <form id="dynamic_form" method="post">
                         {{ csrf_field() }}
@@ -192,7 +193,8 @@ td {
                         </div>
                         @csrf
                         <span id="result"></span>
-                        <button type="submit" name="taodondathang" class="btn btn-info">Lưu</button>
+                        <button type="submit" name="taodondathang" class="btn btn-info">Lưu và Trở về</button>
+                        <a type="button" name="taoddh" class="btn btn-success" href="{{ URL::to('banhang/taodondathang') }}">Tạo mới đơn hàng</a><br>
                     </form>
                 </div>
             </section>
@@ -274,6 +276,7 @@ td {
                     else{
                         dynamic_field(1);
                         $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
+                        window.location.href="{!!URL::to('banhang/danhsachdondathang')!!}"
                     }
                     $('#taodondathang').attr('disabled', false);
                 }
