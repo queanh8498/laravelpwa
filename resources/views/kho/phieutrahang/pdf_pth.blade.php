@@ -3,16 +3,67 @@
 <head>
     <title>PHIẾU KHÁCH TRẢ HÀNG-PTH00{{$pth->pth_id}}</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <style>body{
-            font-family: DejaVu Sans;
+    <style>
+        body{
+            font-family: DejaVu Sans, sans-serif;
         }
-        .table-styling{
-            border:1px solid #000;
+        .table_0, .table_1, .table_2, .tieude{
+            border-collapse: collapse;
         }
-        .table-styling tbody tr td{
-            border:1px solid #000;
+        .tieude{
+            /* border: 1px solid #000; */
+            border: none;
+            width: 100%;
         }
-        </style>
+        /* .tieude td{
+            border: 1px solid #000;
+        } */
+        .phieubanhang{
+            font-weight: bold;
+            font-size: 30px;
+            text-align: center;
+            margin-bottom: 5px;
+            padding-left: 134px;
+        }
+        .ma_don{
+            text-align: right;
+        }
+        .table_0{
+            width: 100%;
+            border: none;
+            margin-bottom: 10px;
+        }
+        .table_1{
+            width: 100%;
+            margin-top: 5px;
+        }
+        .table_1 th{
+            border: 1px solid #000;
+        }
+        .table_1 td{
+            border: 1px solid #000;
+        }
+        .table_2{
+            border: none;
+            width: 310px;
+            margin-right: -80px;
+        }
+        .table_2 th{
+            text-align: left;
+        }
+        .table_2 td{
+            text-align: right;
+        }
+        .table_3{
+            border: none;
+            width: 100%;
+            margin-top: 10px;
+        }
+        .table_3 th{
+            text-align: center;
+            /* border: 1px solid #000; */
+        }
+    </style>
 </head>
 <body>
       <h1><center>PHIẾU KHÁCH TRẢ HÀNG</center></h1>
@@ -34,7 +85,7 @@
   <br>
  
   
-            <table border="1" width=100%>
+            <table class="table_1">
                 <thead>
                     <tr>
                               <th>STT</th>
