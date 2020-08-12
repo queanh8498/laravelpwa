@@ -70,7 +70,7 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) = CURDATE()');
         
         //QUÁ HẠN LÀ CÓ BCCN_TOIHAN < NOW()
         $dh_quahan = DB::select('SELECT * FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
-WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE()');
+WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi <>0 ');
 
         //Sắp tới HẠN LÀ CÓ (bccn_toihan > now) and ( NOW() + 5 > BCCN_TOIHAN )
         $dh_saptoihan = DB::select('SELECT * FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
@@ -80,6 +80,8 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE()');
         //Lọc ĐH đã trả
         $dh_datra = DB::select('SELECT * FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
         WHERE dh.kh_id='.$id.' AND dh.ddh_congnomoi=0');
+
+            
 
         return view('khachhang.chitiet')
         ->with('chitiet_kh', $chitiet_kh)

@@ -358,8 +358,8 @@ tr:hover {background-color: #f5f5f5;}
                             <div style="color:green;"><b> {{ $ctkh->bccn_hanno }} (Đã trả)<b></div>
                         </td>
                     @else
-					@if ($current_day < $ctkh->bccn_hanno )
-                        @if ($current_day_add > $ctkh->bccn_hanno )
+					@if (strtotime($current_day) < strtotime($ctkh->bccn_hanno) )
+                        @if (strtotime($current_day_add) > strtotime($ctkh->bccn_hanno) )
                             <td>
                                 <div style="color:blue;"><b>{{ $ctkh->bccn_hanno }} <br> (Sắp tới hạn)</b><div>
                             </td>
@@ -368,13 +368,13 @@ tr:hover {background-color: #f5f5f5;}
                             {{ $ctkh->bccn_hanno }}
                             </td>
                         @endif
-                    @elseif($current_day > $ctkh->bccn_hanno)
+                    @elseif(strtotime($current_day) > strtotime($ctkh->bccn_hanno))  
                         <td>
-                            <div style="color:red;"><b>{{ $ctkh->bccn_hanno }}</b> <br> (Qúa hạn)<div>
+                            <div style="color:red;"><b>{{ $ctkh->bccn_hanno }} <br> (Qúa hạn) </b><div>
                         </td>
-                    @elseif($current_day == $ctkh->bccn_hanno)
+                    @elseif(strtotime($current_day) == strtotime($ctkh->bccn_hanno))
                     <td>
-                        <div style="color:orange;"><b>{{ $ctkh->bccn_hanno }}</b> <br> (Tới hạn)<div>
+                        <div style="color:orange;"><b>{{ $ctkh->bccn_hanno }} <br> (Tới hạn)</b><div>
                     </td>
                     @endif
                     @endif
@@ -398,7 +398,6 @@ tr:hover {background-color: #f5f5f5;}
     </div>
     </div>
 </div>
-
     @endif
 
      <script>
