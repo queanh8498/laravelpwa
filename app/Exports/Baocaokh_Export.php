@@ -36,15 +36,17 @@ class Baocaokh_Export implements FromView
     protected  $from;
     protected  $to;
     protected  $kh;
+    protected  $to_ht;
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($from,$to,$data,$kh) {
+    public function __construct($from,$to,$data,$kh,$to_ht) {
         //$this->data = $data;
         $this->from = $from;
         $this->to = $to;
          $this->data = $data;
           $this->kh = $kh;
+          $this->to_ht=$to_ht;
         
     }
    
@@ -57,6 +59,7 @@ class Baocaokh_Export implements FromView
         $to=$this->to;
          $data=$this->data;
           $kh=$this->kh;
+          $to_ht=$this->to_ht;
         
        // dd($kh);
        // dd($a);
@@ -66,6 +69,7 @@ class Baocaokh_Export implements FromView
             'to' => $to,
             'data' => $data,
             'kh' => $kh,
+            'to_ht'=>$to_ht,
             
         ]);
     }

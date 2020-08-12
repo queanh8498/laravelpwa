@@ -36,15 +36,17 @@ class Baocaoncc_Export implements FromView
     protected  $from;
     protected  $to;
     protected  $ncc;
+    protected  $to_ht;
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($from,$to,$data,$ncc) {
+    public function __construct($from,$to,$data,$ncc,$to_ht) {
         //$this->data = $data;
         $this->from = $from;
         $this->to = $to;
          $this->data = $data;
           $this->ncc = $ncc;
+            $this->to_ht = $to_ht;
         
     }
    
@@ -57,6 +59,7 @@ class Baocaoncc_Export implements FromView
         $to=$this->to;
          $data=$this->data;
           $ncc=$this->ncc;
+          $to_ht=$this->to_ht;
         
        // dd($kh);
        // dd($a);
@@ -66,7 +69,7 @@ class Baocaoncc_Export implements FromView
             'to' => $to,
             'data' => $data,
             'ncc' => $ncc,
-            
+            'to_ht' => $to_ht,
         ]);
     }
   

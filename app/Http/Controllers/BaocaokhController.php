@@ -57,7 +57,8 @@ class BaocaokhController extends Controller
     public function excel_bckh(Request $request){
 
       $from=date("Y-m-d H:i:s", strtotime($request->tungay));
-      $to=date("Y-m-d H:i:s", strtotime($request->denngay));
+      $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
+      $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
         $data= DB::table('chitietdathang')
        ->join('hanghoa','hanghoa.hh_id','=','chitietdathang.hh_id')
        ->join('dondathang','dondathang.ddh_id','=','chitietdathang.ddh_id')
@@ -70,15 +71,17 @@ class BaocaokhController extends Controller
         'to'  => $to,
         'kh'=>$kh,
         'data'=>$data,
+        'to_ht'=>$to_ht,
     ];
    
    
-    return Excel::download(new Baocaokh_Export($from,$to,$data,$kh), 'Baocao_khachhang.xlsx');
+    return Excel::download(new Baocaokh_Export($from,$to,$data,$kh,$to_ht), 'Baocao_khachhang.xlsx');
     }
     public function postpdf_bckh(Request $request){
 
       $from=date("Y-m-d H:i:s", strtotime($request->tungay));
-      $to=date("Y-m-d H:i:s", strtotime($request->denngay));
+      $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
+      $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
         $data= DB::table('chitietdathang')
        ->join('hanghoa','hanghoa.hh_id','=','chitietdathang.hh_id')
        ->join('dondathang','dondathang.ddh_id','=','chitietdathang.ddh_id')
@@ -91,6 +94,7 @@ class BaocaokhController extends Controller
         'to'  => $to,
         'kh'=>$kh,
         'data'=>$data,
+        'to_ht'=>$to_ht,
     ];
  
      $pdf = PDF::loadView('kho.baocao_kh.pdf_bckh',$data4);
@@ -103,7 +107,8 @@ class BaocaokhController extends Controller
 
      
        $from=date("Y-m-d H:i:s", strtotime($request->tungay));
-      $to=date("Y-m-d H:i:s", strtotime($request->denngay));
+       $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
+      $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
           $data= DB::table('chitietdathang')
        ->join('hanghoa','hanghoa.hh_id','=','chitietdathang.hh_id')
        ->join('dondathang','dondathang.ddh_id','=','chitietdathang.ddh_id')

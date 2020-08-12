@@ -12,17 +12,23 @@
                                 {{session('thongbao')}}
                             </span>
                         @endif
-    <div class="table-responsive">
-      <div class="form-group">
-                                    <label for="exampleInputPassword1">Nhà cung cấp</label>
+                            <br/>  
+                        <div class=" col-md-2 form-group">
+                                    <label>Nhà cung cấp:</label>
+                                </div>
+                              <div class=" col-md-4 form-group">
                                       <select name="ncc_id" class="form-control input-sm m-bot15" id="ncc_id">
-                                        <option value="0">--Chọn nhà cung cấp--</option>
+                                       <option value="0">--Chọn nhà cung cấp--</option>
                                         @foreach($ncc as $key => $dsncc)
                                             <option value="{{$dsncc->ncc_id}}">{{$dsncc->ncc_ten}}</option>
                                         @endforeach
+                                     
                                             
                                     </select>
                                 </div>
+                        
+                           <br/>  
+    
   
 <table  class= "table table-bordered table-striped"  id="dataTables-example">
       

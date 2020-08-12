@@ -29,6 +29,10 @@
                                 Session::put('message',null);
                             }
                             ?>
+                              <br/>  
+                        <div class=" col-md-2 form-group">
+                                    <label>Tình trạng:</label>
+                                </div>
                               <div class=" col-md-4 form-group">
                                       <select name="tinhtrang" class="form-control input-sm m-bot15" id="tinhtrang">
                                         <option value="0">--------Chọn tình trạng hàng hóa--------</option>
@@ -40,6 +44,8 @@
                                             
                                     </select>
                                 </div>
+                           </div>
+                           <br/>  
       <table class= "table table-bordered table-striped" id="dataTables-example">
       
       <?php echo $output; ?>

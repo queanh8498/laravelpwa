@@ -24,7 +24,8 @@ class BaocaonccController extends Controller
     public function postpdf_bcncc(Request $request){
 
       $from=date("Y-m-d H:i:s", strtotime($request->tungay));
-      $to=date("Y-m-d H:i:s", strtotime($request->denngay));
+      $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
+      $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
       $data= DB::table('hanghoa')
        ->join('nhomhanghoa','nhomhanghoa.nhom_id','=','hanghoa.nhom_id')
        ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
@@ -33,6 +34,7 @@ class BaocaonccController extends Controller
        $ncc=nhacungcap::find($request->ncc_id);
         $data4 = [
         'from' => $from,
+        'to_ht'  => $to_ht,
         'to'  => $to,
         'ncc'=>$ncc,
         'data'=>$data,
@@ -46,7 +48,8 @@ class BaocaonccController extends Controller
  public function excel_bcncc(Request $request){
 
       $from=date("Y-m-d H:i:s", strtotime($request->tungay));
-      $to=date("Y-m-d H:i:s", strtotime($request->denngay));
+      $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
+      $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
       $data= DB::table('hanghoa')
        ->join('nhomhanghoa','nhomhanghoa.nhom_id','=','hanghoa.nhom_id')
        ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
@@ -56,18 +59,19 @@ class BaocaonccController extends Controller
         $data4 = [
         'from' => $from,
         'to'  => $to,
+        'to_ht'  => $to_ht,
         'ncc'=>$ncc,
         'data'=>$data,
     ];
    
    
-    return Excel::download(new Baocaoncc_Export($from,$to,$data,$ncc), 'Baocao_nhacungcap.xlsx');
+    return Excel::download(new Baocaoncc_Export($from,$to,$data,$ncc,$to_ht), 'Baocao_nhacungcap.xlsx');
     }
       public function postxem_bcncc(Request $request){
 
      
        $from=date("Y-m-d H:i:s", strtotime($request->tungay));
-      $to=date("Y-m-d H:i:s", strtotime($request->denngay));
+       $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
           $data= DB::table('hanghoa')
        ->join('nhomhanghoa','nhomhanghoa.nhom_id','=','hanghoa.nhom_id')
        ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
