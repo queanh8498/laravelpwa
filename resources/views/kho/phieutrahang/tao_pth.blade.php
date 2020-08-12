@@ -206,7 +206,6 @@ $(document).ready(function(){
       
        $('#ddh_congnocu_dinhdang').val(formatNumber($('#cnc').val(), '.', ','));
        
-
               
         $("input[type='checkbox'][name='check']").change(function() {
            

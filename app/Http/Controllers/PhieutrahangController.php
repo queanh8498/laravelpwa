@@ -88,6 +88,7 @@ class PhieutrahangController extends Controller
                </thead>
                <tbody>";
                  $value2=0;
+                 $value3=0;
   foreach ($ctddh as $key => $value) {
     $count++;
   
@@ -123,6 +124,7 @@ class PhieutrahangController extends Controller
         $value2=$value->ddh_congnomoi;
         if($value2<0){
           $value2=0;
+          $value3=$value->ddh_congnomoi;
         }
       
        }
@@ -144,6 +146,7 @@ class PhieutrahangController extends Controller
                 <input type='hidden' name='ctk' id='ctk' class='form-control' readonly='' value='0'>
           
                 <input type='hidden' name='cnm' id='cnm' class='form-control' readonly='' value='0'>
+                  <input type='hidden' name='cnm1' id='cnm1' class='form-control' readonly='' value='".$value3."'>
                  
                </tfoot>";
                 $output.="";
@@ -189,15 +192,25 @@ class PhieutrahangController extends Controller
       $pth->pth_ctk= $request->ctk;
       $pth->pth_trangthai=1;
       $pth->save();
-
+      if($request->cnm1<0){
       $ddh_trangthai= dondathang::find($value);
+      $ddh_trangthai->ddh_trangthai=2;
+      $ddh_trangthai->ddh_congnomoi=$request->cnm1;
+      $ddh_trangthai->save();
+      
+        $datacn = array();
+       $datacn['bccn_soducongno'] =$request->cnm1;
+       DB::table('baocaocongno')->where('ddh_id',$value )->update($datacn); }
+       else{
+          $ddh_trangthai= dondathang::find($value);
       $ddh_trangthai->ddh_trangthai=2;
       $ddh_trangthai->ddh_congnomoi=$request->cnm;
       $ddh_trangthai->save();
       
         $datacn = array();
        $datacn['bccn_soducongno'] =$request->cnm;
-       DB::table('baocaocongno')->where('ddh_id',$value )->update($datacn); 
+       DB::table('baocaocongno')->where('ddh_id',$value )->update($datacn);
+       }
      
        $hh_id = $request->hh_id;
       $ctth_soluong = $request->ctth_soluong;
