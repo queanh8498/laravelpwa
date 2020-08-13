@@ -151,7 +151,7 @@
                             <tfoot>
                                 <tr>
                                     <td colspan="5" class="text-right">
-                                        <strong>Total:</strong> 
+                                        <strong>Tiền hàng:</strong> 
                                     </td>
                                     <!-- <td> -->
                                         <input type="hidden" id="estimated_ammount" class="estimated_ammount" value="0" readonly>
@@ -165,36 +165,52 @@
                 
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-3">
+                                <div class="col-md-2">
+                                    <label for="ddh_congnocu_dinhdang">Công nợ cũ</label>
+                                    <input type="text" name="ddh_congnocu_dinhdang" class="form-control" id="ddh_congnocu_dinhdang" readonly>
+                                </div>
+                                <div class="col-md-2">
                                     <label for="ddh_giamchietkhau">Chiết khấu (%)</label>
                                     <input type="text" name="ddh_giamchietkhau" class="form-control" id="ddh_giamchietkhau">
+                                </div>
+                                <div>
+                                    <!-- <label for="ddh_tongtiensauchietkhau">Tổng tiền</label> -->
+                                    <input type="hidden" name="ddh_tongtiensauchietkhau" class="form-control" id="ddh_tongtiensauchietkhau">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="ddh_tongtiensauchietkhau_dinhdang">Tổng tiền</label>
+                                    <input type="text" name="ddh_tongtiensauchietkhau_dinhdang" class="form-control" id="ddh_tongtiensauchietkhau_dinhdang" readonly>
                                 </div>
                                 <div>
                                     <!-- <label for="ddh_congnocu">Công nợ cũ</label> -->
                                     <input type="hidden" name="ddh_congnocu" class="form-control" id="ddh_congnocu" readonly>
                                 </div>
-                                <div class="col-md-3">
-                                    <label for="ddh_congnocu_dinhdang">Công nợ cũ</label>
-                                    <input type="text" name="ddh_congnocu_dinhdang" class="form-control" id="ddh_congnocu_dinhdang" readonly>
-                                </div>
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label for="ddh_datra">Khách đã trả</label>
                                     <input type="text" name="ddh_datra" class="form-control" id="ddh_datra">
+                                </div>
+                                <div class="col-md-2">
+                                    <label for="ddh_thunocu">Thu nợ cũ</label>
+                                    <input type="text" name="ddh_thunocu" class="form-control" id="ddh_thunocu" readonly>
                                 </div>
                                 <div>
                                     <!-- <label for="ddh_congnomoi">Công nợ mới</label> -->
                                     <input type="hidden" name="ddh_congnomoi" class="form-control" id="ddh_congnomoi" readonly>
                                 </div>
-                                <div class="col-md-3">
+                                <!-- <div class="col-md-3">
                                     <label for="ddh_congnomoi_dinhdang">Công nợ mới</label>
                                     <input type="text" name="ddh_congnomoi_dinhdang" class="form-control" id="ddh_congnomoi_dinhdang" readonly>
+                                </div> -->
+                                <div class="col-md-2">
+                                    <label for="ddh_congnomoihienra">Công nợ mới</label>
+                                    <input type="text" name="ddh_congnomoihienra" class="form-control" id="ddh_congnomoihienra">
                                 </div>
                             </div>
                         </div>
                         @csrf
                         <span id="result"></span>
-                        <button type="submit" name="taodondathang" class="btn btn-info">Lưu và Trở về</button>
-                        <a type="button" name="taoddh" class="btn btn-success" href="{{ URL::to('banhang/taodondathang') }}">Tạo mới đơn hàng</a><br>
+                        <button type="submit" name="taodondathang" class="btn btn-info">Lưu và tiếp tục tạo mới</button>
+                        <a type="button" name="taoddh" class="btn btn-success" href="{{ URL::to('banhang/danhsachdondathang') }}">Trở về</a><br>
                     </form>
                 </div>
             </section>
@@ -276,7 +292,7 @@
                     else{
                         dynamic_field(1);
                         $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
-                        window.location.href="{!!URL::to('banhang/danhsachdondathang')!!}"
+                        window.location.href="{!!URL::to('banhang/taodondathang')!!}"
                     }
                     $('#taodondathang').attr('disabled', false);
                 }
@@ -412,16 +428,50 @@
     // var a = $('#estimated_ammount').val(sum);
     //     $('#estimated_ammount_dinhdang').val(formatNumber(a, '.', ','));
         
+    $(document).on('change','#ddh_giamchietkhau',function () {
+        tong=$(estimated_ammount).val();
+        giamchietkhau=$(this).val();
+        tongtiensauchietkhau=tong-(tong*giamchietkhau/100);
+        $('#ddh_tongtiensauchietkhau').val(tongtiensauchietkhau);
+        $('#ddh_tongtiensauchietkhau_dinhdang').val(formatNumber(tongtiensauchietkhau, '.', ','));
+        $('#ddh_tongtiensauchietkhau_dinhdang').prop('disabled', true);
+    });
+
     $(document).on('change','#ddh_datra',function () {
         tong=$(estimated_ammount).val();
         giamchietkhau=$(estimated_ammount).val()*($(ddh_giamchietkhau).val()/100);
         tiendagiam=tong-giamchietkhau;
         congnocu=$('#ddh_congnocu').val();
         khachdatra=$(this).val();
-        congnomoi=tiendagiam-khachdatra;
-        $('#ddh_congnomoi').val(congnomoi);
-        $('#ddh_congnomoi_dinhdang').val(formatNumber(congnomoi, '.', ','));
-        $('#ddh_congnomoi_dinhdang').prop('disabled', true);
+
+        if(parseInt(khachdatra) > parseInt(tiendagiam)){
+            //alert('Số tiền bạn trả lớn hơn tổng tiền');
+            $(this).val(khachdatra);
+            congnomoihienra = 0;
+            $('#ddh_congnomoihienra').val(congnomoihienra);
+
+            thunocu=khachdatra-tiendagiam;
+            $('#ddh_thunocu').val(formatNumber(thunocu, '.', ','));
+
+            congnomoi=tiendagiam-khachdatra;
+            $('#ddh_congnomoi').val(congnomoi);
+            // $('#ddh_congnomoi_dinhdang').val(formatNumber(congnomoi, '.', ','));
+            // $('#ddh_congnomoi_dinhdang').prop('disabled', true);
+        }
+        else{
+            thunocu = 0;
+            $('#ddh_thunocu').val(thunocu);
+
+            $(this).val(khachdatra);
+            congnomoi=tiendagiam-khachdatra;
+            $('#ddh_congnomoi').val(congnomoi);
+
+            $('#ddh_congnomoihienra').val(formatNumber(congnomoi, '.', ','));
+            $('#ddh_congnomoihienra').prop('disabled', true);
+            // $('#ddh_congnomoi_dinhdang').val(formatNumber(congnomoi, '.', ','));
+            // $('#ddh_congnomoi_dinhdang').prop('disabled', true);
+        }
+        
     });
 
 </script>

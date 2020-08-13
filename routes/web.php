@@ -137,7 +137,7 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::post('/dynamic-field/insert1', 'DonDatHangController@insert')->name('dynamic-field.insert1');
 	Route::post('/timkiem','DonDatHangController@timkiem')->name('dondathang.timkiem');
 	Route::get('/excel-ddh/{ddh_id}', 'DonDatHangController@excel_ddh')->name('dondathang.excel');
-
+	Route::get('/excel-ddh-time/{from_date}/{to_date}', 'DonDatHangController@excel_ddh_time')->name('dondathang.time.excel');
 	//thongke
 	Route::get('/thongke','ThongkeController@thongke');
 	

@@ -30,19 +30,18 @@
                 <form method="post" action="{{ route('dondathang.timkiem') }}">
                     {{ csrf_field() }}
             
-                    <div class="col-sm-5">
+                    <div class="col-md-5">
                         Từ :<input type="date" name="from_date" id="from_date" class="form-control" value="{{ old('from_date',$from_date) }}" />
                     </div>
-                    <div class="col-sm-5">
+                    <div class="col-md-5">
                         Đến :<input type="date" name="to_date" id="to_date" class="form-control"  value="{{ old('to_date',$to_date) }}"/>
                     </div>
-                
-                    <!-- <div class="col-md-1">
-                        <input type="hidden" name="kh_id" id="kh_id" class="form-control" value="">
-                    </div> -->
 
                     <div class="col-md-1">
                         <br><button class="btn btn-outline-dark" type="submit">Tìm kiếm</button>
+                    </div>
+                    <div class="col-md-1">
+                        <br><a type="button" style="margin-left: 41px;" class="btn btn-outline-dark" href="{{ route('dondathang.time.excel', ['from_date'=>$from_date,'to_date'=>$to_date]) }}">Xuất Excel</a>
                     </div>
 
                 </form> 

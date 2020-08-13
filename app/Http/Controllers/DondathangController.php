@@ -14,6 +14,7 @@ use Session;
 use Illuminate\Support\Facades\Redirect;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Exports\DonHang_ChiTiet_Export;
+use App\Exports\DonHang_Time_Export;
 use Maatwebsite\Excel\Facades\Excel;
 use App\KhachHang;
 use App\DonDatHang;
@@ -505,5 +506,33 @@ class DondathangController extends Controller
             GROUP BY aaa.TongSoLuong, aaa.TongTienHang, aaa.ddh_giamchietkhau, aaa.TongCong, aaa.ddh_datra ');
         
         return Excel::download(new DonHang_ChiTiet_Export($ddh,$ddh0,$ddh1,$ddh2), 'donhang_chitiet.xlsx');
+    }
+    public function excel_ddh_time($from_date, $to_date) {
+        
+        //$ddh = dondathang::find($ddh_id);
+        //dd($from_date);
+        //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
+        $to_date_1 = date('Y-m-d', strtotime($to_date. ' + 1 days'));
+        //dd($to_date_1);
+       
+        $current_day = Carbon::now('Asia/Ho_Chi_Minh'); //lấy ngày hiện tại -> format lại
+        $a = $current_day;
+        $current_day=$a->format("Y-m-d");
+       
+        $current_day_add=$a->addDays(5); //lấy ngày hiện tại + 5 -> format lại
+        $b = $current_day_add;
+        $current_day_add=$b->format("Y-m-d");
+
+        $chitiet_ddh_date = DB::select(
+            'SELECT ddh.ddh_id, kh.kh_ten, nv.name, ddh.ddh_ngaylap, ddh.ddh_trangthai, ddh.ddh_giamchietkhau, ddh.ddh_congnocu, ddh	.ddh_congnomoi, bccn.bccn_hanno, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia) TongTienHang, ddh.ddh_datra, SUM((ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * ddh.ddh_giamchietkhau/100)) AS TongCong
+            FROM dondathang ddh
+            JOIN chitietdathang ctdh ON ctdh.ddh_id = ddh.ddh_id
+            JOIN nhanvien nv ON ddh.id = nv.id
+            JOIN khachhang kh ON ddh.kh_id = kh.kh_id
+            LEFT JOIN baocaocongno bccn ON ddh.ddh_id = bccn.ddh_id
+            WHERE ddh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'"
+            GROUP BY ddh.ddh_id, kh.kh_ten, nv.name, ddh.ddh_ngaylap, ddh.ddh_trangthai, ddh.ddh_giamchietkhau, ddh.ddh_congnocu, ddh.ddh_congnomoi, bccn.bccn_hanno, ddh.ddh_datra');
+
+        return Excel::download(new DonHang_Time_Export($chitiet_ddh_date,$current_day,$current_day_add,$from_date,$to_date), 'dondathang_time.xlsx');
     }
 }
