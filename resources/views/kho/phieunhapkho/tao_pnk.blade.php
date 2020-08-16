@@ -110,7 +110,7 @@ $(document).ready(function(){
   html = '<tr>';
      html += '<td><select name="nhom_id[]" class="form-control nhom_id" id="nhom_id'+count+'" data-sub_nhom_id="'+count+'">   <option value="">--Chọn nhóm hàng hóa--</option></select></td>';
         html += '<td><select name="hh_id[]" class="form-control hh_id" id="hh_id'+count+'" data-sub_hh_id="'+count+'"><option value="" >--Chọn hàng hóa--</option></select></td>';
-        html += '<td><input type="number" name="ctpn_soluong[]" class="form-control ctpn_soluong" id="ctpn_soluong'+count+'"  placeholder="nhập số lượng" ></td>';
+        html += '<td><input type="number" name="ctpn_soluong[]" class="form-control ctpn_soluong" id="ctpn_soluong'+count+'"  placeholder="nhập số lượng" min="0"></td>';
         html += '<input type="hidden"  name="ctpn_dongia[]" class="form-control ctpn_dongia"  id="ctpn_dongia'+count+'" value="0" readonly="">';
          html += '<td><input type="text"  name="ctpn_dongiaht[]" class="form-control ctpn_dongiaht"  id="ctpn_dongiaht'+count+'" value="0" readonly="" ></td>';
           html += '<td><input type="text"  name="ctpn_tt[]" class="form-control ctpn_tt"  id="ctpn_tt'+count+'" value="0" readonly="" ></td>';

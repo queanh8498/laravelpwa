@@ -105,7 +105,16 @@ function insert(Request $request)
       
       
       );
-      $error = Validator::make($request->all(), $rules);
+      $messages = [];
+       $nhom_id = $request->nhom_id;
+  foreach($nhom_id as $key => $val)
+  {
+
+    $messages['nhom_id.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.($key + 1).' của cột Nhóm hàng hóa.';
+    $messages['hh_id.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.($key + 1).' của cột Tên hàng hóa.';
+    $messages['ctpn_soluong.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.($key + 1).' của cột Số lượng.';
+  }
+      $error = Validator::make($request->all(), $rules,$messages);
       if($error->fails())
       {
          

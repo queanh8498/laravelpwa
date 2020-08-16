@@ -120,13 +120,15 @@
                         error_html += '<p>'+data.error[count]+'</p>';
                     }
                     $('#result').html('<div class="alert alert-danger">'+error_html+'</div>');
+                      $('#save').attr('disabled', false);
                 }
                 else
                 {
                  
                     $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
+                      $('#save').hide();
                 }
-                $('#save').hide();
+              
             }
         })
  });
@@ -139,11 +141,11 @@
 html = '@foreach($ctptncc as $key =>$value)';
 count++;
   html += '<tr>';
-     html += '<td><input type="checkbox" name="check" class="check" id="check'+count+'" value="'+count+'"></td>';
+     html += '<td><input type="checkbox" name="check[]" class="check" id="check'+count+'" value="'+count+'"></td>';
         html += '<td><input type="text" name="hh_ten[]" class="form-control hh_ten" id="hh_ten'+count+'" value="{{$value->hh_ten}}"></td>';
         html += '<input type="hidden" name="hh_id[]" class="form-control hh_id" id="hh_id'+count+'" data-sub_hh_id="'+count+'" value="{{$value->hh_id}}">';
         html += '<td><input type="text" name="ctpn_soluong[]" class="form-control ctpn_soluong" id="ctpn_soluong'+count+'"  value="{{$value->ctpn_soluong}}"></td>';
-         html += '<td><input type="number" name="ctncc_soluong[]" class="form-control ctncc_soluong" id="ctncc_soluong'+count+'"  ></td>';
+         html += '<td><input type="number" name="ctncc_soluong[]" class="form-control ctncc_soluong" id="ctncc_soluong'+count+'"  min="0"></td>';
         html += '<input type="hidden"  name="ctncc_dongia[]" class="form-control ctncc_dongia"  id="ctncc_dongia'+count+'" value="{{$value->ctpn_dongia}}" >';
          html += '<td><input type="text"  name="ctncc_dongiaht[]" class="form-control ctncc_dongiaht"  id="ctncc_dongiaht'+count+'" value="{{number_format($value->ctpn_dongia,0,",",",")}}" ></td>';
          html += '<td><input type="text"  name="ctptncc_tt[]" class="form-control ctptncc_tt"  id="ctptncc_tt'+count+'" value="0"  ></td>';
@@ -159,7 +161,7 @@ count++;
     $('.ctncc_dongia').prop('disabled', true);
      $('.ctncc_dongiaht').prop('disabled', true);
     $('.ctptncc_tt').prop('disabled', true);
-     $("input[type='checkbox'][name='check']").change(function() {
+     $("input[type='checkbox'][class='check']").change(function() {
            
            var check=$(this).val();
           
@@ -183,7 +185,7 @@ count++;
                    $(document).on('change','.ctncc_soluong',function () {
             
           if(parseInt($('#ctncc_soluong'+check).val())>parseInt($('#ctpn_soluong'+check).val())){
-              alert('Số lượng bạn chọn trả vượt quá số lượng đã nhập');
+              alert('Vượt quá số lượng đã nhập');
               $('#ctncc_soluong'+check).val(0);
           }
         else{

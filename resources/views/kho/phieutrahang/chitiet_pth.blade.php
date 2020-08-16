@@ -27,12 +27,16 @@
         <tbody>
         
           <tr>
+             <?php 
+            $ngaylap=date("d-m-Y H:i:s", strtotime($pth->pth_ngaylap));
+         
+          ?>
             <td>PTH00{{$pth->pth_id}}</td>
             <td>DDH00{{$pth->ddh_id}}</td>
              <td>{{$pth->User->name}}</td>
             <td>{{$pth->dondathang->khachhang->kh_ten}}</td>
              <td>{{$pth->dondathang->khachhang->kh_diachi}}</td>
-            <td>{{$pth->pth_ngaylap}}</td>
+            <td>{{$ngaylap}}</td>
           </tr>
      
         </tbody>

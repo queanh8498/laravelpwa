@@ -137,13 +137,15 @@ $(document).ready(function(){
                         error_html += '<p>'+data.error[count]+'</p>';
                     }
                     $('#result').html('<div class="alert alert-danger">'+error_html+'</div>');
+                      $('#save').attr('disabled', false);
                 }
                 else
                 {
                  
                     $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
+                     $('#save').hide();
                 }
-                $('#save').hide();
+               
             }
         })
  });
@@ -207,7 +209,7 @@ $(document).ready(function(){
        $('#ddh_congnocu_dinhdang').val(formatNumber($('#cnc').val(), '.', ','));
        
               
-        $("input[type='checkbox'][name='check']").change(function() {
+        $("input[type='checkbox'][class='check']").change(function() {
            
            var check=$(this).val();
           
@@ -246,7 +248,7 @@ $(document).ready(function(){
             }
              $(document).on('change','.ctth_soluong',function () {
              if(parseInt($('#ctth_soluong'+check).val())>parseInt($('#ctdh_soluong'+check).val())){
-              alert('Số lượng bạn chọn trả vượt quá số lượng đã mua ');
+              alert('Vượt quá số lượng đã mua');
               $('#ctth_soluong'+check).val(0);
              }
             else{

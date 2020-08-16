@@ -41,28 +41,21 @@ class HanghoaController extends Controller
             <th>Kho</th>
             <th>Nhóm</th>
             <th>Số lượng</th>
-            <th width='200px'>Tình trạng hàng hóa</th>
+          
     
           </tr>
         </thead>
         <tbody>";
-        foreach($hh as $key => $dshh){
-             $output.='
-              <td>'.$dshh->hh_ten.'</td>
-             <td>HH00'. $dshh->hh_id.'</td>
-               <td>'.$dshh->kho_ten.'</td>
-                  <td>'.$dshh->nhom_ten.'</td>
-            <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td>';
-
-            if($dshh->hh_soluong>=10){
-      $output.=   '<td><button class="button button1">Còn hàng</button></td>';}
-                               if($dshh->hh_soluong>=1 && $dshh->hh_soluong<=9){
-     $output.= ' <td><button  class="button button2">Sắp hết hàng</button></td>';}
-                          if($dshh->hh_soluong==0){
-       $output.= ' <td><button class="button button3">Hết hàng</button></td>';}
+         foreach($hh as $key => $dshh){
         
-        $output.='</tr>
-             ';
+             $output.='<tr>
+             <td>'.$dshh->hh_ten.'</td>
+             <td>HH00'. $dshh->hh_id.'</td>
+             <td>'.$dshh->kho_ten.'</td>
+             <td>'.$dshh->nhom_ten.'</td>
+             <td style="color: black;">'.$dshh->hh_soluong.'</td></tr>';
+        
+           
         }
           $output.='</tbody>';
             echo $output;
@@ -80,28 +73,23 @@ class HanghoaController extends Controller
             <th>Kho</th>
             <th>Nhóm</th>
             <th>Số lượng</th>
-            <th width='200px'>Tình trạng hàng hóa</th>
+          
     
           </tr>
         </thead>
         <tbody>";
-        foreach($hh as $key => $dshh){
-             $output.='
-              <td>'.$dshh->hh_ten.'</td>
-             <td>HH00'. $dshh->hh_id.'</td>
-               <td>'.$dshh->kho_ten.'</td>
-                  <td>'.$dshh->nhom_ten.'</td>
-            <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td>';
+         foreach($hh as $key => $dshh){
+          
+           
+             $output.='<tr style="background-color:#ff1a1a;" >
+              <td style="color: black;"><b>'.$dshh->hh_ten.'</b></td>
+              <td style="color: black;"><b>HH00'. $dshh->hh_id.'</b></td>
+              <td style="color: black;"><b>'.$dshh->kho_ten.'</b></td>
+              <td style="color: black;"><b>'.$dshh->nhom_ten.'</b></td>
+              <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td></tr>';
+           
 
-            if($dshh->hh_soluong>=10){
-      $output.=   '<td><button class="button button1">Còn hàng</button></td>';}
-                               if($dshh->hh_soluong>=1 && $dshh->hh_soluong<=9){
-     $output.= ' <td><button  class="button button2">Sắp hết hàng</button></td>';}
-                          if($dshh->hh_soluong==0){
-       $output.= ' <td><button class="button button3">Hết hàng</button></td>';}
-        
-        $output.='</tr>
-             ';
+           
         }
           $output.='</tbody>';
             echo $output;
@@ -119,28 +107,21 @@ class HanghoaController extends Controller
             <th>Kho</th>
             <th>Nhóm</th>
             <th>Số lượng</th>
-            <th width='200px'>Tình trạng hàng hóa</th>
+         
     
           </tr>
         </thead>
         <tbody>";
-        foreach($hh as $key => $dshh){
-             $output.='
-              <td>'.$dshh->hh_ten.'</td>
-             <td>HH00'. $dshh->hh_id.'</td>
-               <td>'.$dshh->kho_ten.'</td>
-                  <td>'.$dshh->nhom_ten.'</td>
-            <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td>';
+          foreach($hh as $key => $dshh){
+          
+            $output.='<tr style="background-color:#ffff33;" >
+              <td style="color: black;"><b>'.$dshh->hh_ten.'</b></td>
+              <td style="color: black;"><b>HH00'. $dshh->hh_id.'</b></td>
+              <td style="color: black;"><b>'.$dshh->kho_ten.'</b></td>
+              <td style="color: black;"><b>'.$dshh->nhom_ten.'</b></td>
+              <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td></tr>';
 
-            if($dshh->hh_soluong>=10){
-      $output.=   '<td><button class="button button1">Còn hàng</button></td>';}
-                               if($dshh->hh_soluong>=1 && $dshh->hh_soluong<=9){
-     $output.= ' <td><button  class="button button2">Sắp hết hàng</button></td>';}
-                          if($dshh->hh_soluong==0){
-       $output.= ' <td><button class="button button3">Hết hàng</button></td>';}
-        
-        $output.='</tr>
-             ';
+           
         }
           $output.='</tbody>';
             echo $output;
@@ -156,28 +137,35 @@ class HanghoaController extends Controller
             <th>Kho</th>
             <th>Nhóm</th>
             <th>Số lượng</th>
-            <th width='200px'>Tình trạng hàng hóa</th>
+          
     
           </tr>
         </thead>
         <tbody>";
-        foreach($hh as $key => $dshh){
-             $output.='
-              <td>'.$dshh->hh_ten.'</td>
+         foreach($hh as $key => $dshh){
+           if($dshh->hh_soluong>=10){
+             $output.='<tr>
+             <td>'.$dshh->hh_ten.'</td>
              <td>HH00'. $dshh->hh_id.'</td>
-               <td>'.$dshh->khohang->kho_ten.'</td>
-                  <td>'.$dshh->nhomhanghoa->nhom_ten.'</td>
-            <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td>';
+             <td>'.$dshh->khohang->kho_ten.'</td>
+             <td>'.$dshh->nhomhanghoa->nhom_ten.'</td>
+             <td style="color: black;">'.$dshh->hh_soluong.'</td></tr>';}
+            if($dshh->hh_soluong>=1 && $dshh->hh_soluong<=9){
+             $output.='<tr style="background-color:#ff1a1a;" >
+              <td style="color: black;"><b>'.$dshh->hh_ten.'</b></td>
+              <td style="color: black;"><b>HH00'. $dshh->hh_id.'</b></td>
+              <td style="color: black;"><b>'.$dshh->khohang->kho_ten.'</b></td>
+              <td style="color: black;"><b>'.$dshh->nhomhanghoa->nhom_ten.'</b></td>
+              <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td></tr>';}
+             if($dshh->hh_soluong==0){
+            $output.='<tr style="background-color:#ffff33;" >
+              <td style="color: black;"><b>'.$dshh->hh_ten.'</b></td>
+              <td style="color: black;"><b>HH00'. $dshh->hh_id.'</b></td>
+              <td style="color: black;"><b>'.$dshh->khohang->kho_ten.'</b></td>
+              <td style="color: black;"><b>'.$dshh->nhomhanghoa->nhom_ten.'</b></td>
+              <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td></tr>';}
 
-            if($dshh->hh_soluong>=10){
-      $output.=   '<td><button class="button button1">Còn hàng</button></td>';}
-                               if($dshh->hh_soluong>=1 && $dshh->hh_soluong<=9){
-     $output.= ' <td><button  class="button button2">Sắp hết hàng</button></td>';}
-                          if($dshh->hh_soluong==0){
-       $output.= ' <td><button class="button button3">Hết hàng</button></td>';}
-        
-        $output.='</tr>
-             ';
+           
         }
           $output.='</tbody>';
               echo $output;
@@ -196,28 +184,35 @@ class HanghoaController extends Controller
             <th>Kho</th>
             <th>Nhóm</th>
             <th>Số lượng</th>
-            <th width='200px'>Tình trạng hàng hóa</th>
+        
     
           </tr>
         </thead>
         <tbody>";
         foreach($hh as $key => $dshh){
-             $output.='
-              <td>'.$dshh->hh_ten.'</td>
+           if($dshh->hh_soluong>=10){
+             $output.='<tr>
+             <td>'.$dshh->hh_ten.'</td>
              <td>HH00'. $dshh->hh_id.'</td>
-               <td>'.$dshh->khohang->kho_ten.'</td>
-                  <td>'.$dshh->nhomhanghoa->nhom_ten.'</td>
-            <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td>';
+             <td>'.$dshh->khohang->kho_ten.'</td>
+             <td>'.$dshh->nhomhanghoa->nhom_ten.'</td>
+             <td style="color: black;">'.$dshh->hh_soluong.'</td></tr>';}
+            if($dshh->hh_soluong>=1 && $dshh->hh_soluong<=9){
+             $output.='<tr style="background-color:#ff1a1a;" >
+              <td style="color: black;"><b>'.$dshh->hh_ten.'</b></td>
+              <td style="color: black;"><b>HH00'. $dshh->hh_id.'</b></td>
+              <td style="color: black;"><b>'.$dshh->khohang->kho_ten.'</b></td>
+              <td style="color: black;"><b>'.$dshh->nhomhanghoa->nhom_ten.'</b></td>
+              <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td></tr>';}
+             if($dshh->hh_soluong==0){
+            $output.='<tr style="background-color:#ffff33;" >
+              <td style="color: black;"><b>'.$dshh->hh_ten.'</b></td>
+              <td style="color: black;"><b>HH00'. $dshh->hh_id.'</b></td>
+              <td style="color: black;"><b>'.$dshh->khohang->kho_ten.'</b></td>
+              <td style="color: black;"><b>'.$dshh->nhomhanghoa->nhom_ten.'</b></td>
+              <td style="color: black;"><b>'.$dshh->hh_soluong.'</b></td></tr>';}
 
-            if($dshh->hh_soluong>=10){
-      $output.=   '<td><button class="button button1">Còn hàng</button></td>';}
-                               if($dshh->hh_soluong>=1 && $dshh->hh_soluong<=9){
-     $output.= ' <td><button  class="button button2">Sắp hết hàng</button></td>';}
-                          if($dshh->hh_soluong==0){
-       $output.= ' <td><button class="button button3">Hết hàng</button></td>';}
-        
-        $output.='</tr>
-             ';
+           
         }
           $output.='</tbody>';
          

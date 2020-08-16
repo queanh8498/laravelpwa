@@ -30,7 +30,12 @@
           </tr>
         </thead>
         <tbody>
+         
           @foreach($hh as $key => $dshh)
+           <?php 
+            $hh_ngaytaomoi=date("d-m-Y H:i:s", strtotime($dshh->hh_ngaytaomoi));
+            $hh_ngaycapnhat=date("d-m-Y H:i:s", strtotime($dshh->hh_ngaycapnhat));
+          ?>
           <tr>
             <td>{{$dshh->hh_ten }}</td>
             <td>HH00{{$dshh->hh_id}}</td>
@@ -39,8 +44,8 @@
             <td>{{$dshh->khohang->kho_ten}}</td>
             <td>{{number_format($dshh->hh_dongia).' '.'VNĐ'}}</td>
             <td>{{$dshh->hh_soluong}}</td>
-            <td>{{$dshh->hh_ngaytaomoi}}</td>
-            <td>{{$dshh->hh_ngaycapnhat }}</td>
+            <td>{{$hh_ngaytaomoi}}</td>
+            <td>{{$hh_ngaycapnhat }}</td>
              <td>
               <a href="{{URL::to('/banhang/sua-hh/'.$dshh->hh_id)}}" class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active" title="Chỉnh sửa thông tin hàng hóa"></i></a>

@@ -30,12 +30,15 @@
         
           @foreach($ptncc as $dsptncc)
           <tr>
-           
+              <?php 
+            $ngaylap=date("d-m-Y H:i:s", strtotime($dsptncc->ptncc_ngaylap));
+         
+          ?>
             <td>PTNCC00{{ $dsptncc->ptncc_id }}</td>
               <td>{{ $dsptncc->nhacungcap->ncc_ten }}</td>
              <td>PNK00{{ $dsptncc->pnk_id }}</td>
               <td>{{ $dsptncc->User->name }}</td>
-               <td>{{ $dsptncc->ptncc_ngaylap }}</td>
+               <td>{{ $ngaylap }}</td>
                
              <td>
               <a href="{{URL::to('/banhang/chitiet-ptncc/'.$dsptncc->ptncc_id)}}"   class="active styling-edit" ui-toggle-class="">

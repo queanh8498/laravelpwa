@@ -30,12 +30,15 @@
         
           @foreach($pth as $dspth)
           <tr>
-           
+           <?php 
+            $ngaylap=date("d-m-Y H:i:s", strtotime($dspth->pth_ngaylap));
+         
+          ?>
             <td>PTH00{{ $dspth->pth_id }}</td>
              <td>{{ $dspth->User->name }}</td>
               <td>{{ $dspth->dondathang->khachhang->kh_ten }}</td>
                  <td>{{ $dspth->dondathang->khachhang->kh_sdt }}</td>
-               <td>{{ $dspth->pth_ngaylap }}</td>
+               <td>{{ $ngaylap }}</td>
              
              <td>
               <a href="{{URL::to('/banhang/chitiet-pth/'.$dspth->pth_id)}}"   class="active styling-edit" ui-toggle-class="">

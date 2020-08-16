@@ -48,7 +48,15 @@ class PhieutranhacungcapController extends Controller
       
       
       );
-      $error = Validator::make($request->all(), $rules);
+    $messages = [];
+        $check = $request->check;
+  foreach($check as $key => $val)
+  {
+
+    $messages['ctncc_soluong.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.$val.' của cột Số lượng trả.';
+   
+  }
+      $error = Validator::make($request->all(), $rules,$messages);
       if($error->fails())
       {
          

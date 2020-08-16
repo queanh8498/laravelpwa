@@ -29,12 +29,15 @@
         
           @foreach($pnk as $dspnk)
           <tr>
-           
+            <?php 
+            $ngaynhapkho=date("d-m-Y H:i:s", strtotime($dspnk->pnk_ngaynhapkho));
+         
+          ?>
             <td>PNK00{{ $dspnk->pnk_id }}</td>
             <td>{{ $dspnk->User->name}}</td>
             <td>{{ $dspnk->khohang->kho_ten}}</td>
             <td>{{ $dspnk->nhacungcap->ncc_ten}}</td>
-            <td>{{ $dspnk->pnk_ngaynhapkho}}</td>
+            <td>{{ $ngaynhapkho}}</td>
              <td>
               <a href="{{URL::to('/banhang/chitiet-pnk/'.$dspnk->pnk_id)}}"  class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-eye text-success text-active" title="Xem chi tiết phiếu nhập kho"></i></a>

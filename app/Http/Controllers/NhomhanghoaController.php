@@ -18,6 +18,7 @@ class NhomhanghoaController extends Controller
     public function getdanhsach_nhom(){
         $ncc=nhacungcap::all();
         $nhom=nhomhanghoa::all();
+
             $output='';
             $output.=" <thead>
           <tr>
@@ -36,9 +37,11 @@ class NhomhanghoaController extends Controller
            
             <td>NHOM00'. $dsnhom->nhom_id .'</td>
             <td>'.$dsnhom->nhacungcap->ncc_ten.'</td>
-            <td>'. $dsnhom->nhom_ten.'</td>
-            <td>'.$dsnhom->nhom_ngaytaomoi.'</td>
-            <td>'.$dsnhom->nhom_ngaycapnhat.'</td>
+            <td>'. $dsnhom->nhom_ten.'</td>';
+            $nhom_ngaytaomoi=date("d-m-Y H:i:s", strtotime($dsnhom->nhom_ngaytaomoi));
+            $nhom_ngaycapnhat=date("d-m-Y H:i:s", strtotime($dsnhom->nhom_ngaycapnhat));
+            $output.=' <td>'. $nhom_ngaytaomoi.'</td>
+            <td>'.$nhom_ngaycapnhat.'</td>
              <td>';
           $output.='<a href="banhang/sua-nhom/'.$dsnhom->nhom_id.'" class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active"></i></a>
@@ -74,11 +77,12 @@ class NhomhanghoaController extends Controller
            
             <td>NHOM00'. $dsnhom->nhom_id .'</td>
             <td>'.$dsnhom->ncc_ten.'</td>
-            <td>'. $dsnhom->nhom_ten.'</td>
-            <td>'.$dsnhom->nhom_ngaytaomoi.'</td>
-            <td>'.$dsnhom->nhom_ngaycapnhat.'</td>
+             <td>'. $dsnhom->nhom_ten.'</td>';
+            $nhom_ngaytaomoi=date("d-m-Y H:i:s", strtotime($dsnhom->nhom_ngaytaomoi));
+            $nhom_ngaycapnhat=date("d-m-Y H:i:s", strtotime($dsnhom->nhom_ngaycapnhat));
+            $output.=' <td>'. $nhom_ngaytaomoi.'</td>
+            <td>'.$nhom_ngaycapnhat.'</td>
              <td>';
-        
         $output.='<a href="banhang/sua-nhom/'.$dsnhom->nhom_id.'" class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active" title="Chỉnh sửa thông tin nhóm hàng hóa"></i></a>
                  <a onclick= "return confirm(\'Bạn có chắc là muốn xóa hàng hóa này không ?\')" href="banhang/xoa-nhom/'.$dsnhom->nhom_id.'" class="active styling-edit" ui-toggle-class="">
@@ -108,9 +112,11 @@ class NhomhanghoaController extends Controller
            
             <td>NHOM00'.$dsnhom->nhom_id .'</td>
             <td>'.$dsnhom->nhacungcap->ncc_ten.'</td>
-            <td>'. $dsnhom->nhom_ten.'</td>
-            <td>'.$dsnhom->nhom_ngaytaomoi.'</td>
-            <td>'.$dsnhom->nhom_ngaycapnhat.'</td>
+             <td>'. $dsnhom->nhom_ten.'</td>';
+            $nhom_ngaytaomoi=date("d-m-Y H:i:s", strtotime($dsnhom->nhom_ngaytaomoi));
+            $nhom_ngaycapnhat=date("d-m-Y H:i:s", strtotime($dsnhom->nhom_ngaycapnhat));
+            $output.=' <td>'. $nhom_ngaytaomoi.'</td>
+            <td>'.$nhom_ngaycapnhat.'</td>
              <td>';
          $output.='<a href="banhang/sua-nhom/'.$dsnhom->nhom_id.'" class="active styling-edit" ui-toggle-class="">
                 <i class="fa fa-pencil-square-o text-success text-active"></i></a>

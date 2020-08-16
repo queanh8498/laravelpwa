@@ -19,17 +19,22 @@
             <th>Địa chỉ kho</th>
             <th>Mã phiếu nhập</th>
             <th>Nhà cung cấp</th>
+            <th>Ngày nhập kho</th>
            
           </tr>
         </thead>
         <tbody>
-        
+        <?php 
+            $ngaynhapkho=date("d-m-Y H:i:s", strtotime($pnk->pnk_ngaynhapkho));
+         
+          ?>
           <tr>
             <td>{{$pnk->User->name}}</td>
             <td>{{$pnk->khohang->kho_ten}}</td>
             <td>{{$pnk->khohang->kho_diachi}}</td>
             <td>PNK00{{$pnk->pnk_id}}</td>
              <td>{{$pnk->nhacungcap->ncc_ten}}</td>
+             <td>{{$ngaynhapkho}}</td>
           </tr>
      
         </tbody>

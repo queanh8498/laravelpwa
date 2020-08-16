@@ -26,11 +26,15 @@
         <tbody>
         
           <tr>
+             <?php 
+            $ngaylap=date("d-m-Y H:i:s", strtotime($ptncc->ptncc_ngaylap));
+         
+          ?>
             <td>PTNCC00{{$ptncc->ptncc_id}}</td>
             <td>{{$ptncc->nhacungcap->ncc_ten}}</td>
             <td>PNK00{{$ptncc->pnk_id}}</td>
              <td>{{$ptncc->User->name}}</td>
-            <td>{{$ptncc->ptncc_ngaylap}}</td>
+            <td>{{$ngaylap}}</td>
           </tr>
      
         </tbody>

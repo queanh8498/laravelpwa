@@ -109,7 +109,11 @@ class NhanvienController extends Controller
         $user->sdt=$request->sdt;
         $user->diachi=$request->diachi;
         $user->password= bcrypt($request->password);
-        $user->quyen=$request->quyen;
+        if($request->quyen==''){
+          $user->quyen=0;
+        }
+        else{
+        $user->quyen=$request->quyen;}
         $user->save();
         return redirect('/banhang/danhsach-nv')->with('thongbao','Thêm nhân viên thành công');
         

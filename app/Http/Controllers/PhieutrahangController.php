@@ -94,7 +94,7 @@ class PhieutrahangController extends Controller
   
         $output .= "
              <tr>";
-                $output .= "<td><input type='checkbox' name='check' class='check' id='check".$count."' value='".$count."'>
+                $output .= "<td><input type='checkbox' name='check[]' class='check' id='check".$count."' value='".$count."'>
                 <input type='hidden' name='ddh_id[]' class='form-control ddh_id' id='ddh_id".$count."' value='".$value->ddh_id."'  >
                 </td>";
          $output .= "<td><input type='text' name='hh_ten[]' class='form-control hh_ten' id='hh_ten".$count."'  value='".$value->hh_ten."'  ></td> 
@@ -106,7 +106,7 @@ class PhieutrahangController extends Controller
        </td> ";
         $output .= "
       
-       <td><input type='number' name='ctth_soluong[]' class='form-control ctth_soluong' id='ctth_soluong".$count."' value='0'  >
+       <td><input type='number' name='ctth_soluong[]' class='form-control ctth_soluong' id='ctth_soluong".$count."' min='0'  >
        </td> ";
 
         $output .= "
@@ -161,11 +161,19 @@ class PhieutrahangController extends Controller
      {
       $rules = array(
        
-       'ctdh_soluong.*'  => 'required'
+       'ctth_soluong.*'  => 'required'
       
       
       );
-      $error = Validator::make($request->all(), $rules);
+     $messages = [];
+        $check = $request->check;
+  foreach($check as $key => $val)
+  {
+
+    $messages['ctth_soluong.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.$val.' của cột Số lượng trả.';
+   
+  }
+      $error = Validator::make($request->all(), $rules,$messages);
       if($error->fails())
       {
          
