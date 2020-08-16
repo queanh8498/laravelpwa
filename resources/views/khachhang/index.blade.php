@@ -52,8 +52,7 @@ tr:hover {background-color: #f5f5f5;}
                   <th>ĐỊA CHỈ </th>
                   <th>SÔ ĐIỆN THOẠI</th>
                   <th>TỔNG NỢ CHƯA TRẢ</th>
-                  <th>XEM CHI TIẾT</th>
-                  <th>HÀNH ĐỘNG</th>
+                  <th>CHI TIẾT</th>
                 </tr>
             </thead>
             
@@ -71,9 +70,7 @@ tr:hover {background-color: #f5f5f5;}
                     @endif
                     <td>
                         <a href="{{URL::to('banhang/khachhang/chitiet/'.$kh->kh_id)}}" class="active styling-edit" ui-toggle-class="">
-                            <i class="fa fa-eye text-success text-active" title="Chi tiết khách hàng"></i></a>
-                    </td>
-                    <td>
+                            <i class="fa fa-eye text-active" title="Chi tiết khách hàng"></i></a>
                         <a href="{{URL::to('banhang/khachhang/edit/'.$kh->kh_id)}}" class="active styling-edit" ui-toggle-class="">
                         <i class="fa fa-edit fa-lg" aria-hidden="true" title="Chỉnh sửa thông tin khách hàng"></i></a>
 						<a href=" {{URL::to('/banhang/pdf-chitietcongno-kh/'.$kh->kh_id)}}" class="active styling-edit" ui-toggle-class="">

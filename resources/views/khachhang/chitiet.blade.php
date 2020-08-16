@@ -118,7 +118,10 @@ tr:hover {background-color: #f5f5f5;}
                   <th>NHÂN VIÊN </th>
                   <th>NGÀY LẬP ĐƠN</th>
                   <th>NGÀY TỚI HẠN</th>
+                  <th>TỔNG TIỀN</th>
                   <th>NỢ ĐƠN</th>
+                  <th>CHI TIẾT</th>
+
                 </tr>
             </thead>
 
@@ -139,14 +142,20 @@ tr:hover {background-color: #f5f5f5;}
                     <td>{{ $dh_toihan->ddh_ngaylap }}</td>
 
                     <td  style="color:orange;"><b>{{ $dh_toihan->bccn_hanno }} (Tới hạn)</b></td>
+                    
+                    <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
 
                     <td>{{ number_format($dh_toihan->ddh_congnomoi,0,',',',') }} VNĐ</td>
 
                     <?php $sum += $dh_toihan->ddh_congnomoi;?>
+                    <td>
+                    <a href="{{URL::to('/banhang/chitietdondathang/'.$dh_toihan->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-eye text-active" title="Xem chi tiết"></i></a> &nbsp;
+
+                    </td>
                 </tr>
             @endforeach
             <tr>
-            <td colspan="4"><b>TỔNG CÔNG NỢ:</b></td>
+            <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
 
             <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>
@@ -173,7 +182,10 @@ tr:hover {background-color: #f5f5f5;}
                   <th>NHÂN VIÊN </th>
                   <th>NGÀY LẬP ĐƠN</th>
                   <th>NGÀY TỚI HẠN</th>
+                  <th>TỔNG TIỀN</th>
                   <th>NỢ ĐƠN</th>
+                  <th>CHI TIẾT</th>
+
                 </tr>
             </thead>
 
@@ -195,13 +207,19 @@ tr:hover {background-color: #f5f5f5;}
 
                     <td style="color:red"><b>{{ $dh_quahan->bccn_hanno }} (Qúa hạn)</b></td>
 
+                    <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
+
                     <td>{{ number_format($dh_quahan->ddh_congnomoi,0,',',',') }} VNĐ</td>
 
                     <?php $sum += $dh_quahan->ddh_congnomoi;?>
+                    <td>
+                            <a href="{{URL::to('/banhang/chitietdondathang/'.$dh_quahan->ddh_id)}}" class="active styling-edit" ui-toggle-class="">
+                            <i class="fa fa-eye text-active" title="Chi tiết đơn hàng"></i></a>
+                    </td>
                 </tr>
             @endforeach
             <tr>
-            <td colspan="4"><b>TỔNG CÔNG NỢ:</b></td>
+            <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
 
             <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>
@@ -225,7 +243,10 @@ tr:hover {background-color: #f5f5f5;}
                   <th>NHÂN VIÊN </th>
                   <th>NGÀY LẬP ĐƠN</th>
                   <th>NGÀY TỚI HẠN</th>
+                  <th>TỔNG TIỀN</th>
                   <th>NỢ ĐƠN</th>
+                  <th>CHI TIẾT</th>
+
                 </tr>
             </thead>
 
@@ -246,14 +267,20 @@ tr:hover {background-color: #f5f5f5;}
                     <td>{{ $dh_saptoihan->ddh_ngaylap }}</td>
 
                     <td style="color:blue"><b>{{ $dh_saptoihan->bccn_hanno }} (Sắp tới hạn)</b></td>
+                    
+                    <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
 
                     <td>{{ number_format($dh_saptoihan->ddh_congnomoi,0,',',',') }} VNĐ</td>
 
                     <?php $sum += $dh_saptoihan->ddh_congnomoi;?>
+                    <td>
+                            <a href="{{URL::to('/banhang/chitietdondathang/'.$dh_saptoihan->ddh_id)}}" class="active styling-edit" ui-toggle-class="">
+                            <i class="fa fa-eye text-active" title="Chi tiết đơn hàng"></i></a>
+                    </td>
                 </tr>
             @endforeach
             <tr>
-            <td colspan="4"><b>TỔNG CÔNG NỢ:</b></td>
+            <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
 
             <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>
@@ -277,7 +304,9 @@ tr:hover {background-color: #f5f5f5;}
                   <th>NHÂN VIÊN </th>
                   <th>NGÀY LẬP ĐƠN</th>
                   <th>NGÀY TỚI HẠN</th>
+                  <th>TỔNG TIỀN</th>
                   <th>NỢ ĐƠN</th>
+                  <th>CHI TIẾT</th>
                 </tr>
             </thead>
 
@@ -298,14 +327,19 @@ tr:hover {background-color: #f5f5f5;}
                     <td>{{ $dh_datra->ddh_ngaylap }}</td>
 
                     <td style="color:green"><b>{{ $dh_datra->bccn_hanno }} (Đã trả)</b></td>
+                    <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
 
                     <td>{{ number_format($dh_datra->ddh_congnomoi,0,',',',') }} VNĐ</td>
 
                     <?php $sum += $dh_datra->ddh_congnomoi;?>
+                    <td>
+                            <a href="{{URL::to('/banhang/chitietdondathang/'.$dh_datra->ddh_id)}}" class="active styling-edit" ui-toggle-class="">
+                            <i class="fa fa-eye text-active" title="Chi tiết đơn hàng"></i></a>
+                    </td>
                 </tr>
             @endforeach
             <tr>
-            <td colspan="4"><b>TỔNG CÔNG NỢ:</b></td>
+            <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
 
             <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>
@@ -330,7 +364,9 @@ tr:hover {background-color: #f5f5f5;}
                   <th>NGÀY LẬP ĐƠN</th>
                   <th>NGÀY TỚI HẠN</th>
 				   <!-- NỢ THEO ĐƠN = CÔNG NỢ MỚI -->
+                  <th>TỔNG TIỀN</th>
                   <th>NỢ ĐƠN</th>
+                  <th>CHI TIẾT</th>
 				  <!-- <th>TỔNG NỢ THEO ĐƠN</th> -->
                 </tr>
             </thead>
@@ -378,16 +414,19 @@ tr:hover {background-color: #f5f5f5;}
                     </td>
                     @endif
                     @endif
-					<!-- end -->
+                    <!-- end -->
+                    <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
                     <td>{{ number_format($ctkh->ddh_congnomoi,0,',',',') }} VNĐ</td>
-					<!-- <?php //$tongCNtheoDH = $ctkh->ddh_congnomoi + $ctkh->ddh_congnocu;?> -->
-                    <!-- <td> number_format($tongCNtheoDH,0,',',',')  VNĐ</td> -->
+					<td>
+                            <a href="{{URL::to('/banhang/chitietdondathang/'.$ctkh->ddh_id)}}" class="active styling-edit" ui-toggle-class="">
+                            <i class="fa fa-eye text-active" title="Chi tiết đơn hàng"></i></a>
+                    </td>
 
                     <?php $sum += $ctkh->ddh_congnomoi;?>
                 </tr>
             @endforeach
             <tr>
-            <td colspan="4"><b>TỔNG CÔNG NỢ:</b></td>
+            <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
 
             <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>

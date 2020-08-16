@@ -27,6 +27,8 @@
         $id = date("d/m/Y", strtotime($now));
     ?>
     @endforeach
+    <span><center>Sổ Tiền Mặt Tân Thành -- Ngày: {{ $date ?? '00-00-00' }}</center></span> 
+<br>
     
     <span><center><i>Khách hàng: </i><strong>{{$kh->kh_ten}}</strong></center></span> 
     <span><center><i>Địa chỉ: </i><strong>{{$kh->kh_diachi}}</strong></center></span> 
@@ -48,9 +50,10 @@
                 <th rowspan="2">STT</th>
                 <th rowspan="2">Ngày mua</th>
                 <th rowspan="2">Số chứng từ</th>
-                <th colspan="2">Số tiền (VND)</th>
+                <th colspan="3">Số tiền (VND)</th>
             </tr>
             <tr>
+            <th>Tổng tiền</th>
             <th>Đã trả</th>
             <th>Nợ</th>
             </tr>
@@ -69,13 +72,14 @@
                 ?>
                 <td>{{ $date }}</td>
                 <td>{{ $chitiet_kh->ddh_id }}</td>
+                <td>{{ number_format($chitiet_kh->tongtien,0,',',',') }}</td>
                 <td>{{ number_format($chitiet_kh->ddh_datra,0,',',',') }}</td>
                 <?php $sum += $chitiet_kh->ddh_congnomoi; ?>
                 <td>{{ number_format($chitiet_kh->ddh_congnomoi,0,',',',') }}</td>
             </tr>
             @endforeach
             <tr>
-            <th colspan="4">Tổng nợ</th>
+            <th colspan="5">Tổng nợ</th>
             <th>{{ number_format($sum,0,',',',') }}</th>
             </tr>
 

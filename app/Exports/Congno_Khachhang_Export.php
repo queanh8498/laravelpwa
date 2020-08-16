@@ -2,7 +2,6 @@
 
 namespace App\Exports;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 use App\Invoice;
 use Maatwebsite\Excel\Concerns\WithColumnWidth;
 
@@ -18,10 +17,13 @@ use DB;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Concerns\WithEvents;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
+use Maatwebsite\Excel\Events\AfterSheet;
 
 
 // class Congno_Khachhang_Export implements FromArray, WithHeadings, WithStyles, ShouldAutoSize
-class Congno_Khachhang_Export implements FromView
+class Congno_Khachhang_Export implements FromView, ShouldAutoSize,WithEvents
 {
     protected $data;
     protected $kh;
@@ -35,8 +37,88 @@ class Congno_Khachhang_Export implements FromView
         $this->chitiet_kh = $chitiet_kh;
         
     }
-   
-    
+
+public function  registerEvents(): array
+    {
+        
+        return [
+            AfterSheet::class    => function(AfterSheet $event) {
+                $kh=$this->kh;
+                $chitiet_kh=$this->chitiet_kh;
+
+        // Set khổ giấy in ngang
+        // $event->sheet->getDelegate()->getPageSetup()
+        //     ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
+        
+        // Format dòng tiêu đề "Tiêu đề cột"
+        $event->sheet->getDelegate()->getStyle('A7:F8')->applyFromArray(
+            [
+                'font' => [
+                    'bold' => true,
+                ],
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+
+                ],
+
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['argb' => '00000000'],
+                    ],
+                ]
+            ]
+        );
+        // Dòng bắt đầu xuất Excel danh sách sản phẩm
+        $startRow =   9;
+       
+        foreach($chitiet_kh as $index=>$chitiet_kh)
+        {
+            $currentRow = $startRow + $index;
+            //dd($currentRow); 
+            //$event->sheet->getDelegate()->getRowDimension($currentRow)->setRowHeight(50);
+            $coordinate = "A${currentRow}:F${currentRow}";
+
+            $event->sheet->getDelegate()->getStyle($coordinate)->applyFromArray(
+                [
+                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+                    'alignment' => [
+                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                        //'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP
+
+                    ],
+                    'borders' => [
+                        'allBorders' => [
+                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                            'color' => ['argb' => '00000000'],
+                        ],
+                    ]
+                ]
+            );
+        }
+        //Set border for __Summary line
+        $currentRow = $currentRow+1;
+        $coordinate = "A${currentRow}:F${currentRow}";
+        $event->sheet->getDelegate()->getStyle($coordinate)->applyFromArray(
+            [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    //'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP
+
+                ],
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['argb' => '00000000'],
+                    ],
+                ]
+            ]
+        );
+        }
+    ];
+    }
+
     public function view(): View
     {
         

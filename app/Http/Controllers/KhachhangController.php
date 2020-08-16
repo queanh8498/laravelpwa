@@ -15,12 +15,10 @@ use Carbon\Carbon;
 use DateTime;
 use Barryvdh\DomPDF\Facade as PDF;
 
-  
 use App\Exports\Congno_Khachhang_Export;
 use App\Exports\Congno_KH_Time_Export;
 use Maatwebsite\Excel\Facades\Excel;
   
-
 session_start();
 
 class KhachhangController extends Controller
@@ -34,10 +32,13 @@ class KhachhangController extends Controller
     }
     public function getdetail($id){
 
-        $chitiet_kh = DB::select('SELECT *,kh.kh_ten FROM dondathang dh 
+        $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien 
+                                FROM dondathang dh 
                                 JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
                                 join khachhang kh on kh.kh_id = dh.kh_id
-                                WHERE dh.kh_id='.$id);
+                                JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+                                WHERE dh.kh_id='.$id.'
+                                 GROUP BY dh.ddh_id');
 		// now+5 >= hanno;
        // 11/1 + 5 => 20/1 => sap toi han ;
     /************************** */
@@ -81,8 +82,6 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
         $dh_datra = DB::select('SELECT * FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
         WHERE dh.kh_id='.$id.' AND dh.ddh_congnomoi=0');
 
-            
-
         return view('khachhang.chitiet')
         ->with('chitiet_kh', $chitiet_kh)
         ->with('current_day', $current_day)
@@ -119,10 +118,11 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
         $b = $current_day_add;
         $current_day_add=$b->format("Y-m-d");
 
-        $chitiet_kh_date = DB::select('SELECT *,kh.kh_ten FROM dondathang dh 
+        $chitiet_kh_date = DB::select('SELECT *,kh.kh_ten,SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien  FROM dondathang dh 
                                 JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
                                 join khachhang kh on kh.kh_id = dh.kh_id
-                                WHERE dh.kh_id='.$id.' AND dh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'" ');
+                                JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+                                WHERE dh.kh_id='.$id.' AND dh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'" GROUP BY dh.ddh_id');
        // dd($chitiet_kh_date);
 
        return view('khachhang.search')
@@ -168,6 +168,22 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
 
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+            'kh_ten'=>'required|min:3',
+            'kh_sdt'=> 'required|min:10|max:10',
+            'kh_diachi'=>'required',
+            
+    ],
+    [
+            'kh_ten.required'=>'Vui lòng nhập tên khách hàng',
+            'kh_ten.min'=>'Tên khách hàng phải có ít nhất 3 ký tự',
+            'kh_diachi.required'=>'Vui lòng nhập địa chỉ',
+            'kh_sdt.required'=>'Vui lòng nhập số điện thoại ',
+            'kh_sdt.min'=>'Số điện thoại phải có độ dài 10 số',
+            'kh_sdt.max'=>'Số điện thoại phải có độ dài 10 số',
+         
+    ]);
+
         $kh = khachhang::where('kh_id', $id)->first();
 
         $kh->kh_ten = $request->kh_ten;
@@ -181,10 +197,12 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
     }
 	public function pdf_chitietcongno_kh($id) {
         $kh = khachhang::find($id);
-        $chitiet_kh = DB::select('SELECT *,kh.kh_ten FROM dondathang dh 
+        $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+                                FROM dondathang dh 
+                                JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
                                 JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
                                 join khachhang kh on kh.kh_id = dh.kh_id
-                                WHERE dh.kh_id='.$id);
+                                WHERE dh.kh_id='.$id.' GROUP BY dh.ddh_id');
         
         $dh_first=DB::select('SELECT dh.ddh_ngaylap as ngaylap FROM dondathang dh 
                             JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
@@ -203,10 +221,12 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
     public function excel_chitietcongno_kh($id) {
 
         //$dd($kh);
-        $chitiet_kh = DB::select('SELECT dh.ddh_id,dh.ddh_ngaylap, dh.ddh_datra,bc.bccn_soducongno FROM dondathang dh 
+        $chitiet_kh = DB::select('SELECT dh.ddh_id,dh.ddh_ngaylap, dh.ddh_datra,bc.bccn_soducongno, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+                                FROM dondathang dh 
                                 JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
                                 join khachhang kh on kh.kh_id = dh.kh_id
-                                WHERE dh.kh_id='.$id);
+                                JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+                                WHERE dh.kh_id='.$id.' GROUP BY dh.ddh_id');
         
         
         $kh = khachhang::find($id);
@@ -231,10 +251,12 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
         $b = $current_day_add;
         $current_day_add=$b->format("Y-m-d");
 
-        $chitiet_kh_date = DB::select('SELECT *,kh.kh_ten FROM dondathang dh 
+        $chitiet_kh_date = DB::select('SELECT *,kh.kh_ten,SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+                                 FROM dondathang dh 
                                 JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
                                 join khachhang kh on kh.kh_id = dh.kh_id
-                                WHERE dh.kh_id='.$id.' AND dh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'" ');
+                                JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+                                WHERE dh.kh_id='.$id.' AND dh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'" GROUP BY dh.ddh_id');
     
         $kh = khachhang::find($id);
 
