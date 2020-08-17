@@ -4,17 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <style>
-        .table_1, .table_2{
-            border-collapse: collapse;
-        }
-        .table_1 th{
-            border: 1px solid #000;
-        }
-        .table_1 td{
-            border: 1px solid #000;
-        }
-    </style>
 </head>
 <body>
     <table>
@@ -97,7 +86,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td colspan="2" style="font-weight: bold;">Tổng số lượng</td>
+                <td colspan="2" style="font-weight: bold;">Tổng số lượng: </td>
                 <td colspan="2">{{ $ddh2->TongSoLuong }}</td>
             </tr>
             <tr>
@@ -106,7 +95,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td colspan="2" style="font-weight: bold;">Tổng tiền hàng</td>
+                <td colspan="2" style="font-weight: bold;">Tổng tiền hàng: </td>
                 <td colspan="2" style="text-align: right;">{{ number_format($ddh2->TongTienHang, 0, ',' , ',') }} VND</td>
             </tr>
             <tr>
@@ -115,7 +104,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td colspan="2" style="font-weight: bold;">Chiết khấu (%)</td>
+                <td colspan="2" style="font-weight: bold;">Chiết khấu (%): </td>
                 <td colspan="2">{{ $ddh2->ddh_giamchietkhau }}</td>
             </tr>
             <tr>
@@ -124,7 +113,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td colspan="2" style="font-weight: bold;">Tổng cộng</td>
+                <td colspan="2" style="font-weight: bold;">Tổng cộng: </td>
                 <td colspan="2" style="text-align: right;">{{ number_format($ddh2->TongCong, 0, ',' , ',') }} VND</td>
             </tr>
             <tr>
@@ -142,7 +131,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td colspan="2" style="font-weight: bold;">Còn lại:</td>
+                <td colspan="2" style="font-weight: bold;">Còn lại: </td>
                 <td colspan="2" style="text-align: right;">{{ number_format($ddh2->ConLai, 0, ',' , ',') }} VND</td>
             </tr>
         @endforeach

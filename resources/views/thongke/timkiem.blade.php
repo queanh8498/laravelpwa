@@ -18,10 +18,10 @@
                         {{ csrf_field() }}
                 
                         <div class="col-sm-5">
-                            Từ :<input type="date" name="from_date" id="from_date" class="form-control"/>
+                            Từ :<input type="date" name="from_date" id="from_date" class="form-control" value="{{ old('from_date',$from_date) }}"/>
                         </div>
                         <div class="col-sm-5">
-                            Đến :<input type="date" name="to_date" id="to_date" class="form-control"/>
+                            Đến :<input type="date" name="to_date" id="to_date" class="form-control"  value="{{ old('to_date',$to_date) }}"/>
                         </div>
                     
                         <!-- <div class="col-md-1">
@@ -46,15 +46,15 @@
                         <th>Tổng công nợ</th>
                     </tr>
                     <tr>
-                        @foreach($thongke as $thongke)
-                            <td>{{ $thongke->sodonhang}}</td>
-                            <td>{{ number_format($thongke->TongTienThuDuoc, 0, ',' , ',') }} đ</td>
-                            <td>{{ number_format($thongke->TongCongNo, 0, ',' , ',') }} đ</td>
+                        @foreach($thongke_timkiem as $thongke_timkiem)
+                            <td>{{ $thongke_timkiem->sodonhang}}</td>
+                            <td>{{ number_format($thongke_timkiem->TongTienThuDuoc, 0, ',' , ',') }} đ</td>
+                            <td>{{ number_format($thongke_timkiem->TongCongNo, 0, ',' , ',') }} đ</td>
                         @endforeach
                     </tr>
                 </table>
             </div>
         </div>
     </div>
-   
+    
 @endsection

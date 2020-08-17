@@ -123,7 +123,7 @@
                                         <input type="date" name="ddh_ngaylap" class="form-control" id="ddh_ngaylap" >
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="ddh_thoihan">Thời hạn</label>
+                                    <label for="ddh_thoihan">Thời hạn thanh toán (Số ngày)</label>
                                     <input type="number" name="ddh_thoihan" class="form-control" id="ddh_thoihan" value="30" >
                                 </div>
                             </div>              
@@ -165,11 +165,11 @@
                 
                         <div class="form-group">
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label for="ddh_congnocu_dinhdang">Công nợ cũ</label>
                                     <input type="text" name="ddh_congnocu_dinhdang" class="form-control" id="ddh_congnocu_dinhdang" readonly>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label for="ddh_giamchietkhau">Chiết khấu (%)</label>
                                     <input type="text" name="ddh_giamchietkhau" class="form-control" id="ddh_giamchietkhau">
                                 </div>
@@ -177,7 +177,7 @@
                                     <!-- <label for="ddh_tongtiensauchietkhau">Tổng tiền</label> -->
                                     <input type="hidden" name="ddh_tongtiensauchietkhau" class="form-control" id="ddh_tongtiensauchietkhau">
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label for="ddh_tongtiensauchietkhau_dinhdang">Tổng tiền</label>
                                     <input type="text" name="ddh_tongtiensauchietkhau_dinhdang" class="form-control" id="ddh_tongtiensauchietkhau_dinhdang" readonly>
                                 </div>
@@ -185,11 +185,13 @@
                                     <!-- <label for="ddh_congnocu">Công nợ cũ</label> -->
                                     <input type="hidden" name="ddh_congnocu" class="form-control" id="ddh_congnocu" readonly>
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-3">
                                     <label for="ddh_datra">Khách đã trả</label>
                                     <input type="text" name="ddh_datra" class="form-control" id="ddh_datra">
                                 </div>
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label for="ddh_thunocu">Thu nợ cũ</label>
                                     <input type="text" name="ddh_thunocu" class="form-control" id="ddh_thunocu" readonly>
                                 </div>
@@ -201,9 +203,13 @@
                                     <label for="ddh_congnomoi_dinhdang">Công nợ mới</label>
                                     <input type="text" name="ddh_congnomoi_dinhdang" class="form-control" id="ddh_congnomoi_dinhdang" readonly>
                                 </div> -->
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label for="ddh_congnomoihienra">Công nợ mới</label>
-                                    <input type="text" name="ddh_congnomoihienra" class="form-control" id="ddh_congnomoihienra">
+                                    <input type="text" name="ddh_congnomoihienra" class="form-control" id="ddh_congnomoihienra" readonly>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="ddh_tongno">Tổng nợ</label>
+                                    <input type="text" name="ddh_tongno" class="form-control" id="ddh_tongno" readonly>
                                 </div>
                             </div>
                         </div>
@@ -355,7 +361,7 @@
                 $('#hh_soluong'+sub_hh_id).val(data.hh_soluong);
                 $(document).on('change','.ctdh_soluong',function () {
                     if(parseInt($('#ctdh_soluong'+sub_hh_id).val())>parseInt($('#hh_soluong'+sub_hh_id).val())){
-                        alert('Số lượng bạn chọn mua vượt quá số lượng trong kho');
+                        alert('Số lượng vượt quá số lượng trong kho');
                         $('#ctdh_soluong'+sub_hh_id).val($('#hh_soluong'+sub_hh_id).val());
                     }
                     else{
@@ -443,7 +449,6 @@
         tiendagiam=tong-giamchietkhau;
         congnocu=$('#ddh_congnocu').val();
         khachdatra=$(this).val();
-
         if(parseInt(khachdatra) > parseInt(tiendagiam)){
             //alert('Số tiền bạn trả lớn hơn tổng tiền');
             $(this).val(khachdatra);
@@ -457,6 +462,9 @@
             $('#ddh_congnomoi').val(congnomoi);
             // $('#ddh_congnomoi_dinhdang').val(formatNumber(congnomoi, '.', ','));
             // $('#ddh_congnomoi_dinhdang').prop('disabled', true);
+
+            tongno = parseInt(congnocu) + parseInt(congnomoi);
+            $('#ddh_tongno').val(formatNumber(tongno, '.', ','));
         }
         else{
             thunocu = 0;
@@ -470,6 +478,9 @@
             $('#ddh_congnomoihienra').prop('disabled', true);
             // $('#ddh_congnomoi_dinhdang').val(formatNumber(congnomoi, '.', ','));
             // $('#ddh_congnomoi_dinhdang').prop('disabled', true);
+
+            tongno = parseInt(congnocu) + parseInt(congnomoi);
+            $('#ddh_tongno').val(formatNumber(tongno, '.', ','));
         }
         
     });

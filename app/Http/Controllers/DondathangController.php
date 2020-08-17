@@ -191,7 +191,17 @@ class DondathangController extends Controller
                 'ddh_datra' => 'required',
             );
 
-            $error = Validator::make($request->all(), $rules);
+            $messages = [];
+            $nhom_id = $request->nhom_id;
+            foreach($nhom_id as $key => $val){
+                $messages['nhom_id.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.($key + 1).' của cột Nhóm hàng hóa.';
+                $messages['hh_id.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.($key + 1).' của cột Tên hàng hóa.';
+                $messages['ctdh_soluong.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.($key + 1).' của cột Số lượng.';
+                $messages['ddh_ngaylap.required'] = 'Bạn chưa nhập "Ngày lập".';
+                $messages['ddh_datra.required'] = 'Bạn chưa nhập "Khách đã trả".';
+            }
+
+            $error = Validator::make($request->all(), $rules,$messages);
 
             if($error->fails()){
                 return response()->json([
@@ -212,6 +222,7 @@ class DondathangController extends Controller
             $ddh->ddh_id=$request->ddh_id;
             $ddh->id=$request->id;
             $ddh->kh_id=$request->kh_id;
+            // $ddh->pt_id=0;
             //dd($ddh->kh_id);
             //date_default_timezone_set('Asia/Ho_Chi_Minh');
             $ddh->ddh_ngaylap = Carbon::now('Asia/Ho_Chi_Minh');
@@ -224,6 +235,7 @@ class DondathangController extends Controller
             
             $bccn = new baocaocongno();
             $bccn->ddh_id=$ddh->ddh_id;
+            // $bccn->pt_id=0;
             $songay_chono=$request->ddh_thoihan;
             $bccn->bccn_hanno = $request->ddh_ngaylap;
             $bccn->bccn_hanno = $bccn->bccn_hanno->addDays($songay_chono);
