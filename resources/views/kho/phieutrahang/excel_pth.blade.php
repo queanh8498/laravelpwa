@@ -1,99 +1,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>PHIẾU KHÁCH TRẢ HÀNG-PTH00{{$pth->pth_id}}</title>
+    <title>PHIẾU KHÁCH TRẢ HÀNG</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 </head>
 <?php 
   $date=date("d-m-Y", strtotime($pth->pth_ngaylap));
  ?>
-   <body style="font-size: 10px">
-    <div class="row">
-        <table border="0" align="center" cellpadding="5" style="border-collapse: collapse;">
-           
-            <tr>
-                <td colspan="6" class="caption" align="center" style="text-align: center; font-size: 20px">
-                    <b>PHIẾU KHÁCH TRẢ HÀNG</b>
-                </td>
-            </tr>
-              <tr>
-                <td colspan="6" class="caption" align="center" style="text-align: center; font-size: 16px">
-                   Sổ Tiền Mặt Tân Thành -- Ngày:{{ $date }}
-                </td>
-            </tr>
-            <tr>
-                <td colspan="3" class="caption" align="left" style="text-align: center; font-size: 12px">
-                 <i>Khách trả hàng: </i><strong>{{$pth->dondathang->khachhang->kh_ten}}</strong>
-                </td>
-                  <td colspan="3" class="caption" align="right" style="text-align: center; font-size: 12px">
-               <i>Địa chỉ khách trả hàng: </i><strong> {{$pth->dondathang->khachhang->kh_diachi}}</strong>
-                </td>
-               
-            </tr>
-             <tr>
-                <td colspan="3" class="caption" align="left" style="text-align: center; font-size: 12px">
-                <i>Phiếu trả cho đơn hàng: </i><strong>DDH00{{$pth->ddh_id}}</strong>
-                </td>
-                  
-               
-            </tr>
-            <tr style="border: 1px thin #000;">
-                <th style="text-align: center">STT</th>
-                <th style="text-align: center">Tên hàng hóa</th>
-                <th style="text-align: center">Đơn vị tính</th>
-                <th style="text-align: center">Nhà cung cấp</th>
-                <th style="text-align: center">Nhóm hàng hóa</th>
-                <th style="text-align: center">Số lượng</th>
-                <th style="text-align: center">Đơn giá</th>
-                 <th style="text-align: center">Thành tiền</th>
-            </tr>
-              <?php $i=1; 
+ <body>
+ <table>
+    <thead>
+        <tr>
+            <th colspan="8" style="font-size:20px;text-align:center">
+                <strong>PHIẾU KHÁCH TRẢ HÀNG</strong>
+            </th>
+        </tr>
+        <tr>
+            <th colspan="8" style="font-size:16px;text-align:center">
+                 Sổ Tiền Mặt Tân Thành -- Ngày:{{ $date }}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+  
+        <tr>
+        <td colspan="4"> <i>Khách trả hàng: </i><strong>{{$pth->dondathang->khachhang->kh_ten}}</strong></td>
+        <td></td>
+        
+        <td colspan="3"> <i>Địa chỉ khách trả hàng: </i><strong> {{$pth->dondathang->khachhang->kh_diachi}}</strong></td>
+        </tr>
+        <tr>
+        <td colspan="4"> <i>Phiếu trả cho đơn hàng: </i><strong>DDH00{{$pth->ddh_id}}</strong></td>
+        <td></td>
+        <td></td>
+        </tr>
+      
+        
+    </tbody>
+</table>
+ <table border="1" width=100% >
+        <thead>
+           <tr>
+                <th style="text-align: center;width:5px">STT</th>
+                <th style="text-align: center;width:12px">Tên hàng hóa</th>
+                <th style="text-align: center;width:10px">Đơn vị tính</th>
+                <th style="text-align: center;width:12px">Nhà cung cấp</th>
+                <th style="text-align: center;width:15px">Nhóm hàng hóa</th>
+                <th style="text-align: center;width:8px">Số lượng</th>
+                <th style="text-align: center;width:10px">Đơn giá</th>
+                <th style="text-align: center;width:15px">Thành tiền</th>
+           </tr>
+        </thead> 
+        <tbody>
+          <?php $i=1; 
                      $total=0;
                      ?>
-          @foreach($ctth as $key => $dsctpth)
-            <tr style="border: 1px thin #000; " >
-                <td align="center" valign="middle" width="5">
+                @foreach($ctth as $key => $dsctpth)
+            <tr  style="border: 1px thin #000" align=center >
+                <td style="text-align:center;width:5px">
                    {{$i++}}
                 </td>
-                <td align="center" valign="middle" width="20" >
+                <td style="text-align:center;width:12px" >
                    {{$dsctpth->hh_ten}}
                 </td>
-                <td align="left" valign="middle" width="30">
-                  {{$dsctpth->hh_donvitinh}}
+                <td style="text-align:center;width:10px">
+                 {{$dsctpth->hh_donvitinh}}
                 </td>
-                <td align="left" valign="middle" width="30">
-                  {{$dsctpth->ncc_ten}}
+                <td style="text-align:center;width:12px">
+                   {{$dsctpth->ncc_ten}}
                 </td>
-                <td align="right" valign="middle" width="15">
+                <td style="text-align:center;width:15px">
                   {{$dsctpth->nhom_ten}}
                 </td>
-                <td align="right" valign="middle" width="15">
-                  {{$dsctpth->ctth_soluong}}
+                 <td style="text-align:center;width:8px">
+                    {{$dsctpth->ctth_soluong}}
                 </td>
-                  <td align="right" valign="middle" width="15">
-                    {{number_format($dsctpth->ctth_dongia,0,',','.')}}
+               
+                  <td style="text-align:center;width:10px">
+                      {{number_format($dsctpth->ctth_dongia,0,',','.')}}
                   </td>
-                    <td align="right" width="15" valign="middle">
+                    <td style="text-align:center;width:15px">
                       {{number_format($dsctpth->ctth_soluong*$dsctpth->ctth_dongia,0,',','.')}}
                     </td>
-               <?php
+                 <?php
             $total=$total+($dsctpth->ctth_soluong*$dsctpth->ctth_dongia);
              ?>   
               
             </tr>
              @endforeach
-             
-            <tr></tr>
-            <tr>
+
+        </tbody>
+    </table>
+    <table>
+     <tr>
               <td></td>
               <td></td>
               <td></td>
               <td></td>
               <td></td>
-              <td colspan="2" class="caption" align="right" style="text-align: center; font-size: 12px">
-               <i>Tổng tiền:</i>
+              <td colspan="2" class="caption" align="center" style="text-align: center; font-size: 12px">
+                <strong>Tổng tiền: </strong>
                 </td>
-                 <td align="right" width="15" valign="middle">
+                 <td align="center" width="15" valign="middle">
                      {{number_format($total,0,',','.')}}
                     </td>
             </tr>
@@ -103,10 +111,10 @@
               <td></td>
               <td></td>
               <td></td>
-              <td colspan="2" class="caption" align="right" style="text-align: center; font-size: 12px">
-               <i>Giảm chiết khấu:</i>
+              <td colspan="2" class="caption" align="center" style="text-align: center; font-size: 12px">
+                <strong>Giảm chiết khấu: </strong>
                 </td>
-                 <td align="right" width="15" valign="middle">
+                 <td align="center" width="15" valign="middle">
                       {{$pth->dondathang->ddh_giamchietkhau}}
                     </td>
             </tr>
@@ -116,10 +124,10 @@
               <td></td>
               <td></td>
               <td></td>
-              <td colspan="2" class="caption" align="right" style="text-align: center; font-size: 12px">
-               <i>Tiền nợ:</i>
+              <td colspan="2" class="caption" align="center" style="text-align: center; font-size: 12px">
+                <strong>Tiền nợ:</strong>
                 </td>
-                 <td align="right" width="15" valign="middle">
+                 <td align="center" width="15" valign="middle">
                      {{number_format($pth->pth_tcn,0,',','.')}}
                     </td>
             </tr>
@@ -129,10 +137,10 @@
               <td></td>
               <td></td>
               <td></td>
-              <td colspan="2" class="caption" align="right" style="text-align: center; font-size: 12px">
-               <i>Tiền nợ mới:</i>
+              <td colspan="2" class="caption" align="center" style="text-align: center; font-size: 12px">
+                <strong>Tiền nợ mới:</strong>
                 </td>
-                 <td align="right" width="15" valign="middle">
+                 <td align="center" width="15" valign="middle">
                       {{number_format($pth->dondathang->ddh_congnomoi,0,',','.')}}
                     </td>
             </tr>
@@ -142,29 +150,35 @@
               <td></td>
               <td></td>
               <td></td>
-              <td colspan="2" class="caption" align="right" style="text-align: center; font-size: 12px">
-               <i>Cần trả khách:</i>
+              <td colspan="2" class="caption" align="center" style="text-align: center; font-size: 12px">
+                <strong>Cần trả khách:</strong>
                 </td>
-                 <td align="right" width="15" valign="middle">
+                 <td align="center" width="15" valign="middle">
                     {{number_format($pth->pth_ctk,0,',','.')}}
                     </td>
             </tr>
-            <tr></tr>
+    </table>
+  <table>
              <tr>
                 <td colspan="2" class="caption" align="left" style="text-align: center; font-size: 12px">
-                 <i>Người lập phiếu</i>
+                 <strong>Người lập phiếu</strong>
                 </td>
-                <td></td>
-                  <td></td>
+                 <td>
+                </td>   
+                <td>
+                </td>   
+                <td>
+                </td>
+                 <td>
+                </td>   
                   <td colspan="2" class="caption" align="right" style="text-align: center; font-size: 12px">
-               <i>Khách trả hàng</i>
+               <strong>Khách trả hàng</strong>
                 </td>
                
             </tr>
         </table>
+    
 
-    </div>
-</body>
 
 
 </html>
