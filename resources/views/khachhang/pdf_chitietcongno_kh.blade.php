@@ -83,6 +83,22 @@
             <th>{{ number_format($sum,0,',',',') }}</th>
             </tr>
 
+            <tr>
+            @foreach($dathu_tongno_kh as $dathu_tongno_kh)
+            <th colspan="5">Đã thu:</th>
+            <th>{{ number_format($dathu_tongno_kh->tongthu_kh,0,',',',') }}</td>
+            </tr>
+             <tr>
+            <th colspan="5"><b>Nợ hiện tại:</b></th>
+            @if($dathu_tongno_kh->tongthu_kh == 0)
+            <th>{{ number_format($sum,0,',',',') }} </th>
+            @else
+            <th >{{ number_format($dathu_tongno_kh->tongno,0,',',',') }}</th>
+            @endif
+
+            @endforeach
+            </tr>
+
         </tbody>
     </table>
     <br>

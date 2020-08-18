@@ -27,6 +27,7 @@ use App\NhomHangHoa;
 use App\PhieuXuatKho;
 use App\KhoHang;
 use App\NhaCungCap;
+use App\congno_khachhang;
 
 
 session_start();
@@ -191,17 +192,7 @@ class DondathangController extends Controller
                 'ddh_datra' => 'required',
             );
 
-            $messages = [];
-            $nhom_id = $request->nhom_id;
-            foreach($nhom_id as $key => $val){
-                $messages['nhom_id.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.($key + 1).' của cột Nhóm hàng hóa.';
-                $messages['hh_id.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.($key + 1).' của cột Tên hàng hóa.';
-                $messages['ctdh_soluong.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.($key + 1).' của cột Số lượng.';
-                $messages['ddh_ngaylap.required'] = 'Bạn chưa nhập "Ngày lập".';
-                $messages['ddh_datra.required'] = 'Bạn chưa nhập "Khách đã trả".';
-            }
-
-            $error = Validator::make($request->all(), $rules,$messages);
+            $error = Validator::make($request->all(), $rules);
 
             if($error->fails()){
                 return response()->json([
@@ -222,8 +213,8 @@ class DondathangController extends Controller
             $ddh->ddh_id=$request->ddh_id;
             $ddh->id=$request->id;
             $ddh->kh_id=$request->kh_id;
-            // $ddh->pt_id=0;
-            //dd($ddh->kh_id);
+            $kh_id=$ddh->kh_id;
+            
             //date_default_timezone_set('Asia/Ho_Chi_Minh');
             $ddh->ddh_ngaylap = Carbon::now('Asia/Ho_Chi_Minh');
             $ddh->ddh_trangthai = 1;
@@ -235,12 +226,28 @@ class DondathangController extends Controller
             
             $bccn = new baocaocongno();
             $bccn->ddh_id=$ddh->ddh_id;
-            // $bccn->pt_id=0;
             $songay_chono=$request->ddh_thoihan;
             $bccn->bccn_hanno = $request->ddh_ngaylap;
             $bccn->bccn_hanno = $bccn->bccn_hanno->addDays($songay_chono);
             $bccn->bccn_soducongno = $request->ddh_congnomoi;
             $bccn->save();
+
+            // queanh
+            $cnkh=congno_khachhang::select('cnkh_id','kh_id','tongno')->where('kh_id',$kh_id)->first();
+
+            if(!empty($cnkh)){
+                $cnkh->kh_id = $request->kh_id;
+                $cnkh->tongno += $request->ddh_congnomoi;
+                $cnkh->save();
+            }
+            else{
+                $cnkh=new congno_khachhang();
+                $cnkh->kh_id = $request->kh_id;
+                $cnkh->tongno = 0;
+                $cnkh->tongno += $request->ddh_congnomoi;
+                $cnkh->save();
+    }
+            // endqa
 
             $hh_id = $request->hh_id;
             $ctdh_soluong = $request->ctdh_soluong;
@@ -307,10 +314,15 @@ class DondathangController extends Controller
             $output2 = '';
             $query = $request->get('query');
             if($query != ''){
-                $data = DB::table('khachhang')
-                    ->select('khachhang.kh_ten', 'khachhang.kh_id', DB::raw('SUM(dondathang.ddh_congnomoi) as ddh_congnocu'))
-                    ->leftJoin('dondathang', 'dondathang.kh_id', '=', 'khachhang.kh_id')
-                    ->where('kh_sdt', 'like', '%'.$query.'%')
+                // MINH $data = DB::table('khachhang')
+                //     ->select('khachhang.kh_ten', 'khachhang.kh_id', DB::raw('SUM(dondathang.ddh_congnomoi) as ddh_congnocu'))
+                //     ->leftJoin('dondathang', 'dondathang.kh_id', '=', 'khachhang.kh_id')
+                //     ->where('kh_sdt', 'like', '%'.$query.'%')
+                //     ->get();
+                 $data = DB::table('khachhang')
+                    ->select('khachhang.kh_ten', 'khachhang.kh_id', DB::raw('congno_khachhang.tongno as ddh_congnocu'))
+                    ->leftJoin('congno_khachhang', 'congno_khachhang.kh_id', '=', 'khachhang.kh_id')
+                    ->where('khachhang.kh_sdt', 'like', '%'.$query.'%')
                     ->get();
             }
      

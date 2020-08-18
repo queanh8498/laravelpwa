@@ -421,14 +421,35 @@ tr:hover {background-color: #f5f5f5;}
                             <a href="{{URL::to('/banhang/chitietdondathang/'.$ctkh->ddh_id)}}" class="active styling-edit" ui-toggle-class="">
                             <i class="fa fa-eye text-active" title="Chi tiết đơn hàng"></i></a>
                     </td>
-
                     <?php $sum += $ctkh->ddh_congnomoi;?>
                 </tr>
             @endforeach
             <tr>
             <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
-
             <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
+            </tr>
+
+            <tr>
+            @foreach($dathu_tongno_kh as $dathu_tongno_kh)
+            <td colspan="5"><b>ĐÃ THU:</b></td>
+            <td class="text-center"><b>{{ number_format($dathu_tongno_kh->tongthu_kh,0,',',',') }} VNĐ</b></td>
+            @if($dathu_tongno_kh->tongthu_kh==0)
+            @else
+            <td>
+                <a href="{{URL::to('')}}" class="active styling-edit" ui-toggle-class="">
+                <i class="fa fa-eye text-warning" title="Chi tiết thu nợ"></i></a>
+            </td>
+            @endif
+            </tr>
+             <tr>
+            <td colspan="5"><b>NỢ HIỆN TẠI:</b></td>
+            @if($dathu_tongno_kh->tongthu_kh == 0)
+            <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
+            @else
+            <td class="text-center"><b>{{ number_format($dathu_tongno_kh->tongno,0,',',',') }} VNĐ</b></td>
+            @endif
+
+            @endforeach
             </tr>
             </tbody>
         </table>

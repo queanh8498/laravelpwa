@@ -26,7 +26,9 @@ class KhachhangController extends Controller
    
     public function index()
     {
-        $kh=DB::select('select kh.kh_id,kh.kh_ten,kh.kh_diachi,kh.kh_sdt, sum(ddh_congnomoi) as tongcongno  from khachhang as kh left join dondathang as ddh on kh.kh_id = ddh.kh_id group by kh.kh_id');
+        $kh=DB::select('select kh.kh_id,kh.kh_ten,kh.kh_diachi,kh.kh_sdt, 
+        cn.tongno as tongcongno  from khachhang as kh 
+        join congno_khachhang as cn on kh.kh_id = cn.kh_id group by kh.kh_id');
         //dd($kh);
         return view('khachhang.index')->with('kh',$kh);
     }
@@ -39,6 +41,13 @@ class KhachhangController extends Controller
                                 JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
                                 WHERE dh.kh_id='.$id.'
                                  GROUP BY dh.ddh_id');
+
+        $dathu_tongno_kh = DB::select('SELECT kh.kh_id,kh.kh_ten, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
+        from khachhang kh join phieuthu pt on pt.kh_id=kh.kh_id 
+        join congno_khachhang cn on cn.kh_id=kh.kh_id
+        where kh.kh_id='.$id);
+        //dd($dathu_kh);
+
 		// now+5 >= hanno;
        // 11/1 + 5 => 20/1 => sap toi han ;
     /************************** */
@@ -89,7 +98,8 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
         ->with('dh_toihan', $dh_toihan)
         ->with('dh_quahan', $dh_quahan)   
         ->with('dh_saptoihan', $dh_saptoihan)  
-        ->with('dh_datra', $dh_datra);   
+        ->with('dh_datra', $dh_datra)
+        ->with('dathu_tongno_kh', $dathu_tongno_kh);   
 	}
  public function search($id, Request $request)
    {
@@ -123,7 +133,7 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
                                 join khachhang kh on kh.kh_id = dh.kh_id
                                 JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
                                 WHERE dh.kh_id='.$id.' AND dh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'" GROUP BY dh.ddh_id');
-       // dd($chitiet_kh_date);
+      
 
        return view('khachhang.search')
        ->with('chitiet_kh_date', $chitiet_kh_date)
@@ -132,7 +142,6 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
         ->with('from_date', $from_date)
         ->with('to_date', $to_date)
         ->with('thongbao','Thành công');
-
    }
     public function create(){
 
@@ -209,11 +218,16 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
                             join khachhang kh on kh.kh_id = dh.kh_id
                             WHERE dh.kh_id='.$id.' limit 1');
         //dd($dh_first);
+        $dathu_tongno_kh = DB::select('SELECT kh.kh_id,kh.kh_ten, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
+                            from khachhang kh join phieuthu pt on pt.kh_id=kh.kh_id 
+                            join congno_khachhang cn on cn.kh_id=kh.kh_id
+                            where kh.kh_id='.$id);
         
         $data = [
             'kh' => $kh,
             'chitiet_kh' => $chitiet_kh,
             'dh_first' => $dh_first,
+            'dathu_tongno_kh' => $dathu_tongno_kh,
         ];
         $pdf = PDF::loadView('khachhang.pdf_chitietcongno_kh',$data);
         return $pdf->stream();

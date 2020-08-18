@@ -24,9 +24,7 @@ Route::post('/dangnhap','NhanvienController@postdangnhap');
 Route::get('/dangxuat','NhanvienController@getdangxuat');
 //NHÂN VIÊN BÁN HÀNG
 Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
-	// Route::get('/tongquanbanhang','NhanvienController@xem_tongquanbanhang');
-	Route::get('/tongquanbanhang','ThongkeController@thongke');
-	Route::post('/tongquanbanhang_tk','ThongkeController@thongke_timkiem')->name('thongke.timkiem');
+	Route::get('/tongquanbanhang','NhanvienController@xem_tongquanbanhang');
 //QUẢN LÝ KHO HÀNG
 	//khohang
 	Route::get('/danhsach-kho','KhohangController@getdanhsach_kho');
@@ -124,6 +122,15 @@ Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
 	Route::get('/excel-chitietcongno-kh/{id}', 'KhachhangController@excel_chitietcongno_kh')->name('khachhang.chitiet.excel');
 	Route::get('/excel-chitietcongno-kh-time/{id}/{from_date}/{to_date}', 'KhachhangController@excel_chitietcongno_kh_time')->name('khachhang.chitiet.excel.time');
 	Route::resource('/khachhang', 'KhachhangController');
+	//phieuthu
+	Route::get('/phieuthu','PhieuthuController@index')->name('phieuthu.index');
+	Route::get('/phieuthu/timsdt_kh','PhieuthuController@timsdt_kh')->name('phieuthu.timsdt_kh');
+	Route::get('/phieuthu/create','PhieuthuController@create')->name('phieuthu.create');
+
+	Route::post('/dynamic-field/store', 'PhieuthuController@insert')->name('dynamic-field.store');
+
+	Route::resource('/phieuthu', 'PhieuthuController');
+
 
 	//dondathang
 	Route::get('/danhsachdondathang','DonDatHangController@xem_danhsachdondathang');
