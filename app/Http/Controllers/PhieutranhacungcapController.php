@@ -48,8 +48,9 @@ class PhieutranhacungcapController extends Controller
       
       
       );
-    $messages = [];
+        $messages = [];
         $check = $request->check;
+//Hiển thị dòng chưa nhập tương úng với giá trị checkbox
   foreach($check as $key => $val)
   {
 

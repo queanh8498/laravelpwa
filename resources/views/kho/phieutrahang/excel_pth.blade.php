@@ -118,6 +118,19 @@
                       {{$pth->dondathang->ddh_giamchietkhau}}
                     </td>
             </tr>
+                <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td colspan="2" class="caption" align="center" style="text-align: center; font-size: 12px">
+                <strong>Tiền trả hàng:</strong>
+                </td>
+                 <td align="center" width="15" valign="middle">
+                     {{number_format($total-$total*(($pth->dondathang->ddh_giamchietkhau)/100),0,',','.')}}
+                    </td>
+            </tr>
              <tr>
               <td></td>
               <td></td>
@@ -125,7 +138,7 @@
               <td></td>
               <td></td>
               <td colspan="2" class="caption" align="center" style="text-align: center; font-size: 12px">
-                <strong>Tiền nợ:</strong>
+                <strong>Tiền cũ:</strong>
                 </td>
                  <td align="center" width="15" valign="middle">
                      {{number_format($pth->pth_tcn,0,',','.')}}
@@ -137,11 +150,14 @@
               <td></td>
               <td></td>
               <td></td>
+                 <?php
+ $cnkh=DB::table('congno_khachhang')->where('kh_id',$pth->dondathang->khachhang->kh_id)->first();
+        ?>
               <td colspan="2" class="caption" align="center" style="text-align: center; font-size: 12px">
-                <strong>Tiền nợ mới:</strong>
+                <strong>Còn lại:</strong>
                 </td>
                  <td align="center" width="15" valign="middle">
-                      {{number_format($pth->dondathang->ddh_congnomoi,0,',','.')}}
+                      {{number_format($cnkh->tongno,0,',','.')}}
                     </td>
             </tr>
              <tr>

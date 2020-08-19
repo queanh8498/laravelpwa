@@ -36,7 +36,7 @@
                                     <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email nhân viên">
                                 </div>
                                  <div class="form-group">
-                                    <label for="exampleInputPassword1">Nhóm nhân viên</label>
+                                    <label for="exampleInputPassword1">Nhóm nhân viên(không bắt buộc)</label>
                                       <select name="nv" id='nv' class="form-control input-sm m-bot15">
                                           <option value="">---------------------------------------------------------Chọn nhân viên------------------------------------------------------------------------</option>
                                             <option value="0">Bán hàng</option>
@@ -80,6 +80,9 @@
             </div>
         </div>
 <script type="text/javascript">
+   //quyền =1 quản lý bán hàng, quyền=3 quản lý công nợ, quyền=5 quản lý kho
+  //Thực hiện tính tổng để ra quyền tương ứng vd: Admin=1+3+5=9, quản lý bán hàng+quản lý kho=1+5=6 
+  //Nếu thay đổi chọn nhóm nhân viên sẽ check vào checkbox tương ứng tính lại giá trị quyền
   $('#nv').change(function(){
     var nv=$(this).val();
    if(nv==0){
@@ -98,6 +101,7 @@
    
    
   });
+  //check vào checkbox tương ứng tính giá trị quyền trên hệ thống
          $('input:checkbox').change(function ()
      {
       var total = 0;

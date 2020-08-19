@@ -83,6 +83,7 @@
         </div>
 
 <script type="text/javascript">
+   //Format lại số sang 2000000=>2,000,000
    function formatNumber(nStr, decSeperate, groupSeperate) {
             nStr += '';
             x = nStr.split(decSeperate);
@@ -121,12 +122,14 @@
                     }
                     $('#result').html('<div class="alert alert-danger">'+error_html+'</div>');
                       $('#save').attr('disabled', false);
+                        //Nếu có lỗi nhập liệu hiển thị lỗi đông thời hiện lại nút để tạo lại phiếu trả nhà cung cấp
                 }
                 else
                 {
                  
                     $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
                       $('#save').hide();
+                      //Nếu tạo thành công sẽ ẩn nút tránh tạo phiếu trả 2 lần
                 }
               
             }
@@ -134,6 +137,7 @@
  });
 
 });
+   //Hiển thị table
   $(document).ready(function(){
 
  var count = 0;
@@ -153,6 +157,7 @@ count++;
      
  
     $('tbody').html(html);
+      //Tránh tình trạng gửi toàn bộ dữ liệu chỉ các cột có check mới được phép gửi thông tin
      $('#save').attr('disabled', true);
     $('.hh_ten').prop('disabled', true);
     $('.hh_id').prop('disabled', true);
@@ -199,6 +204,7 @@ count++;
     });
            }
              else{
+               //Nếu uncheck phải đặt giá trị số lượng trả  và thành tiền về 0 tránh tình trạng hàm sum_pnk() lấy dữ liệu từ cột thành tiền uncheck để cộng vào cho kết quả sai. Vì thế số lượng trả min=0 thay vì 1(Nếu đặt số lượng trả 1 thành tiền ở cột uncheck vẫn có giá trị nếu hàm sum_pnk thực hiện cộng dồn sẽ cho kết quả sai)
             var sum2=parseCurrency($('#sum').val())-parseCurrency($('#ctptncc_tt'+check).val());
             $('#sum').val(formatNumber(sum2, '.', ','));
             $('#hh_id'+check).prop('disabled', true);
@@ -212,10 +218,11 @@ count++;
    
   });
 });
+//Format sang số để tính toán vd 2,000,000=> 2000000
  function parseCurrency( num ) {
     return parseFloat( num.replace( /,/g, '') );
 }
-
+//Tính tổng
 function sum_pnk(){
   var sum=0;
   $('.ctptncc_tt').each(function(){

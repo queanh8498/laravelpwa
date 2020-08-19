@@ -20,6 +20,7 @@ use App\chitietphieunhap;
 use App\chitietdathang;
 use App\Exports\Phieutrahang_Export;
 use Maatwebsite\Excel\Facades\Excel;
+use App\congno_khachhang;
 use Barryvdh\DomPDF\Facade as PDF;
 use Validator;
 session_start();
@@ -45,6 +46,7 @@ class PhieutrahangController extends Controller
         $a = $current_day;
         $current_day=$a->format("Y-m-d");
         $ddh=dondathang::with('khachhang')->where([['kh_id',$kh_id],['ddh_trangthai',1]])->get();
+        //Chọn ra các đơn hàng trong 7 ngày kể từ ngày mua
         if(!$ddh->isEmpty()){
         
       foreach ($ddh as $dondathang) {      
@@ -73,6 +75,7 @@ class PhieutrahangController extends Controller
    ->join('hanghoa','hanghoa.hh_id','=','chitietdathang.hh_id')
    ->join('dondathang','dondathang.ddh_id','=','chitietdathang.ddh_id')
    ->where([['chitietdathang.ddh_id',$request->ddh_id],['kh_id',$request->kh_id]])->get();
+        $cnkh=congno_khachhang::select('cnkh_id','kh_id','tongno')->where('kh_id',$request->kh_id)->first();
     $count = 0;
  $output='';
   $output .= "   <thead>
@@ -87,8 +90,8 @@ class PhieutrahangController extends Controller
                 </tr>
                </thead>
                <tbody>";
-                 $value2=0;
-                 $value3=0;
+                  if(!empty($cnkh)){
+                $value2=$cnkh->tongno;}
   foreach ($ctddh as $key => $value) {
     $count++;
   
@@ -121,11 +124,7 @@ class PhieutrahangController extends Controller
           $output .= " </tr>";
 
           $value1=$value->ddh_giamchietkhau;
-        $value2=$value->ddh_congnomoi;
-        if($value2<0){
-          $value2=0;
-          $value3=$value->ddh_congnomoi;
-        }
+     
       
        }
        $output.=" </tbody>
@@ -142,11 +141,13 @@ class PhieutrahangController extends Controller
              
               <input type='hidden' name='cnc' id='cnc' class='form-control' readonly='' value='".$value2."'>
                   
+                <input type='hidden' name='tien_gck' id='tien_gck' class='form-control' readonly='' value='0'>
+          
           
                 <input type='hidden' name='ctk' id='ctk' class='form-control' readonly='' value='0'>
           
                 <input type='hidden' name='cnm' id='cnm' class='form-control' readonly='' value='0'>
-                  <input type='hidden' name='cnm1' id='cnm1' class='form-control' readonly='' value='".$value3."'>
+               
                  
                </tfoot>";
                 $output.="";
@@ -155,7 +156,7 @@ class PhieutrahangController extends Controller
  
      
     
-     function insertddh(Request $request)
+  public   function insertddh(Request $request)
     {
       if($request->ajax())
      {
@@ -167,6 +168,7 @@ class PhieutrahangController extends Controller
       );
      $messages = [];
         $check = $request->check;
+        //Hiển thị cột số lượng trả chưa nhập theo giá trị của checkbox tương ứng 
   foreach($check as $key => $val)
   {
 
@@ -200,25 +202,76 @@ class PhieutrahangController extends Controller
       $pth->pth_ctk= $request->ctk;
       $pth->pth_trangthai=1;
       $pth->save();
-      if($request->cnm1<0){
+     //CẬP NHẬT LẠI GIÁ TRỊ CÔNG NỢ MỚI, BÁO CÁO CÔNG NỢ, TỔNG NỢ TRÊN ĐƠN HÀNG
+    //NẾU $ddh_congnomoi >=0 => Lúc đầu khách hàng đã trả 1 phần tiền trên đơn hàng. Nếu phần tiền trả 1 phần đó lớn hơn giá trị trả hàng thực hiện tính lại giá trị công nợ mới và tính lại tổng công nợ. Nếu xảy ra trường hợp trả hết sẽ làm $cncn bị âm do giá trị trả hàng lớn hơn giá trị nợ đơn do đó cập nhật công nợ mới về 0 và tính lại tổng nợ.
       $ddh_trangthai= dondathang::find($value);
+      $cncn=$ddh_trangthai->ddh_congnomoi-$request->tien_gck;
+      if($ddh_trangthai->ddh_congnomoi>=0){
+      if($cncn>=0){
       $ddh_trangthai->ddh_trangthai=2;
-      $ddh_trangthai->ddh_congnomoi=$request->cnm1;
+      $ddh_trangthai->ddh_congnomoi=$cncn;
       $ddh_trangthai->save();
-      
-        $datacn = array();
-       $datacn['bccn_soducongno'] =$request->cnm1;
-       DB::table('baocaocongno')->where('ddh_id',$value )->update($datacn); }
-       else{
-          $ddh_trangthai= dondathang::find($value);
+      //Cập nhật báo cáo công nợ
+      $datacn = array();
+      $datacn['bccn_soducongno'] =$cncn;
+      DB::table('baocaocongno')->where('ddh_id',$value )->update($datacn);
+     //Cập nhật nợ thông qua giá trị tổng nợ lưu vào biến $request->cnm
+             $cnkh=congno_khachhang::select('cnkh_id','kh_id','tongno')->where('kh_id',$request->kh_id)->first();
+             if(!empty($cnkh)){
+                 $cnkh->kh_id = $request->kh_id;
+                 $cnkh->tongno =$request->cnm;
+                 $cnkh->save();
+             }
+    }
+      else{
+     // Nếu $cncn <0 khi đó giá trị đơn hàng nhỏ hơn giá trị trả hàng cần trả tiền cho khách hàng và cập nhật công nợ mới về 0 và cập nhật lại báo cáo công nợ
+      $ddh_trangthai->ddh_congnomoi=0;
       $ddh_trangthai->ddh_trangthai=2;
-      $ddh_trangthai->ddh_congnomoi=$request->cnm;
       $ddh_trangthai->save();
+      //Cập nhật báo cáo công nợ
+       $datacn = array();
+      $datacn['bccn_soducongno'] =$cncn;
+      DB::table('baocaocongno')->where('ddh_id',$value )->update($datacn);
+      //Cập nhật nợ thông qua giá trị tổng nợ lưu vào biến $request->cnm
+             $cnkh=congno_khachhang::select('cnkh_id','kh_id','tongno')->where('kh_id',$request->kh_id)->first();
+             if(!empty($cnkh)){
+                 $cnkh->kh_id = $request->kh_id;
+                 $cnkh->tongno =$request->cnm;
+                 $cnkh->save();
+       
+      }}
       
-        $datacn = array();
-       $datacn['bccn_soducongno'] =$request->cnm;
-       DB::table('baocaocongno')->where('ddh_id',$value )->update($datacn);
-       }
+}
+else{
+  //Trương hợp giá trị $ddh_congnomoi <0 do khách hàng không nợ đơn hàng và trả 1 phần tiền cũ đã nợ, do đó nếu cập nhật lại báo cáo công nợ sẽ làm mất số tiền khách đã trả trước đó, vì vậy khi trả hàng không cập nhật giá trị báo cáo công nợ trên đơn hàng .
+   if($cncn>=0){
+      $ddh_trangthai->ddh_trangthai=2;
+      $ddh_trangthai->ddh_congnomoi=$cncn;
+      $ddh_trangthai->save();
+     
+    //Cập nhật nợ thông qua giá trị tổng nợ lưu vào biến $request->cnm
+             $cnkh=congno_khachhang::select('cnkh_id','kh_id','tongno')->where('kh_id',$request->kh_id)->first();
+             if(!empty($cnkh)){
+                 $cnkh->kh_id = $request->kh_id;
+                 $cnkh->tongno =$request->cnm;
+                 $cnkh->save();
+             }
+    }
+      else{
+    
+      $ddh_trangthai->ddh_trangthai=2;
+      $ddh_trangthai->save();
+      //Cập nhật nợ thông qua giá trị tổng nợ lưu vào biến $request->cnm
+             $cnkh=congno_khachhang::select('cnkh_id','kh_id','tongno')->where('kh_id',$request->kh_id)->first();
+             if(!empty($cnkh)){
+                 $cnkh->kh_id = $request->kh_id;
+                 $cnkh->tongno =$request->cnm;
+                 $cnkh->save();
+       
+      }
+
+}}
+
      
        $hh_id = $request->hh_id;
       $ctth_soluong = $request->ctth_soluong;
@@ -261,7 +314,7 @@ class PhieutrahangController extends Controller
     return view('kho.phieutrahang.chitiet_pth')->with('pth',$pth)->with('ctth',$ctth);
 
     }
-        function timsdt_khpth(Request $request){
+     public   function timsdt_khpth(Request $request){
         if($request->ajax()){
             $output = '';
             $output1 = '';

@@ -22,7 +22,7 @@ class BaocaonccController extends Controller
     	return view('kho.baocao_ncc.bcncc')->with('ncc',$ncc);
     }
     public function postpdf_bcncc(Request $request){
-
+  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
       $from=date("Y-m-d H:i:s", strtotime($request->tungay));
       $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
       $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
@@ -46,7 +46,7 @@ class BaocaonccController extends Controller
     return $pdf->stream();
     }
  public function excel_bcncc(Request $request){
-
+  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
       $from=date("Y-m-d H:i:s", strtotime($request->tungay));
       $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
       $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
@@ -69,7 +69,7 @@ class BaocaonccController extends Controller
     }
       public function postxem_bcncc(Request $request){
 
-     
+       //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
        $from=date("Y-m-d H:i:s", strtotime($request->tungay));
        $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
           $data= DB::table('hanghoa')

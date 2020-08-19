@@ -130,12 +130,19 @@
             <td>  {{$pth->dondathang->ddh_giamchietkhau}}%</td>
         </tr>
         <tr>
-            <th> Tiền nợ : </th>
-            <td>{{number_format($pth->pth_tcn,0,',','.')}} đ</td>
+            <th>Tiền trả hàng: </th>
+            <td>{{number_format($total-$total*(($pth->dondathang->ddh_giamchietkhau)/100),0,',','.')}}đ</td>
         </tr>
         <tr>
-            <th> Tiền nợ mới:</th>
-            <td>{{number_format($pth->dondathang->ddh_congnomoi,0,',','.')}} đ</td>
+            <th> Tiền cũ: </th>
+            <td>{{number_format($pth->pth_tcn,0,',','.')}} đ</td>
+        </tr>
+        <?php
+ $cnkh=DB::table('congno_khachhang')->where('kh_id',$pth->dondathang->khachhang->kh_id)->first();
+        ?>
+        <tr>
+            <th> Còn lại:</th>
+            <td>{{number_format($cnkh->tongno,0,',','.')}} đ</td>
         </tr>
          <tr>
             <th> Cần trả khách: </th>

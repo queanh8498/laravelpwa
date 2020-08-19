@@ -107,6 +107,7 @@ function insert(Request $request)
       );
       $messages = [];
        $nhom_id = $request->nhom_id;
+       //Hiển thị dòng chưa nhập tương ứng với giá trị nhóm id do $key bắt đầu từ 0 nên cần cộng 1 để hiển thị
   foreach($nhom_id as $key => $val)
   {
 

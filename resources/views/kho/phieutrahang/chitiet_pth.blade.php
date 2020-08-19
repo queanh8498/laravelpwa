@@ -101,7 +101,7 @@
                             Tổng tiền: 
                         </th>
                         <td>
-                         {{number_format($total,0,',','.')}}
+                         {{number_format($total,0,',','.')}} VNĐ
                         </td>
                     </tr>
       
@@ -110,23 +110,35 @@
                             Giảm chiết khấu: 
                         </th>
                         <td>
-                          {{$pth->dondathang->ddh_giamchietkhau}}%
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Tiền nợ trên đơn hàng: 
-                        </th>
-                        <td>
-                           {{number_format($pth->pth_tcn,0,',','.')}}
+                          {{$pth->dondathang->ddh_giamchietkhau}} %
                         </td>
                     </tr>
                      <tr>
                         <th>
-                            Tiền nợ mới trên đơn hàng: 
+                           Tiền trả hàng:
                         </th>
                         <td>
-                          {{number_format($pth->dondathang->ddh_congnomoi,0,',','.')}}
+                        {{number_format($total-$total*(($pth->dondathang->ddh_giamchietkhau)/100),0,',','.')}} VNĐ
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Tiền cũ: 
+                        </th>
+                        <td>
+                           {{number_format($pth->pth_tcn,0,',','.')}} VNĐ
+                        </td>
+                    </tr>
+                     <tr>
+                           <?php
+ $cnkh=DB::table('congno_khachhang')->where('kh_id',$pth->dondathang->khachhang->kh_id)->first();
+        ?>
+       
+                        <th>
+                            Còn lại: 
+                        </th>
+                        <td>
+                          {{number_format($cnkh->tongno,0,',','.')}} VNĐ
                         </td>
                     </tr>
                     <tr>
@@ -134,7 +146,7 @@
                            Cần trả khách: 
                         </th>
                         <td>
-                         {{number_format($pth->pth_ctk,0,',','.')}}
+                         {{number_format($pth->pth_ctk,0,',','.')}} VNĐ
                         </td>
                     </tr>
                  

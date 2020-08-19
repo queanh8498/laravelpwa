@@ -55,7 +55,7 @@ class BaocaokhController extends Controller
         }
     }
     public function excel_bckh(Request $request){
-
+  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
       $from=date("Y-m-d H:i:s", strtotime($request->tungay));
       $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
       $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
@@ -78,7 +78,7 @@ class BaocaokhController extends Controller
     return Excel::download(new Baocaokh_Export($from,$to,$data,$kh,$to_ht), 'Baocao_khachhang.xlsx');
     }
     public function postpdf_bckh(Request $request){
-
+  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
       $from=date("Y-m-d H:i:s", strtotime($request->tungay));
       $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
       $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
@@ -104,7 +104,7 @@ class BaocaokhController extends Controller
 
 
      public function postxem_bckh(Request $request){
-
+  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
      
        $from=date("Y-m-d H:i:s", strtotime($request->tungay));
        $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
