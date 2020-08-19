@@ -24,7 +24,8 @@ Route::post('/dangnhap','NhanvienController@postdangnhap');
 Route::get('/dangxuat','NhanvienController@getdangxuat');
 //NHÂN VIÊN BÁN HÀNG
 Route::group(['prefix'=>'banhang','middleware'=>'Nhanvien_Login'],function(){
-	Route::get('/tongquanbanhang','NhanvienController@xem_tongquanbanhang');
+	Route::get('/tongquanbanhang','ThongkeController@thongke');
+	Route::post('/tongquanbanhang_tk','ThongkeController@thongke_timkiem')->name('thongke.timkiem');
 //QUẢN LÝ KHO HÀNG
 	//khohang
 	Route::get('/danhsach-kho','KhohangController@getdanhsach_kho');

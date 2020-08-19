@@ -121,7 +121,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <li><a href="{{URL::to('banhang/danhsachdondathang')}}">Đơn hàng</a></li>
                         <li><a href="{{URL::to('banhang/phieuthu')}}">Phiếu thu</a></li>
                         <li><a href="{{URL::to('banhang/ton-hh')}}">Hàng hóa còn tồn kho</a></li>
-                        <li><a href="{{URL::to('banhang/thongke')}}">Thống kê</a></li>
+                        <!-- <li><a href="{{URL::to('banhang/thongke')}}">Thống kê</a></li> -->
                    
                         
                       

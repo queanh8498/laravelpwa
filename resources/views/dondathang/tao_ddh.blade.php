@@ -186,15 +186,13 @@
                                     <input type="hidden" name="ddh_congnocu" class="form-control" id="ddh_congnocu" readonly>
                                 </div>
                                 <div class="col-md-3">
-                                </div>
-                                <div class="col-md-3">
                                     <label for="ddh_datra">Khách đã trả</label>
                                     <input type="text" name="ddh_datra" class="form-control" id="ddh_datra">
                                 </div>
-                                <div class="col-md-3">
+                                <!-- <div class="col-md-3">
                                     <label for="ddh_thunocu">Thu nợ cũ</label>
                                     <input type="text" name="ddh_thunocu" class="form-control" id="ddh_thunocu" readonly>
-                                </div>
+                                </div> -->
                                 <div>
                                     <!-- <label for="ddh_congnomoi">Công nợ mới</label> -->
                                     <input type="hidden" name="ddh_congnomoi" class="form-control" id="ddh_congnomoi" readonly>
@@ -203,6 +201,10 @@
                                     <label for="ddh_congnomoi_dinhdang">Công nợ mới</label>
                                     <input type="text" name="ddh_congnomoi_dinhdang" class="form-control" id="ddh_congnomoi_dinhdang" readonly>
                                 </div> -->
+                                <div class="col-md-3">
+                                </div>
+                                <div class="col-md-3">
+                                </div>
                                 <div class="col-md-3">
                                     <label for="ddh_congnomoihienra">Công nợ mới</label>
                                     <input type="text" name="ddh_congnomoihienra" class="form-control" id="ddh_congnomoihienra" readonly>
@@ -449,39 +451,64 @@
         tiendagiam=tong-giamchietkhau;
         congnocu=$('#ddh_congnocu').val();
         khachdatra=$(this).val();
+
         if(parseInt(khachdatra) > parseInt(tiendagiam)){
-            //alert('Số tiền bạn trả lớn hơn tổng tiền');
-            $(this).val(khachdatra);
-            congnomoihienra = 0;
-            $('#ddh_congnomoihienra').val(congnomoihienra);
-
-            thunocu=khachdatra-tiendagiam;
-            $('#ddh_thunocu').val(formatNumber(thunocu, '.', ','));
-
-            congnomoi=tiendagiam-khachdatra;
+            alert('Số tiền "Khách đã trả" lớn hơn "Tổng tiền" ');
+            $(this).val(tiendagiam);
+            congnomoi = 0;
             $('#ddh_congnomoi').val(congnomoi);
-            // $('#ddh_congnomoi_dinhdang').val(formatNumber(congnomoi, '.', ','));
-            // $('#ddh_congnomoi_dinhdang').prop('disabled', true);
+
+            $('#ddh_congnomoihienra').val(formatNumber(congnomoi, '.', ','));
+            $('#ddh_congnomoihienra').prop('disabled', true);
 
             tongno = parseInt(congnocu) + parseInt(congnomoi);
             $('#ddh_tongno').val(formatNumber(tongno, '.', ','));
+
         }
         else{
-            thunocu = 0;
-            $('#ddh_thunocu').val(thunocu);
-
             $(this).val(khachdatra);
             congnomoi=tiendagiam-khachdatra;
             $('#ddh_congnomoi').val(congnomoi);
 
             $('#ddh_congnomoihienra').val(formatNumber(congnomoi, '.', ','));
             $('#ddh_congnomoihienra').prop('disabled', true);
-            // $('#ddh_congnomoi_dinhdang').val(formatNumber(congnomoi, '.', ','));
-            // $('#ddh_congnomoi_dinhdang').prop('disabled', true);
 
             tongno = parseInt(congnocu) + parseInt(congnomoi);
             $('#ddh_tongno').val(formatNumber(tongno, '.', ','));
         }
+        // if(parseInt(khachdatra) > parseInt(tiendagiam)){
+        //     //alert('Số tiền bạn trả lớn hơn tổng tiền');
+        //     $(this).val(khachdatra);
+        //     congnomoihienra = 0;
+        //     $('#ddh_congnomoihienra').val(congnomoihienra);
+
+        //     thunocu=khachdatra-tiendagiam;
+        //     $('#ddh_thunocu').val(formatNumber(thunocu, '.', ','));
+
+        //     congnomoi=tiendagiam-khachdatra;
+        //     $('#ddh_congnomoi').val(congnomoi);
+        //     // $('#ddh_congnomoi_dinhdang').val(formatNumber(congnomoi, '.', ','));
+        //     // $('#ddh_congnomoi_dinhdang').prop('disabled', true);
+
+        //     tongno = parseInt(congnocu) + parseInt(congnomoi);
+        //     $('#ddh_tongno').val(formatNumber(tongno, '.', ','));
+        // }
+        // else{
+        //     thunocu = 0;
+        //     $('#ddh_thunocu').val(thunocu);
+
+        //     $(this).val(khachdatra);
+        //     congnomoi=tiendagiam-khachdatra;
+        //     $('#ddh_congnomoi').val(congnomoi);
+
+        //     $('#ddh_congnomoihienra').val(formatNumber(congnomoi, '.', ','));
+        //     $('#ddh_congnomoihienra').prop('disabled', true);
+        //     // $('#ddh_congnomoi_dinhdang').val(formatNumber(congnomoi, '.', ','));
+        //     // $('#ddh_congnomoi_dinhdang').prop('disabled', true);
+
+        //     tongno = parseInt(congnocu) + parseInt(congnomoi);
+        //     $('#ddh_tongno').val(formatNumber(tongno, '.', ','));
+        // }
         
     });
 

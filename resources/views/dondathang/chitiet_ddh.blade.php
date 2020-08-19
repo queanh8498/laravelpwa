@@ -115,7 +115,15 @@
                     </tr>
                     <tr>
                         <th>
-                            Còn lại: 
+                            Nợ hiện tại:
+                        </th>
+                        <td>
+                            {{ number_format($ddh2->TongCong-$ddh2->ddh_datra, 0, ',' , ',') }} VND
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Tổng nợ:  
                         </th>
                         <td>
                             {{ number_format($ddh2->ConLai, 0, ',' , ',') }} VND
