@@ -130,7 +130,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </li>
                    @endif
                     @if(Auth::user()->quyen==3||Auth::user()->quyen==4||Auth::user()->quyen==8||Auth::user()->quyen==9)
-                       <li class="sub-menu">
+                       <!-- <li class="sub-menu">
                     <a href="javascript:;">
                         <i class="fa fa-book"></i>
                         <span>Quản lý công nợ</span>
@@ -142,7 +142,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         
                       
                     </ul>
-                </li>
+                </li> -->
                 @endif
                        @if(Auth::user()->quyen==9)
                        <li class="sub-menu">

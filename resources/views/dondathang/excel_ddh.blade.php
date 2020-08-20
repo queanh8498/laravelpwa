@@ -23,8 +23,8 @@
                     <td></td>
                     <th colspan="2" style="font-weight: bold;">Trạng thái:</th>
                     <td colspan="2">
-                        @if(($ddh->ddh_trangthai)==0)
-                            {{ 'Chưa giao hàng ' }}
+                        @if(($ddh->ddh_trangthai)==2)
+                            {{ 'Có trả hàng ' }}
                         @else
                             {{ 'Đã giao hàng' }}
                         @endif

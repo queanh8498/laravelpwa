@@ -74,11 +74,15 @@
 
                     <tbody>
                         @foreach($danhsach_ddh as $ddh)
+                            <?php
+                                $ddh_ngaylap=date("d-m-Y", strtotime($ddh->ddh_ngaylap));
+                                $bccn_hanno=date("d-m-Y", strtotime($ddh->bccn_hanno));
+                            ?>
                             <tr>
                                 <td>DH00{{ $ddh->ddh_id }}</td>
                                 <td>{{ $ddh->kh_ten }}</td>
-                                <td>{{ $ddh->ddh_ngaylap }}</td>
-                                <td>{{ $ddh->bccn_hanno }}</td>
+                                <td>{{ $ddh_ngaylap }}</td>
+                                <td>{{ $bccn_hanno }}</td>
                                 <td>{{ number_format($ddh->ddh_congnocu, 0, ',' , ',') }} đ</td>
                                 <td>
                                     @if(($ddh->ddh_datra)==($ddh->TongCong))
