@@ -60,7 +60,7 @@ tr:hover {background-color: #f5f5f5;}
             <tbody>
             @foreach($phieuthu_kh as $phieuthu_kh)
             <tr>
-                <td>PT000{{ $phieuthu_kh->pt_id }}</td>
+                <td>PT00{{ $phieuthu_kh->pt_id }}</td>
                 <td>{{ $phieuthu_kh->name }}</td>
 
                 <?php 

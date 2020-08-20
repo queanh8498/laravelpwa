@@ -35,19 +35,31 @@ class KhachhangController extends Controller
     }
     public function getdetail($id){
 
-        $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien 
+        // $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien 
+        //                         FROM dondathang dh 
+        //                         JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
+        //                         join khachhang kh on kh.kh_id = dh.kh_id
+        //                         JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+        //                         WHERE dh.kh_id='.$id.'
+        //                          GROUP BY dh.ddh_id');
+                                // dd($chitiet_kh);
+                        $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
                                 FROM dondathang dh 
+                                JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
                                 JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
                                 join khachhang kh on kh.kh_id = dh.kh_id
-                                JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
-                                WHERE dh.kh_id='.$id.'
-                                 GROUP BY dh.ddh_id');
+                                left join 
+                                        (select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
+                                          join chitiettrahang ctth on pth.pth_id = ctth.pth_id
+                                          join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id ) as aaa on dh.ddh_id = aaa.donhang_id
+                                WHERE dh.kh_id='.$id.' GROUP BY dh.ddh_id');
 
-        $dathu_tongno_kh = DB::select('SELECT kh.kh_id,kh.kh_ten, pt_id,pt_ngaylap,pt_tienthu, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
-        from khachhang kh 
-        join phieuthu pt on pt.kh_id=kh.kh_id 
-        join congno_khachhang cn on cn.kh_id=kh.kh_id
-        where kh.kh_id='.$id);
+        $dathu_tongno_kh = DB::select('SELECT kh.kh_id,kh.kh_ten,pt_id,pt_ngaylap,pt_tienthu, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
+                                        from khachhang kh 
+                                        left join phieuthu pt on pt.kh_id=kh.kh_id 
+                                        left join congno_khachhang cn on cn.kh_id=kh.kh_id
+                                        where kh.kh_id='.$id);
+
 
         $chitiet_thu=DB::select('SELECT kh.kh_id,kh.kh_ten, pt_id,pt_ngaylap,pt_tienthu
         from khachhang kh 
@@ -82,20 +94,45 @@ class KhachhangController extends Controller
         //  dd($t); 
 
         //TỚI HẠN LÀ CÓ BCCN_TOIHAN = NOW()
-        $dh_toihan = DB::select('SELECT * FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
+        $dh_toihan = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+        FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
+        JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+        left join 
+(select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
+ join chitiettrahang ctth on pth.pth_id = ctth.pth_id
+ join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id) as aaa on dh.ddh_id = aaa.donhang_id      
 WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) = CURDATE()');
         
         //QUÁ HẠN LÀ CÓ BCCN_TOIHAN < NOW()
-        $dh_quahan = DB::select('SELECT * FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
+        $dh_quahan = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+        FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
+        JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+        left join 
+(select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
+ join chitiettrahang ctth on pth.pth_id = ctth.pth_id
+ join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id) as aaa on dh.ddh_id = aaa.donhang_id                  
 WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi <>0 ');
 
         //Sắp tới HẠN LÀ CÓ (bccn_toihan > now) and ( NOW() + 5 > BCCN_TOIHAN )
-        $dh_saptoihan = DB::select('SELECT * FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
-        WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) > CURDATE() 
-        AND adddate(CURDATE(),INTERVAL 6 DAY) > DATE(bc.bccn_hanno)');
+        $dh_saptoihan = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+        FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
+        JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+        left join 
+(select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
+ join chitiettrahang ctth on pth.pth_id = ctth.pth_id
+ join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id) as aaa on dh.ddh_id = aaa.donhang_id                                  
+      WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) > CURDATE() 
+      AND adddate(CURDATE(),INTERVAL 6 DAY) > DATE(bc.bccn_hanno)
+      ');
 
         //Lọc ĐH đã trả
-        $dh_datra = DB::select('SELECT * FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
+        $dh_datra = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+        FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
+        JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+        left join 
+(select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
+ join chitiettrahang ctth on pth.pth_id = ctth.pth_id
+ join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id) as aaa on dh.ddh_id = aaa.donhang_id
         WHERE dh.kh_id='.$id.' AND dh.ddh_congnomoi=0');
 
         return view('khachhang.chitiet')
@@ -136,13 +173,19 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
         $b = $current_day_add;
         $current_day_add=$b->format("Y-m-d");
 
-        $chitiet_kh_date = DB::select('SELECT *,kh.kh_ten,SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien  FROM dondathang dh 
-                                JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
-                                join khachhang kh on kh.kh_id = dh.kh_id
-                                JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+        $chitiet_kh_date = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+        FROM dondathang dh 
+        JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+        JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
+        join khachhang kh on kh.kh_id = dh.kh_id
+        left join 
+                (select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
+                  join chitiettrahang ctth on pth.pth_id = ctth.pth_id
+                  join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' and pth.pth_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'" group by pth.ddh_id) 
+                  as aaa on dh.ddh_id = aaa.donhang_id
                                 WHERE dh.kh_id='.$id.' AND dh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'" GROUP BY dh.ddh_id');
       
-
+       
        return view('khachhang.search')
        ->with('chitiet_kh_date', $chitiet_kh_date)
        ->with('current_day', $current_day)
@@ -214,17 +257,18 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
     }
 	public function pdf_chitietcongno_kh($id) {
         $kh = khachhang::find($id);
-        $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
-                                FROM dondathang dh 
-                                JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
-                                JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
-                                join khachhang kh on kh.kh_id = dh.kh_id
-                                left join 
-										(select pth.pth_id, pth.ddh_id as donhang_id, ctth_soluong*ctth_dongia giatri_trahang from phieutrahang pth
-	      								join chitiettrahang ctth on pth.pth_id = ctth.pth_id) as aaa on dh.ddh_id = aaa.donhang_id
-                                WHERE dh.kh_id='.$id.' GROUP BY dh.ddh_id');
+        $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+        FROM dondathang dh 
+        JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+        JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
+        join khachhang kh on kh.kh_id = dh.kh_id
+        left join 
+                (select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
+                  join chitiettrahang ctth on pth.pth_id = ctth.pth_id
+                  join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id) as aaa on dh.ddh_id = aaa.donhang_id
+        WHERE dh.kh_id='.$id.' GROUP BY dh.ddh_id');
                                // dd($chitiet_kh);
-
+                               
         
         $dh_first=DB::select('SELECT dh.ddh_ngaylap as ngaylap FROM dondathang dh 
                             JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
@@ -247,31 +291,29 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
         $pdf = PDF::loadView('khachhang.pdf_chitietcongno_kh',$data);
         return $pdf->stream();
 }
-    public function excel_chitietcongno_kh($id) {
-
-        //$dd($kh);
-        $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
-        FROM dondathang dh 
-        JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
-        JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
-        join khachhang kh on kh.kh_id = dh.kh_id
-        left join 
-                (select pth.pth_id, pth.ddh_id as donhang_id, ctth_soluong*ctth_dongia giatri_trahang from phieutrahang pth
-                  join chitiettrahang ctth on pth.pth_id = ctth.pth_id) as aaa on dh.ddh_id = aaa.donhang_id
-        WHERE dh.kh_id='.$id.' GROUP BY dh.ddh_id');
-        // dd($chitiet_kh);
-
-        $dathu_tongno_kh = DB::select('SELECT kh.kh_id,kh.kh_ten, pt_id,pt_ngaylap,pt_tienthu, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
-                from khachhang kh 
-                join phieuthu pt on pt.kh_id=kh.kh_id 
-                join congno_khachhang cn on cn.kh_id=kh.kh_id
-                where kh.kh_id='.$id);
-        
-        $kh = khachhang::find($id);
-        
-        return Excel::download(new Congno_Khachhang_Export($kh,$chitiet_kh,$dathu_tongno_kh), 'congno_kh.xlsx');
-        //return Excel::download(['kh' => $kh,'chitiet_kh' => $chitiet_kh], 'congno_kh.xlsx');
-
+public function excel_chitietcongno_kh($id) {
+    //$dd($kh);
+    $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+    FROM dondathang dh 
+    JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+    JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
+    join khachhang kh on kh.kh_id = dh.kh_id
+    left join 
+            (select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
+              join chitiettrahang ctth on pth.pth_id = ctth.pth_id
+              join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id) as aaa on dh.ddh_id = aaa.donhang_id
+    WHERE dh.kh_id='.$id.' GROUP BY dh.ddh_id');
+    // dd($chitiet_kh);
+    $dathu_tongno_kh = DB::select('SELECT kh.kh_id,kh.kh_ten, pt_id,pt_ngaylap,pt_tienthu, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
+            from khachhang kh 
+            LEFT join phieuthu pt on pt.kh_id=kh.kh_id 
+            LEFT join congno_khachhang cn on cn.kh_id=kh.kh_id
+            where kh.kh_id='.$id);
+    
+    $kh = khachhang::find($id);
+    
+    return Excel::download(new Congno_Khachhang_Export($kh,$chitiet_kh,$dathu_tongno_kh), 'congno_kh.xlsx');
+    //return Excel::download(['kh' => $kh,'chitiet_kh' => $chitiet_kh], 'congno_kh.xlsx');
 }
     public function excel_chitietcongno_kh_time($id, $from_date, $to_date) {
 

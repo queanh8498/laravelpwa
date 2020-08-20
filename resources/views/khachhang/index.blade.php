@@ -59,7 +59,7 @@ tr:hover {background-color: #f5f5f5;}
             <tbody>
             @foreach($kh as $kh)
                 <tr>
-                    <td>{{ $kh->kh_id }}</td>
+                    <td>KH00{{ $kh->kh_id }}</td>
                     <td>{{ $kh->kh_ten }}</td>
                     <td>{{ $kh->kh_diachi }}</td>
                     <td>{{ $kh->kh_sdt }}</td>

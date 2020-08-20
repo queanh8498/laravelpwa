@@ -108,7 +108,7 @@ tr:hover {background-color: #f5f5f5;
             <?php $sum=0; ?>
             @foreach($chitiet_kh_date as $ctkh)
                 <tr>
-                    <td>{{ $ctkh->ddh_id }}</td>
+                    <td>DH00{{ $ctkh->ddh_id }}</td>
                     @if($ctkh->id == 1)
                     <td>Nhân viên bán hàng</td>
                     @else
@@ -150,6 +150,8 @@ tr:hover {background-color: #f5f5f5;
                     <!-- end -->
                         <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
                         <td>{{ number_format($ctkh->ddh_congnomoi,0,',',',') }} VNĐ</td>
+                        <!-- <td>{{ number_format($ctkh->giatri_trahang,0,',',',') }} VNĐ</td> -->
+
                     <?php $sum += $ctkh->ddh_congnomoi;?>
                     <td>
                     <a href="{{URL::to('/banhang/chitietdondathang/'.$ctkh->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-eye text-active" title="Xem chi tiết"></i></a> &nbsp;
@@ -159,8 +161,9 @@ tr:hover {background-color: #f5f5f5;
             @endforeach
             <tr>
             <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
-            <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
+            <td colspan="2" class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>
+           
             </tbody>
         </table>
     </div>

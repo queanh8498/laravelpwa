@@ -120,6 +120,7 @@ tr:hover {background-color: #f5f5f5;}
                   <th>NGÀY TỚI HẠN</th>
                   <th>TỔNG TIỀN</th>
                   <th>NỢ ĐƠN</th>
+                  <th>TRẢ HÀNG</th>
                   <th>CHI TIẾT</th>
 
                 </tr>
@@ -128,8 +129,10 @@ tr:hover {background-color: #f5f5f5;}
             <tbody>
             <?php $sum=0; ?>
             @foreach($dh_toihan as $dh_toihan)
+                @if ($dh_toihan->ddh_id == NULL)
+                @else
                 <tr>
-                    <td>{{ $dh_toihan->ddh_id }}</td>
+                    <td>DH00{{ $dh_toihan->ddh_id }}</td>
                     @if($dh_toihan->id == 1)
                     <td>Nhân viên bán hàng</td>
                     @else
@@ -143,21 +146,23 @@ tr:hover {background-color: #f5f5f5;}
 
                     <td  style="color:orange;"><b>{{ $dh_toihan->bccn_hanno }} (Tới hạn)</b></td>
                     
-                    <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
+                    <td>{{ number_format($dh_toihan->tongtien,0,',',',') }} VNĐ</td>
 
-                    <td>{{ number_format($dh_toihan->ddh_congnomoi,0,',',',') }} VNĐ</td>
+                    <td>{{ number_format($dh_toihan->tongtien - $dh_toihan->ddh_datra,0,',',',') }} VNĐ</td>
 
+                    <td>{{ number_format($dh_toihan->giatri_trahang,0,',',',') }} VNĐ</td>                  
                     <?php $sum += $dh_toihan->ddh_congnomoi;?>
                     <td>
                     <a href="{{URL::to('/banhang/chitietdondathang/'.$dh_toihan->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-eye text-active" title="Xem chi tiết"></i></a> &nbsp;
 
                     </td>
                 </tr>
+                @endif
             @endforeach
             <tr>
             <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
 
-            <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
+            <td colspan="2" class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>
             </tbody>
         </table>
@@ -184,6 +189,8 @@ tr:hover {background-color: #f5f5f5;}
                   <th>NGÀY TỚI HẠN</th>
                   <th>TỔNG TIỀN</th>
                   <th>NỢ ĐƠN</th>
+                  <th>TRẢ HÀNG</th>
+
                   <th>CHI TIẾT</th>
 
                 </tr>
@@ -192,8 +199,10 @@ tr:hover {background-color: #f5f5f5;}
             <tbody>
             <?php $sum=0; ?>
             @foreach($dh_quahan as $dh_quahan)
+            @if ($dh_quahan->ddh_id == NULL)
+                @else
                 <tr>
-                    <td>{{ $dh_quahan->ddh_id }}</td>
+                    <td>DH00{{ $dh_quahan->ddh_id }}</td>
                     @if($dh_quahan->id == 1)
                     <td>Nhân viên bán hàng</td>
                     @else
@@ -207,9 +216,11 @@ tr:hover {background-color: #f5f5f5;}
 
                     <td style="color:red"><b>{{ $dh_quahan->bccn_hanno }} (Qúa hạn)</b></td>
 
-                    <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
+                    <td>{{ number_format($dh_quahan->tongtien,0,',',',') }} VNĐ</td>
 
-                    <td>{{ number_format($dh_quahan->ddh_congnomoi,0,',',',') }} VNĐ</td>
+                    <td>{{ number_format($dh_quahan->tongtien-$dh_quahan->ddh_datra,0,',',',') }} VNĐ</td>
+
+<td>{{ number_format($dh_quahan->giatri_trahang,0,',',',') }} VNĐ</td>                   
 
                     <?php $sum += $dh_quahan->ddh_congnomoi;?>
                     <td>
@@ -217,11 +228,12 @@ tr:hover {background-color: #f5f5f5;}
                             <i class="fa fa-eye text-active" title="Chi tiết đơn hàng"></i></a>
                     </td>
                 </tr>
+                @endif
             @endforeach
             <tr>
             <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
 
-            <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
+            <td colspan="2" class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>
             </tbody>
         </table>
@@ -245,6 +257,8 @@ tr:hover {background-color: #f5f5f5;}
                   <th>NGÀY TỚI HẠN</th>
                   <th>TỔNG TIỀN</th>
                   <th>NỢ ĐƠN</th>
+                  <th>TRẢ HÀNG</th>
+
                   <th>CHI TIẾT</th>
 
                 </tr>
@@ -253,8 +267,10 @@ tr:hover {background-color: #f5f5f5;}
             <tbody>
             <?php $sum=0; ?>
             @foreach($dh_saptoihan as $dh_saptoihan)
+            @if ($dh_saptoihan->ddh_id == NULL)
+                @else
                 <tr>
-                    <td>{{ $dh_saptoihan->ddh_id }}</td>
+                    <td>DH00{{ $dh_saptoihan->ddh_id }}</td>
                     @if($dh_saptoihan->id == 1)
                     <td>Nhân viên bán hàng</td>
                     @else
@@ -270,7 +286,9 @@ tr:hover {background-color: #f5f5f5;}
                     
                     <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
 
-                    <td>{{ number_format($dh_saptoihan->ddh_congnomoi,0,',',',') }} VNĐ</td>
+                    <td>{{ number_format($dh_saptoihan->tongtien-$dh_saptoihan->ddh_datra,0,',',',') }} VNĐ</td>
+
+                    <td>{{ number_format($dh_saptoihan->giatri_trahang,0,',',',') }} VNĐ</td>
 
                     <?php $sum += $dh_saptoihan->ddh_congnomoi;?>
                     <td>
@@ -278,11 +296,12 @@ tr:hover {background-color: #f5f5f5;}
                             <i class="fa fa-eye text-active" title="Chi tiết đơn hàng"></i></a>
                     </td>
                 </tr>
+                @endif
             @endforeach
             <tr>
             <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
 
-            <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
+            <td colspan="2" class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>
             </tbody>
         </table>
@@ -306,6 +325,8 @@ tr:hover {background-color: #f5f5f5;}
                   <th>NGÀY TỚI HẠN</th>
                   <th>TỔNG TIỀN</th>
                   <th>NỢ ĐƠN</th>
+                  <th>TRẢ HÀNG</th>
+
                   <th>CHI TIẾT</th>
                 </tr>
             </thead>
@@ -313,8 +334,10 @@ tr:hover {background-color: #f5f5f5;}
             <tbody>
             <?php $sum=0; ?>
             @foreach($dh_datra as $dh_datra)
+            @if ($dh_datra->ddh_id == NULL)
+                @else
                 <tr>
-                    <td>{{ $dh_datra->ddh_id }}</td>
+                    <td>DH00{{ $dh_datra->ddh_id }}</td>
                     @if($dh_datra->id == 1)
                     <td>Nhân viên bán hàng</td>
                     @else
@@ -327,21 +350,23 @@ tr:hover {background-color: #f5f5f5;}
                     <td>{{ $dh_datra->ddh_ngaylap }}</td>
 
                     <td style="color:green"><b>{{ $dh_datra->bccn_hanno }} (Đã trả)</b></td>
-                    <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
+                    <td>{{ number_format($dh_datra->tongtien,0,',',',') }} VNĐ</td>
 
-                    <td>{{ number_format($dh_datra->ddh_congnomoi,0,',',',') }} VNĐ</td>
+                    <td>{{ number_format($dh_datra->tongtien-$dh_datra->ddh_datra,0,',',',') }} VNĐ</td>
 
+                    <td>{{ number_format($dh_datra->giatri_trahang,0,',',',') }} VNĐ</td>
                     <?php $sum += $dh_datra->ddh_congnomoi;?>
                     <td>
                             <a href="{{URL::to('/banhang/chitietdondathang/'.$dh_datra->ddh_id)}}" class="active styling-edit" ui-toggle-class="">
                             <i class="fa fa-eye text-active" title="Chi tiết đơn hàng"></i></a>
                     </td>
                 </tr>
+                @endif
             @endforeach
             <tr>
             <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
 
-            <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
+            <td colspan="2" class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>
             </tbody>
         </table>
@@ -349,7 +374,7 @@ tr:hover {background-color: #f5f5f5;}
     </div>
 
     <!-- ====================================end table4 - sắp tới hạn -->
-    <div id="table2"></div>
+    
 
     <div id="table10">
     <div class="panel-heading" style="font-size:25px">
@@ -366,6 +391,8 @@ tr:hover {background-color: #f5f5f5;}
 				   <!-- NỢ THEO ĐƠN = CÔNG NỢ MỚI -->
                   <th>TỔNG TIỀN</th>
                   <th>NỢ ĐƠN</th>
+                  <th>TRẢ HÀNG</th>
+                  <th>TỔNG NỢ THEO ĐƠN</th>
                   <th>CHI TIẾT</th>
 				  <!-- <th>TỔNG NỢ THEO ĐƠN</th> -->
                 </tr>
@@ -375,7 +402,7 @@ tr:hover {background-color: #f5f5f5;}
             <?php $sum=0; ?>
             @foreach($chitiet_kh as $ctkh)
                 <tr>
-                    <td>{{ $ctkh->ddh_id }}</td>
+                    <td>DH00{{ $ctkh->ddh_id }}</td>
                     @if($ctkh->id == 1)
                     <td>Nhân viên bán hàng</td>
                     @else
@@ -416,39 +443,53 @@ tr:hover {background-color: #f5f5f5;}
                     @endif
                     <!-- end -->
                     <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
-                    <td>{{ number_format($ctkh->ddh_congnomoi,0,',',',') }} VNĐ</td>
+                    <?php $no = $ctkh->tongtien-$ctkh->ddh_datra;?>
+                    <td>{{ number_format($no,0,',',',') }}</td>
+                    
+                    @if ($ctkh->giatri_trahang == NULL)
+                    <td>0</td>
+                @else
+                    <td>{{ number_format($ctkh->giatri_trahang,0,',',',') }}</td>
+                @endif
+                <?php $no_after_trahang = $no - $ctkh->giatri_trahang;
+                    if ($no_after_trahang < 0){
+                        $no_after_trahang=0;
+                    }
+                ?>
+                <td>{{ number_format($no_after_trahang,0,',',',') }} </td>
+                    <!-- sum là tổng nợ đc tính sau khi khách trả hàng -->
+                    <?php $sum += $no_after_trahang; ?>
 					<td>
                             <a href="{{URL::to('/banhang/chitietdondathang/'.$ctkh->ddh_id)}}" class="active styling-edit" ui-toggle-class="">
                             <i class="fa fa-eye text-active" title="Chi tiết đơn hàng"></i></a>
                     </td>
-                    <?php $sum += $ctkh->ddh_congnomoi;?>
                 </tr>
             @endforeach
             <tr>
-            <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
-            <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
+            <td colspan="7"><b>TỔNG CÔNG NỢ:</b></td>
+            <td  class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>
             <tr>
             @foreach($dathu_tongno_kh as $dathu_tongno_kh)
-            <td colspan="5"><b>ĐÃ THU:</b></td>
-            <td class="text-center"><b>{{ number_format($dathu_tongno_kh->tongthu_kh,0,',',',') }} VNĐ</b></td>
+            <td colspan="7"><b>ĐÃ THU:</b></td>
+            <td  class="text-center"><b>{{ number_format($dathu_tongno_kh->tongthu_kh,0,',',',') }} VNĐ</b></td>
+           
             @if($dathu_tongno_kh->tongthu_kh==0)
             @else
-            <td>
+            <td colspan="2">
                 <a href="{{URL::to('banhang/khachhang/phieuthu/'.$id)}}" ui-toggle-class="">
                 <i class="fa fa-eye text-warning" title="Chi tiết thu nợ"></i></a>
             </td>
                    
             @endif
-
+            <tr>
+            <td colspan="7"><b>TIỀN TRẢ LẠI KHÁCH:</b></td>
+            <td><b>{{ number_format($ctkh->pth_ctk,0,',',',') }} VNĐ</b></td>
+               
             </tr>
              <tr>
-            <td colspan="5"><b>NỢ HIỆN TẠI:</b></td>
-            @if($dathu_tongno_kh->tongthu_kh == 0)
-            <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
-            @else
-            <td class="text-center"><b>{{ number_format($dathu_tongno_kh->tongno,0,',',',') }} VNĐ</b></td>
-            @endif
+            <td colspan="7"><b>NỢ HIỆN TẠI:</b></td>
+            <th ><b>{{ number_format($dathu_tongno_kh->tongno,0,',',',') }} VNĐ</b></th>
 
             @endforeach
             </tr>

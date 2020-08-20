@@ -11,6 +11,11 @@ use App\User;
 use App\khachhang;
 use App\dondathang;
 use App\hanghoa;
+use App\phieuthu;
+use App\baocaocongno;
+use App\chitietdathang;
+use App\chitiettrahang;
+use App\congno_khachhang;
 use Carbon\Carbon;
 use DateTime;
 use DB;
@@ -29,7 +34,6 @@ class Congno_Khachhang_Export implements FromView, ShouldAutoSize,WithEvents
     protected $kh;
     protected $chitiet_kh;
     protected $dathu_tongno_kh;
-
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -50,7 +54,7 @@ public function  registerEvents(): array
                 $chitiet_kh=$this->chitiet_kh;
                 $dathu_tongno_kh=$this->dathu_tongno_kh;
 
-        // Set khổ giấy in ngang
+        //Set khổ giấy in ngang
         $event->sheet->getDelegate()->getPageSetup()
             ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
         
@@ -78,11 +82,6 @@ public function  registerEvents(): array
        
         foreach($chitiet_kh as $index=>$chitiet_kh)
         {
-            if(($chitiet_kh->giatri_trahang == NULL))
-                $a = 0;
-            else
-                $a = 1;
-            
             $currentRow = $startRow + $index;
             //dd($currentRow); 
             //$event->sheet->getDelegate()->getRowDimension($currentRow)->setRowHeight(50);
@@ -105,51 +104,27 @@ public function  registerEvents(): array
                 ]
             );
         }
-
         //Set border for __Summary line
-        if ($a == 1){
-            $currentRow = $currentRow+1;
-            $Row = $currentRow+3;
-            $coordinate = "A${currentRow}:H${Row}";
-            $event->sheet->getDelegate()->getStyle($coordinate)->applyFromArray(
-                [
-                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                        //'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP
+        $currentRow = $currentRow+1;
+        $row=$currentRow+3;
+        $coordinate = "A${currentRow}:H${row}";
+        $event->sheet->getDelegate()->getStyle($coordinate)->applyFromArray(
+            [
+                'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
+                'alignment' => [
+                    'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                    //'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP
 
+                ],
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+                        'color' => ['argb' => '00000000'],
                     ],
-                    'borders' => [
-                        'allBorders' => [
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                            'color' => ['argb' => '00000000'],
-                        ],
-                    ]
                 ]
-            );
-        } 
-        else {
-            $currentRow = $currentRow+1;
-            $Row = $currentRow+2;
-            $coordinate = "A${currentRow}:H${Row}";
-            $event->sheet->getDelegate()->getStyle($coordinate)->applyFromArray(
-                [
-                    'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
-                    'alignment' => [
-                        'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
-                        //'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP
-
-                    ],
-                    'borders' => [
-                        'allBorders' => [
-                            'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
-                            'color' => ['argb' => '00000000'],
-                        ],
-                    ]
-                ]
-            );
-        }      
-    }
+            ]
+        );
+        }
     ];
     }
 
@@ -167,7 +142,7 @@ public function  registerEvents(): array
             //'data' => $data,
             'kh' => $kh,
             'chitiet_kh' => $chitiet_kh,
-            'dathu_tongno_kh' => $dathu_tongno_kh,
+            'dathu_tongno_kh' => $dathu_tongno_kh
             
         ]);
     }

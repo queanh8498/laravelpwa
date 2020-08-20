@@ -60,7 +60,7 @@
             @foreach($chitiet_kh_date as $key => $chitiet_kh_date)
             <tr align=center>
                 <td style="text-align:center">{{ $i++ }}</td>
-                <td style="text-align:center">{{ $chitiet_kh_date->ddh_id }}</td>
+                <td style="text-align:center">DH00{{ $chitiet_kh_date->ddh_id }}</td>
                 <?php 
                 $date=date("d-m-Y", strtotime($chitiet_kh_date->ddh_ngaylap ));
                 ?>

@@ -80,7 +80,7 @@
                 $date=date("d-m-Y", strtotime($chitiet_kh->ddh_ngaylap ));
                 ?>
                 <td>{{ $date }}</td>
-                <td>{{ $chitiet_kh->ddh_id }}</td>
+                <td>DH00{{ $chitiet_kh->ddh_id }}</td>
                 <td>{{ number_format($chitiet_kh->tongtien,0,',',',') }}</td>
                 <td>{{ number_format($chitiet_kh->ddh_datra,0,',',',') }}</td>
                 <?php $no = $chitiet_kh->tongtien-$chitiet_kh->ddh_datra;?>
@@ -93,7 +93,11 @@
                 @else
                     <td>{{ number_format($chitiet_kh->giatri_trahang,0,',',',') }}</td>
                 @endif
-                <?php $no_after_trahang = $no - $chitiet_kh->giatri_trahang?>
+                <?php $no_after_trahang = $no - $chitiet_kh->giatri_trahang;
+                    if ($no_after_trahang < 0){
+                        $no_after_trahang=0;
+                    }
+                ?>
                 <td>{{ number_format($no_after_trahang,0,',',',') }} </td>
 
                 <!-- sum là tổng nợ đc tính sau khi khách trả hàng -->
@@ -111,14 +115,14 @@
             <th colspan="7">Đã thu:</th>
             <th>{{ number_format($dathu_tongno_kh->tongthu_kh,0,',',',') }}</td>
             </tr>
-                @if ($chitiet_kh->giatri_trahang == NULL)
-                @else
+                
+                
                 <tr>
                     <th colspan="7"><b>Tiền trả lại khách:</b></th>
-                    <?php $tralaikhach = abs($sum - $dathu_tongno_kh->tongthu_kh) ; ?>
-                    <th>{{ number_format($tralaikhach,0,',',',') }}</th>
+                    <!-- <?php //$tralaikhach = abs($sum - $dathu_tongno_kh->tongthu_kh) ; ?> -->
+                    <th>{{ number_format($chitiet_kh->pth_ctk,0,',',',') }}</th>
                 </tr>
-                @endif
+               
 
              <tr>
             <th colspan="7"><b>Nợ hiện tại:</b></th>
