@@ -55,7 +55,7 @@
                                             
                                 </div>
                                
-                 <span id="result"></span>
+              
                   <table class="table table-bordered table-striped" id="user_table">
 
                
@@ -86,7 +86,9 @@
                             </div>
                         </div>
                     @csrf
+                       <span id="result"></span>
                           <input type='submit' name='save' id='save' class='btn btn-primary' value='Lưu'/>
+                           <a type="button" name="taopth" class="btn btn-success"   href="{{ URL::to('banhang/danhsach-pth') }}">Trở về</a><br>
                 </form>
                             <div class="position-center">
                              
@@ -146,6 +148,7 @@ $(document).ready(function(){
                  
                     $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
                      $('#save').hide();  //Khi tạo thành công nút save cần ẩn đi tránh trả 2 lần trên 1 đơn hàng
+                       window.location.href="{!!URL::to('banhang/danhsach-pth')!!}"
                 }
                
             }

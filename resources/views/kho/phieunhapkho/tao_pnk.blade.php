@@ -43,7 +43,7 @@
                                             
                                     </select>
                                 </div>
-                 <span id="result"></span>
+               
                  <table class="table table-bordered table-striped" id="user_table">
 
                <thead>
@@ -62,21 +62,24 @@
                <tfoot>
                  <tr>
                 <td colspan="4" class="text-right" >  <strong>Tính tổng:</strong> </td>
-                <td><input type="text" name="sum" id="sum" class="form-control" readonly="" value="0"></td>
-                  <td></td>
+                <td colspan="2" ><input type="text" name="sum" id="sum" class="form-control" readonly="" value="0"></td>
+                 
               </tr>
 
-                <tr>
-                                <td colspan="5" align="right">&nbsp;</td>
-                                <td>
-                  @csrf
-                  <input type="submit" name="save" id="save" class="btn btn-primary" value="Lưu" />
+               
+                                
+              
 
-                 </td>
-                </tr>
+              
+               
                </tfoot>
            </table>
+               @csrf
+                 <span id="result"></span>
+                  <input type="submit" name="save" id="save" class="btn btn-primary" value="Lưu và tạo mới" />
+                 <a type="button" name="taopnk" class="btn btn-success" href="{{ URL::to('banhang/danhsach-pnk') }}">Trở về</a><br>
                 </form>
+               
                             <div class="position-center">
                              
 
@@ -182,6 +185,7 @@ $(document).ready(function(){
                 {
                    
                     $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
+                      window.location.href="{!!URL::to('banhang/tao-pnk')!!}"
                 }
                 $('#save').attr('disabled', false);
             }

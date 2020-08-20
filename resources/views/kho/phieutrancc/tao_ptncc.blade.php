@@ -38,7 +38,7 @@
                           </div>
                           
                           
-                 <span id="result"></span>
+                
                    <table class="table table-bordered table-striped" id="user_table">
 
                <thead>
@@ -49,7 +49,7 @@
                      <th with="10%">Số lượng trả</th>
                       <th  with="10%" >Đơn giá</th>
                        <th   with="10%" >Thành tiền</th>
-                    <th >Hành động</th>
+                  
                 </tr>
                </thead>
                <tbody>
@@ -58,19 +58,15 @@
                <tfoot>
                    <tr>
                 <td colspan="5" class="text-right" >  <strong>Tính tổng:</strong> </td>
-                <td><input type="text" name="sum" id="sum" class="form-control" readonly="" value="0"></td>
-                  <td></td>
+                <td ><input type="text" name="sum" id="sum" class="form-control" readonly="" value="0"></td>
+                  
               </tr>
-                <tr>
-                                <td colspan="6" align="right">&nbsp;</td>
-                                <td>
-                  @csrf
-                  <input type="submit" name="save" id="save" class="btn btn-primary" value="Lưu" />
-
-                 </td>
-                </tr>
                </tfoot>
            </table>
+                  @csrf
+                   <span id="result"></span>
+                  <input type="submit" name="save" id="save" class="btn btn-primary" value="Lưu" />
+                   <a type="button" name="taoptncc" class="btn btn-success"  href="{{URL::to('/banhang/chitiet-pnk/'.$pnk->pnk_id)}}">Trở về</a><br>
                 </form>
                             <div class="position-center">
                              
@@ -129,6 +125,7 @@
                  
                     $('#result').html('<div class="alert alert-success">'+data.success+'</div>');
                       $('#save').hide();
+                        window.location.href="{!!URL::to('banhang/danhsach-ptncc')!!}"
                       //Nếu tạo thành công sẽ ẩn nút tránh tạo phiếu trả 2 lần
                 }
               
@@ -153,7 +150,7 @@ count++;
         html += '<input type="hidden"  name="ctncc_dongia[]" class="form-control ctncc_dongia"  id="ctncc_dongia'+count+'" value="{{$value->ctpn_dongia}}" >';
          html += '<td><input type="text"  name="ctncc_dongiaht[]" class="form-control ctncc_dongiaht"  id="ctncc_dongiaht'+count+'" value="{{number_format($value->ctpn_dongia,0,",",",")}}" ></td>';
          html += '<td><input type="text"  name="ctptncc_tt[]" class="form-control ctptncc_tt"  id="ctptncc_tt'+count+'" value="0"  ></td>';
-          html += '<td></td></tr> @endforeach';
+          html += '</tr> @endforeach';
      
  
     $('tbody').html(html);
