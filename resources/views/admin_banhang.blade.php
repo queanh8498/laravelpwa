@@ -29,6 +29,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{{asset('backend/js/jquery2.0.3.min.js')}}"></script>
 <script src="{{asset('backend/js/raphael-min.js')}}"></script>
 <script src="{{asset('backend/js/morris.js')}}"></script>
+  @laravelPWA
 <base href="{{asset('')}}">
 </head>
 <body>
@@ -38,7 +39,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!--logo start-->
 <div class="brand">
     <a href="#" class="logo">
-        ADMIN
+        QUẢN LÝ
     </a>
     <div class="sidebar-toggle-box">
         <div class="fa fa-bars"></div>
@@ -174,7 +175,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
  <!-- footer -->
 		  <div class="footer">
 			<div class="wthree-copyright">
-			  <p>© 2017 Visitors. All rights reserved | Design by <a href="http://w3layouts.com">W3layouts</a></p>
+			  <p>PHẦN MỀM QUẢN LÝ BÁN HÀNG LARAVEL</p>
 			</div>
 		  </div>
   <!-- / footer -->
@@ -224,10 +225,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     order: [
                         [0, 'asc']
                     ],
-                    dom: 'lBfrtip',
-   buttons: [
-    'excel', 'csv', 'pdf', 'copy', 'print'
-   ],
+                   
                     'language': {
                         'info': 'Hiển thị _START_ đến _END_ của _TOTAL_ danh sách',
                         'lengthMenu': "Hiển thị _MENU_ danh sách",
@@ -250,20 +248,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </script>
 <script>
 	CKEDITOR.replace('ckeditor');
-	CKEDITOR.replace('ckeditor1');
-	CKEDITOR.replace('ckeditor2');
-	CKEDITOR.replace('ckeditor3');
-	CKEDITOR.replace('ckeditor4');
-	CKEDITOR.replace('ckeditor5');
-    CKEDITOR.replace('ckeditor6');
-    CKEDITOR.replace('ckeditor7');
-    CKEDITOR.replace('ckeditor8');
-    CKEDITOR.replace('ckeditor9');
-    CKEDITOR.replace('ckeditor10');
-    CKEDITOR.replace('ckeditor11');
-    CKEDITOR.replace('ckeditor12');
-    CKEDITOR.replace('ckeditor13');
-    CKEDITOR.replace('ckeditor14');
 </script>
 <!-- morris JavaScript -->	
 <script>

@@ -3265,7 +3265,8 @@
         "homepage": "https://github.com/sebastianbergmann/php-token-stream/",
         "keywords": [
             "tokenizer"
-        ]
+        ],
+        "abandoned": true
     },
     {
         "name": "phpunit/phpunit",
@@ -4725,6 +4726,54 @@
         ],
         "description": "Library that helps with managing the version number of Git-hosted PHP projects",
         "homepage": "https://github.com/sebastianbergmann/version"
+    },
+    {
+        "name": "silviolleite/laravelpwa",
+        "version": "2.0.2",
+        "version_normalized": "2.0.2.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/silviolleite/laravel-pwa.git",
+            "reference": "33157d41c6c6ccbdec2624e2fcc79753b08229b3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/silviolleite/laravel-pwa/zipball/33157d41c6c6ccbdec2624e2fcc79753b08229b3",
+            "reference": "33157d41c6c6ccbdec2624e2fcc79753b08229b3",
+            "shasum": ""
+        },
+        "time": "2020-07-01T11:33:47+00:00",
+        "type": "library",
+        "extra": {
+            "laravel": {
+                "providers": [
+                    "LaravelPWA\\Providers\\LaravelPWAServiceProvider"
+                ]
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "LaravelPWA\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Silvio Luis Leite",
+                "email": "silviolleite@gmail.com"
+            }
+        ],
+        "description": "Looks like an app, feels like an app, but NOT an app.",
+        "keywords": [
+            "laravel",
+            "php",
+            "progressive web apps",
+            "pwa"
+        ]
     },
     {
         "name": "swiftmailer/swiftmailer",

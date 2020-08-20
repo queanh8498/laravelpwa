@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2eded2bdc3bf844b11f24598ecc990d0",
+    "content-hash": "096f141354aca9247a89034fdcef6afb",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2671,6 +2671,52 @@
                 "stylesheet"
             ],
             "time": "2020-06-01T09:10:00+00:00"
+        },
+        {
+            "name": "silviolleite/laravelpwa",
+            "version": "2.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/silviolleite/laravel-pwa.git",
+                "reference": "33157d41c6c6ccbdec2624e2fcc79753b08229b3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/silviolleite/laravel-pwa/zipball/33157d41c6c6ccbdec2624e2fcc79753b08229b3",
+                "reference": "33157d41c6c6ccbdec2624e2fcc79753b08229b3",
+                "shasum": ""
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelPWA\\Providers\\LaravelPWAServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelPWA\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Silvio Luis Leite",
+                    "email": "silviolleite@gmail.com"
+                }
+            ],
+            "description": "Looks like an app, feels like an app, but NOT an app.",
+            "keywords": [
+                "laravel",
+                "php",
+                "progressive web apps",
+                "pwa"
+            ],
+            "time": "2020-07-01T11:33:47+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

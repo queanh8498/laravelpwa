@@ -36,7 +36,7 @@
                                     <input type="email" name="email" class="form-control" id="exampleInputEmail1" placeholder="Email nhân viên">
                                 </div>
                                  <div class="form-group">
-                                    <label for="exampleInputPassword1">Nhóm nhân viên(không bắt buộc)</label>
+                                    <label for="exampleInputPassword1">Nhóm nhân viên (không bắt buộc)</label>
                                       <select name="nv" id='nv' class="form-control input-sm m-bot15">
                                           <option value="">---------------------------------------------------------Chọn nhân viên------------------------------------------------------------------------</option>
                                             <option value="0">Bán hàng</option>
@@ -88,15 +88,24 @@
    if(nv==0){
     $('#checkbox1').prop('checked', true);
     $('#checkbox2').prop('checked', false);
+    $('#checkbox3').prop('checked', false);
     var checkbox1 = parseInt($('#checkbox1').val());
      $("#quyen").val(checkbox1);
     }
   if(nv==1){
     $('#checkbox1').prop('checked', false);
     $('#checkbox2').prop('checked', true);
+    $('#checkbox3').prop('checked', false);
     var checkbox2 = parseInt($('#checkbox2').val());
     $("#quyen").val(checkbox2);
      
+  }
+  if(nv==""){
+    $('#checkbox1').prop('checked', false);
+    $('#checkbox2').prop('checked', false);
+    $('#checkbox3').prop('checked', false);
+    $("#quyen").val(0);
+
   }
    
    

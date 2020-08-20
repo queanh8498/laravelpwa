@@ -188,6 +188,7 @@ class ComposerStaticInitde7df308fa7536477d59c84cf17d82b0
             'League\\Flysystem\\' => 17,
             'League\\CommonMark\\' => 18,
             'Laravel\\Tinker\\' => 15,
+            'LaravelPWA\\' => 11,
         ),
         'I' => 
         array (
@@ -468,6 +469,10 @@ class ComposerStaticInitde7df308fa7536477d59c84cf17d82b0
         array (
             0 => __DIR__ . '/..' . '/laravel/tinker/src',
         ),
+        'LaravelPWA\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/silviolleite/laravelpwa',
+        ),
         'Illuminate\\' => 
         array (
             0 => __DIR__ . '/..' . '/laravel/framework/src/Illuminate',
@@ -601,6 +606,16 @@ class ComposerStaticInitde7df308fa7536477d59c84cf17d82b0
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Exports\\Baocaokh_Export' => __DIR__ . '/../..' . '/app/Exports/Baocaokh_Export.php',
+        'App\\Exports\\Baocaoncc_Export' => __DIR__ . '/../..' . '/app/Exports/Baocaoncc_Export.php',
+        'App\\Exports\\Baocaotk_Export' => __DIR__ . '/../..' . '/app/Exports/Baocaotk_Export.php',
+        'App\\Exports\\Congno_KH_Time_Export' => __DIR__ . '/../..' . '/app/Exports/Congno_KH_Time_Export.php',
+        'App\\Exports\\Congno_Khachhang_Export' => __DIR__ . '/../..' . '/app/Exports/Congno_Khachhang_Export.php',
+        'App\\Exports\\DonHang_ChiTiet_Export' => __DIR__ . '/../..' . '/app/Exports/DonHang_ChiTiet_Export.php',
+        'App\\Exports\\DonHang_Time_Export' => __DIR__ . '/../..' . '/app/Exports/DonHang_Time_Export.php',
+        'App\\Exports\\Phieunhapkho_Export' => __DIR__ . '/../..' . '/app/Exports/Phieunhapkho_Export.php',
+        'App\\Exports\\Phieutrahang_Export' => __DIR__ . '/../..' . '/app/Exports/Phieutrahang_Export.php',
+        'App\\Exports\\Phieutranhacungcap_Export' => __DIR__ . '/../..' . '/app/Exports/Phieutranhacungcap_Export.php',
         'App\\Http\\Controllers\\BaocaokhController' => __DIR__ . '/../..' . '/app/Http/Controllers/BaocaokhController.php',
         'App\\Http\\Controllers\\BaocaonccController' => __DIR__ . '/../..' . '/app/Http/Controllers/BaocaonccController.php',
         'App\\Http\\Controllers\\BaocaotkController' => __DIR__ . '/../..' . '/app/Http/Controllers/BaocaotkController.php',
@@ -613,8 +628,10 @@ class ComposerStaticInitde7df308fa7536477d59c84cf17d82b0
         'App\\Http\\Controllers\\NhanvienController' => __DIR__ . '/../..' . '/app/Http/Controllers/NhanvienController.php',
         'App\\Http\\Controllers\\NhomhanghoaController' => __DIR__ . '/../..' . '/app/Http/Controllers/NhomhanghoaController.php',
         'App\\Http\\Controllers\\PhieunhapkhoController' => __DIR__ . '/../..' . '/app/Http/Controllers/PhieunhapkhoController.php',
+        'App\\Http\\Controllers\\PhieuthuController' => __DIR__ . '/../..' . '/app/Http/Controllers/PhieuthuController.php',
         'App\\Http\\Controllers\\PhieutrahangController' => __DIR__ . '/../..' . '/app/Http/Controllers/PhieutrahangController.php',
         'App\\Http\\Controllers\\PhieutranhacungcapController' => __DIR__ . '/../..' . '/app/Http/Controllers/PhieutranhacungcapController.php',
+        'App\\Http\\Controllers\\ThongkeController' => __DIR__ . '/../..' . '/app/Http/Controllers/ThongkeController.php',
         'App\\Http\\Kernel' => __DIR__ . '/../..' . '/app/Http/Kernel.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\CheckForMaintenanceMode' => __DIR__ . '/../..' . '/app/Http/Middleware/CheckForMaintenanceMode.php',
@@ -638,6 +655,7 @@ class ComposerStaticInitde7df308fa7536477d59c84cf17d82b0
         'App\\chitietphieuxuat' => __DIR__ . '/../..' . '/app/chitietphieuxuat.php',
         'App\\chitiettrahang' => __DIR__ . '/../..' . '/app/chitiettrahang.php',
         'App\\chitiettrancc' => __DIR__ . '/../..' . '/app/chitiettrancc.php',
+        'App\\congno_khachhang' => __DIR__ . '/../..' . '/app/congno_khachhang.php',
         'App\\dondathang' => __DIR__ . '/../..' . '/app/dondathang.php',
         'App\\hanghoa' => __DIR__ . '/../..' . '/app/hanghoa.php',
         'App\\khachhang' => __DIR__ . '/../..' . '/app/khachhang.php',
@@ -646,6 +664,7 @@ class ComposerStaticInitde7df308fa7536477d59c84cf17d82b0
         'App\\nhomhanghoa' => __DIR__ . '/../..' . '/app/nhomhanghoa.php',
         'App\\phieuchi' => __DIR__ . '/../..' . '/app/phieuchi.php',
         'App\\phieunhapkho' => __DIR__ . '/../..' . '/app/phieunhapkho.php',
+        'App\\phieuthu' => __DIR__ . '/../..' . '/app/phieuthu.php',
         'App\\phieutrahang' => __DIR__ . '/../..' . '/app/phieutrahang.php',
         'App\\phieutrancc' => __DIR__ . '/../..' . '/app/phieutrancc.php',
         'App\\phieuxuatkho' => __DIR__ . '/../..' . '/app/phieuxuatkho.php',
@@ -2634,6 +2653,11 @@ class ComposerStaticInitde7df308fa7536477d59c84cf17d82b0
         'Illuminate\\View\\ViewName' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewName.php',
         'Illuminate\\View\\ViewServiceProvider' => __DIR__ . '/..' . '/laravel/framework/src/Illuminate/View/ViewServiceProvider.php',
         'JsonException' => __DIR__ . '/..' . '/symfony/polyfill-php73/Resources/stubs/JsonException.php',
+        'LaravelPWA\\Http\\Controllers\\LaravelPWAController' => __DIR__ . '/..' . '/silviolleite/laravelpwa/Http/Controllers/LaravelPWAController.php',
+        'LaravelPWA\\Providers\\LaravelPWAServiceProvider' => __DIR__ . '/..' . '/silviolleite/laravelpwa/Providers/LaravelPWAServiceProvider.php',
+        'LaravelPWA\\Providers\\RouteServiceProvider' => __DIR__ . '/..' . '/silviolleite/laravelpwa/Providers/RouteServiceProvider.php',
+        'LaravelPWA\\Services\\ManifestService' => __DIR__ . '/..' . '/silviolleite/laravelpwa/Services/ManifestService.php',
+        'LaravelPWA\\Services\\MetaService' => __DIR__ . '/..' . '/silviolleite/laravelpwa/Services/MetaService.php',
         'Laravel\\Tinker\\ClassAliasAutoloader' => __DIR__ . '/..' . '/laravel/tinker/src/ClassAliasAutoloader.php',
         'Laravel\\Tinker\\Console\\TinkerCommand' => __DIR__ . '/..' . '/laravel/tinker/src/Console/TinkerCommand.php',
         'Laravel\\Tinker\\TinkerCaster' => __DIR__ . '/..' . '/laravel/tinker/src/TinkerCaster.php',

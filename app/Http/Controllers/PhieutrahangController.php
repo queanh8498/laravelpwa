@@ -54,7 +54,7 @@ class PhieutrahangController extends Controller
         if($b>$a){ 
        
         echo ' <input type="checkbox"  value="'.$dondathang->ddh_id.'">
-         <label >DDH00'.$dondathang->ddh_id.'</label><br> ';
+         <label >DH00'.$dondathang->ddh_id.'</label><br> ';
        }
       
       }
@@ -206,7 +206,7 @@ class PhieutrahangController extends Controller
     //NẾU $ddh_congnomoi >=0 => Lúc đầu khách hàng đã trả 1 phần tiền trên đơn hàng. Nếu phần tiền trả 1 phần đó lớn hơn giá trị trả hàng thực hiện tính lại giá trị công nợ mới và tính lại tổng công nợ. Nếu xảy ra trường hợp trả hết sẽ làm $cncn bị âm do giá trị trả hàng lớn hơn giá trị nợ đơn do đó cập nhật công nợ mới về 0 và tính lại tổng nợ.
       $ddh_trangthai= dondathang::find($value);
       $cncn=$ddh_trangthai->ddh_congnomoi-$request->tien_gck;
-      if($ddh_trangthai->ddh_congnomoi>=0){
+    
       if($cncn>=0){
       $ddh_trangthai->ddh_trangthai=2;
       $ddh_trangthai->ddh_congnomoi=$cncn;
@@ -228,9 +228,9 @@ class PhieutrahangController extends Controller
       $ddh_trangthai->ddh_congnomoi=0;
       $ddh_trangthai->ddh_trangthai=2;
       $ddh_trangthai->save();
-      //Cập nhật báo cáo công nợ
+      //Cập nhật báo cáo công nợ về 0
        $datacn = array();
-      $datacn['bccn_soducongno'] =$cncn;
+      $datacn['bccn_soducongno'] =0;
       DB::table('baocaocongno')->where('ddh_id',$value )->update($datacn);
       //Cập nhật nợ thông qua giá trị tổng nợ lưu vào biến $request->cnm
              $cnkh=congno_khachhang::select('cnkh_id','kh_id','tongno')->where('kh_id',$request->kh_id)->first();
@@ -239,40 +239,7 @@ class PhieutrahangController extends Controller
                  $cnkh->tongno =$request->cnm;
                  $cnkh->save();
        
-      }}
-      
-}
-else{
-  //Trương hợp giá trị $ddh_congnomoi <0 do khách hàng không nợ đơn hàng và trả 1 phần tiền cũ đã nợ, do đó nếu cập nhật lại báo cáo công nợ sẽ làm mất số tiền khách đã trả trước đó, vì vậy khi trả hàng không cập nhật giá trị báo cáo công nợ trên đơn hàng .
-   if($cncn>=0){
-      $ddh_trangthai->ddh_trangthai=2;
-      $ddh_trangthai->ddh_congnomoi=$cncn;
-      $ddh_trangthai->save();
-     
-    //Cập nhật nợ thông qua giá trị tổng nợ lưu vào biến $request->cnm
-             $cnkh=congno_khachhang::select('cnkh_id','kh_id','tongno')->where('kh_id',$request->kh_id)->first();
-             if(!empty($cnkh)){
-                 $cnkh->kh_id = $request->kh_id;
-                 $cnkh->tongno =$request->cnm;
-                 $cnkh->save();
-             }
-    }
-      else{
-    
-      $ddh_trangthai->ddh_trangthai=2;
-      $ddh_trangthai->save();
-      //Cập nhật nợ thông qua giá trị tổng nợ lưu vào biến $request->cnm
-             $cnkh=congno_khachhang::select('cnkh_id','kh_id','tongno')->where('kh_id',$request->kh_id)->first();
-             if(!empty($cnkh)){
-                 $cnkh->kh_id = $request->kh_id;
-                 $cnkh->tongno =$request->cnm;
-                 $cnkh->save();
-       
-      }
-
-}}
-
-     
+      }} 
        $hh_id = $request->hh_id;
       $ctth_soluong = $request->ctth_soluong;
       $ctth_dongia=$request->ctth_dongia;
