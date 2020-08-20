@@ -12,7 +12,7 @@
                 @foreach ($ddh as $ddh)
                     <tr>
                         <th>Mã hóa đơn:</th>
-                        <td>{{ $ddh->ddh_id }}</td>
+                        <td>DH00{{ $ddh->ddh_id }}</td>
                         <th>Trạng thái:</th>
                         <td>
                             @if(($ddh->ddh_trangthai)==2)

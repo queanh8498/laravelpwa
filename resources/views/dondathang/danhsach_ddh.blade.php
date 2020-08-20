@@ -75,7 +75,7 @@
                     <tbody>
                         @foreach($danhsach_ddh as $ddh)
                             <tr>
-                                <td>{{ $ddh->ddh_id }}</td>
+                                <td>DH00{{ $ddh->ddh_id }}</td>
                                 <td>{{ $ddh->kh_ten }}</td>
                                 <td>{{ $ddh->ddh_ngaylap }}</td>
                                 <td>{{ $ddh->bccn_hanno }}</td>
