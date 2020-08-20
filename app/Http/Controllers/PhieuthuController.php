@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\khachhang;
 use App\congno_khachhang;
 use App\phieuthu;
+use App\User;
 use DB;
 use Validator;
 
@@ -17,15 +18,18 @@ use Carbon\Carbon;
 class PhieuthuController extends Controller
 {
     public function index(){
-        $pt=DB::select('SELECT pt.pt_id,pt.pt_ngaylap,kh.kh_ten,pt_tienthu,cn.tongno FROM phieuthu pt 
+        $pt=DB::select('SELECT pt.pt_id,pt.pt_ngaylap,kh.kh_ten,pt_tienthu,cn.tongno,pt.id,nv.name FROM phieuthu pt 
         JOIN khachhang kh ON kh.kh_id=pt.kh_id 
+        join nhanvien nv on nv.id = pt.id
         JOIN congno_khachhang cn ON cn.kh_id=pt.kh_id ');
 
         return view('khachhang.phieuthu.index')->with('pt',$pt);
        }
 
     public function create(){
-        return view('khachhang.phieuthu.create');
+
+        $nv = user::all();
+        return view('khachhang.phieuthu.create')->with('nv',$nv);
     }
     function timsdt_kh(Request $request){
         if($request->ajax()){

@@ -1,7 +1,5 @@
 @extends('admin_banhang')
 @section('admin_content')
-
-<h3>Chào mừng bạn đến với Quản lý Khách hàng</h3>
  
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -48,6 +46,7 @@ tr:hover {background-color: #f5f5f5;}
             <thead>
                 <tr>
                   <th>Mã phiếu</th> 
+                  <th>Người lập</th> 
                   <th>Ngày lập phiếu</th> 
                   <th>Họ tên</th>
                   <th>Số tiền thu (VND)</th>
@@ -60,6 +59,9 @@ tr:hover {background-color: #f5f5f5;}
             @foreach($pt as $pt)
                 <tr>
                     <td>PT000{{ $pt->pt_id }}</td>
+
+                    <td>{{ $pt->name }}</td>
+                    
                     <?php 
                     $pt->pt_ngaylap=date("d-m-Y", strtotime($pt->pt_ngaylap));
                     ?>
@@ -70,10 +72,9 @@ tr:hover {background-color: #f5f5f5;}
                 </tr>
             @endforeach
             <tr>
-                <td colspan="3"><b>TỔNG TIỀN THU</b></td>
+                <td colspan="4"><b>TỔNG TIỀN THU</b></td>
                 <td><b>{{ number_format($tongthu,0,',',',') }} VNĐ</b></td>
             </tr>
-
             </tbody>
         </table>
     </div>

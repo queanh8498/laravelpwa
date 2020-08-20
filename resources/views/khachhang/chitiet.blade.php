@@ -95,7 +95,7 @@ tr:hover {background-color: #f5f5f5;}
                 <a class="btn btn-warning" onclick='show(1);' ><b>Tới hạn</b></a>
                 <a class="btn btn-danger" onclick='show(3);' style="color:white;"><b>Quá hạn</b></a>
                 <a class="btn btn-info" onclick='show(4);'  style="color:white;"><b>Sắp tới hạn</b></a>
-                <a class="btn btn-success" onclick='show(5);'  style="color:white;"><b>Đã trả</b></a>
+                <a class="btn btn-success" onclick='show(5);'  style="color:white;/"><b>Đã trả</b></a>
                 <a class="btn btn-light" onclick='show(10);'><b>Tất cả Đơn</b></a>
             </div>
         </div>
@@ -428,7 +428,6 @@ tr:hover {background-color: #f5f5f5;}
             <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
             <td class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>
-
             <tr>
             @foreach($dathu_tongno_kh as $dathu_tongno_kh)
             <td colspan="5"><b>ĐÃ THU:</b></td>
@@ -436,10 +435,12 @@ tr:hover {background-color: #f5f5f5;}
             @if($dathu_tongno_kh->tongthu_kh==0)
             @else
             <td>
-                <a href="{{URL::to('')}}" class="active styling-edit" ui-toggle-class="">
+                <a href="{{URL::to('banhang/khachhang/phieuthu/'.$id)}}" ui-toggle-class="">
                 <i class="fa fa-eye text-warning" title="Chi tiết thu nợ"></i></a>
             </td>
+                   
             @endif
+
             </tr>
              <tr>
             <td colspan="5"><b>NỢ HIỆN TẠI:</b></td>
@@ -468,6 +469,8 @@ function show(nr) {
     document.getElementById("table4").style.display="none";
     document.getElementById("table5").style.display="none";
     document.getElementById("table10").style.display="none";
+   
+
     document.getElementById("table"+nr).style.display="block";
 }
 

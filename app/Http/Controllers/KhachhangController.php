@@ -11,6 +11,7 @@ use App\User;
 use App\khachhang;
 use App\dondathang;
 use App\hanghoa;
+use App\phieuthu;
 use Carbon\Carbon;
 use DateTime;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -42,11 +43,17 @@ class KhachhangController extends Controller
                                 WHERE dh.kh_id='.$id.'
                                  GROUP BY dh.ddh_id');
 
-        $dathu_tongno_kh = DB::select('SELECT kh.kh_id,kh.kh_ten, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
-        from khachhang kh join phieuthu pt on pt.kh_id=kh.kh_id 
+        $dathu_tongno_kh = DB::select('SELECT kh.kh_id,kh.kh_ten, pt_id,pt_ngaylap,pt_tienthu, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
+        from khachhang kh 
+        join phieuthu pt on pt.kh_id=kh.kh_id 
         join congno_khachhang cn on cn.kh_id=kh.kh_id
         where kh.kh_id='.$id);
-        //dd($dathu_kh);
+
+        $chitiet_thu=DB::select('SELECT kh.kh_id,kh.kh_ten, pt_id,pt_ngaylap,pt_tienthu
+        from khachhang kh 
+        join phieuthu pt on pt.kh_id=kh.kh_id 
+        where kh.kh_id='.$id);
+        //dd($dathu_tongno_kh);
 
 		// now+5 >= hanno;
        // 11/1 + 5 => 20/1 => sap toi han ;
@@ -99,7 +106,8 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
         ->with('dh_quahan', $dh_quahan)   
         ->with('dh_saptoihan', $dh_saptoihan)  
         ->with('dh_datra', $dh_datra)
-        ->with('dathu_tongno_kh', $dathu_tongno_kh);   
+        ->with('dathu_tongno_kh', $dathu_tongno_kh) 
+        ->with('chitiet_thu', $chitiet_thu);   
 	}
  public function search($id, Request $request)
    {
@@ -211,7 +219,12 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
                                 JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
                                 JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
                                 join khachhang kh on kh.kh_id = dh.kh_id
+                                left join 
+										(select pth.pth_id, pth.ddh_id as donhang_id, ctth_soluong*ctth_dongia giatri_trahang from phieutrahang pth
+	      								join chitiettrahang ctth on pth.pth_id = ctth.pth_id) as aaa on dh.ddh_id = aaa.donhang_id
                                 WHERE dh.kh_id='.$id.' GROUP BY dh.ddh_id');
+                               // dd($chitiet_kh);
+
         
         $dh_first=DB::select('SELECT dh.ddh_ngaylap as ngaylap FROM dondathang dh 
                             JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
@@ -219,9 +232,11 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
                             WHERE dh.kh_id='.$id.' limit 1');
         //dd($dh_first);
         $dathu_tongno_kh = DB::select('SELECT kh.kh_id,kh.kh_ten, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
-                            from khachhang kh join phieuthu pt on pt.kh_id=kh.kh_id 
-                            join congno_khachhang cn on cn.kh_id=kh.kh_id
-                            where kh.kh_id='.$id);
+                                        from khachhang kh 
+                                        left join phieuthu pt on pt.kh_id=kh.kh_id 
+                                        left join congno_khachhang cn on cn.kh_id=kh.kh_id
+                                        where kh.kh_id='.$id);
+                            //dd($dathu_tongno_kh);
         
         $data = [
             'kh' => $kh,
@@ -235,17 +250,26 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
     public function excel_chitietcongno_kh($id) {
 
         //$dd($kh);
-        $chitiet_kh = DB::select('SELECT dh.ddh_id,dh.ddh_ngaylap, dh.ddh_datra,bc.bccn_soducongno, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
-                                FROM dondathang dh 
-                                JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
-                                join khachhang kh on kh.kh_id = dh.kh_id
-                                JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
-                                WHERE dh.kh_id='.$id.' GROUP BY dh.ddh_id');
-        
+        $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+        FROM dondathang dh 
+        JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+        JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
+        join khachhang kh on kh.kh_id = dh.kh_id
+        left join 
+                (select pth.pth_id, pth.ddh_id as donhang_id, ctth_soluong*ctth_dongia giatri_trahang from phieutrahang pth
+                  join chitiettrahang ctth on pth.pth_id = ctth.pth_id) as aaa on dh.ddh_id = aaa.donhang_id
+        WHERE dh.kh_id='.$id.' GROUP BY dh.ddh_id');
+        // dd($chitiet_kh);
+
+        $dathu_tongno_kh = DB::select('SELECT kh.kh_id,kh.kh_ten, pt_id,pt_ngaylap,pt_tienthu, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
+                from khachhang kh 
+                join phieuthu pt on pt.kh_id=kh.kh_id 
+                join congno_khachhang cn on cn.kh_id=kh.kh_id
+                where kh.kh_id='.$id);
         
         $kh = khachhang::find($id);
         
-        return Excel::download(new Congno_Khachhang_Export($kh,$chitiet_kh), 'congno_kh.xlsx');
+        return Excel::download(new Congno_Khachhang_Export($kh,$chitiet_kh,$dathu_tongno_kh), 'congno_kh.xlsx');
         //return Excel::download(['kh' => $kh,'chitiet_kh' => $chitiet_kh], 'congno_kh.xlsx');
 
 }
@@ -276,6 +300,20 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
 
         return Excel::download(new Congno_KH_Time_Export($kh,$chitiet_kh_date,$current_day,$current_day_add,$from_date,$to_date), 'congno_kh_time.xlsx');
 }
-     
+    public function phieuthu_kh($id) {
+
+        $phieuthu_kh = DB::select('select *,name from khachhang kh 
+        join phieuthu pt on pt.kh_id = kh.kh_id
+        JOIN nhanvien nv on nv.id = pt.id 
+        where kh.kh_id = '.$id);
+        
+        $kh = khachhang::where("kh_id", $id)->first();
+        //dd($kh);
+
+        return view('khachhang.phieuthu_kh')
+        ->with('phieuthu_kh', $phieuthu_kh)
+        ->with('kh', $kh);
+    
+}
 
 }

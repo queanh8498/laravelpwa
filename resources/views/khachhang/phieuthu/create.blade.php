@@ -41,6 +41,18 @@
                         {{ csrf_field() }}
                         <div class="form-group">
                             <div class="row">
+                                <div class="col-md-7">
+                                    <label for="id">Nhân viên lập phiếu:</label>
+                                    <select name="id" id="id" class="form-control">
+                                        @foreach($nv as $nv)
+                                        <option value="{{ $nv->id }}">{{ $nv->name }}</option>
+                                        @endforeach
+                                    </select>                                
+                                </div>
+                            </div>
+                            </div>
+                            <div class="form-group">
+                            <div class="row">
                                 <div class="col-md-3">
                                     <label for="kh_sdt">SDT:</label>
                                     <input type="text" name="kh_sdt" class="form-control" id="kh_sdt" >             
