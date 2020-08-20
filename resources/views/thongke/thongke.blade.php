@@ -43,7 +43,7 @@
     <div class="panel panel-default">
         
         <div class="panel-heading">
-            Thống kê 
+            Thống kê tháng hiện tại
         </div>
 
         <div class="container-fluid">
@@ -68,12 +68,12 @@
        
         <br>
         <div class="panel panel-default">
-            @foreach($thongke as $thongke)
+           
                 <div class="row">
                     <div class="col-md-3" >
                         <div class="small-box" style="border-radius: 5px 5px 5px 5px; height: 100px; width: 250px; margin: 0px 0px 20px 130px; background: linear-gradient(45deg,#39f 0%,#0040FF 100%); border-color: #2982cc;">
                             <div class="inner">
-                                <p style="font-size: 1.3125rem; font-weight: bold;">{{ $thongke->sodonhang }}</p>
+                                <p style="font-size: 1.3125rem; font-weight: bold;">{{ $sodonhang }}</p>
 
                                 <p style="font-size: 14px; margin-top: 5px;">Tổng đơn hàng</p>
                             </div>
@@ -85,7 +85,7 @@
                     <div class="col-md-3">
                         <div class="small-box" style="border-radius: 5px 5px 5px 5px; height: 100px; width: 250px; margin: 0px 20px 20px 140px; background: linear-gradient(45deg,#39f 0%,#0040FF 100%); border-color: #2982cc;">
                             <div class="inner">
-                            <p style="font-size: 1.3125rem; font-weight: bold;">{{ number_format($thongke->TongTienThuDuoc, 0, ',', ',') }} </p>
+                            <p style="font-size: 1.3125rem; font-weight: bold;">{{ number_format($a_b_c, 0, ',', ',') }} </p>
 
                             <p style="font-size: 14px; margin-top: 5px;">Tổng tiền thu được</p>
                             </div>
@@ -97,7 +97,7 @@
                     <div class="col-md-3">
                         <div class="small-box" style="border-radius: 5px 5px 5px 5px; height: 100px; width: 250px; margin: 0px 10px 20px 150px; background: linear-gradient(45deg,#39f 0%,#0040FF 100%); border-color: #2982cc;">
                             <div class="inner">
-                                <p style="font-size: 1.3125rem; font-weight: bold;">{{ number_format($thongke->TongCongNo, 0, ',', ',') }}</p>
+                                <p style="font-size: 1.3125rem; font-weight: bold;">{{ number_format($tongno, 0, ',', ',') }}</p>
 
                                 <p style="font-size: 14px; margin-top: 5px;">Tổng nợ</p>
                             </div>
@@ -107,7 +107,7 @@
                         </div>
                     </div>
                 </div>
-            @endforeach
+           
             
         </div>
 

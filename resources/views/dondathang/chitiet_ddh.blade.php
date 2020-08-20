@@ -15,8 +15,8 @@
                         <td>{{ $ddh->ddh_id }}</td>
                         <th>Trạng thái:</th>
                         <td>
-                            @if(($ddh->ddh_trangthai)==0)
-                                {{ 'Chưa giao hàng ' }}
+                            @if(($ddh->ddh_trangthai)==2)
+                                {{ 'Có trả hàng' }}
                             @else
                                 {{ 'Đã giao hàng' }}
                             @endif
