@@ -100,6 +100,8 @@ tr:hover {background-color: #f5f5f5;
                   <!-- NỢ THEO ĐƠN = CÔNG NỢ MỚI -->
                   <th>TỔNG TIỀN</th>
                   <th>NỢ ĐƠN</th>
+                  <th>TRẢ HÀNG</th>
+                  <th>TỔNG NỢ THEO ĐƠN</th>
                   <th>CHI TIẾT</th>
                 </tr>
             </thead>
@@ -149,10 +151,25 @@ tr:hover {background-color: #f5f5f5;
                     @endif
                     <!-- end -->
                         <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
-                        <td>{{ number_format($ctkh->ddh_congnomoi,0,',',',') }} VNĐ</td>
+                        <?php $no = $ctkh->tongtien-$ctkh->ddh_datra;?>
+                        <td>{{ number_format($no,0,',',',') }}</td>
                         <!-- <td>{{ number_format($ctkh->giatri_trahang,0,',',',') }} VNĐ</td> -->
+                        @if ($ctkh->giatri_trahang == NULL)
+                    <td>0</td>
+                @else
+                    <td>{{ number_format($ctkh->giatri_trahang,0,',',',') }}</td>
+                @endif
+                <?php $no_after_trahang_1 = $no - $ctkh->giatri_trahang;
+                        $no_after_trahang_2 = $no - $ctkh->giatri_trahang;
+                    if ($no_after_trahang_1 < 0){
+                        $no_after_trahang_1=0;
+                    }
+                ?>
+                <td>{{ number_format($no_after_trahang_1,0,',',',') }} </td>
 
-                    <?php $sum += $ctkh->ddh_congnomoi;?>
+                     <!-- sum là tổng nợ đc tính sau khi khách trả hàng -->
+                     <?php $sum += $no_after_trahang_1; ?>
+
                     <td>
                     <a href="{{URL::to('/banhang/chitietdondathang/'.$ctkh->ddh_id)}}" class="active styling-edit" ui-toggle-class=""><i class="fa fa-eye text-active" title="Xem chi tiết"></i></a> &nbsp;
 
@@ -160,12 +177,33 @@ tr:hover {background-color: #f5f5f5;
                 </tr>
             @endforeach
             <tr>
-            <td colspan="5"><b>TỔNG CÔNG NỢ:</b></td>
-            <td colspan="2" class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
+            <td colspan="7"><b>TỔNG CÔNG NỢ:</b></td>
+            <td  class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
+            </tr>
+            <tr>
+            @foreach($dathu_tongno_kh_date as $dathu_tongno_kh_date)
+            <td colspan="7"><b>ĐÃ THU:</b></td>
+            <td  class="text-center"><b>{{ number_format($dathu_tongno_kh_date->tongthu_kh,0,',',',') }} VNĐ</b></td>
+           
+            <tr>
+            <td colspan="7"><b>TIỀN TRẢ LẠI KHÁCH:</b></td>
+            <td><b>{{ number_format($ctkh->pth_ctk,0,',',',') }} VNĐ</b></td>
+               
+            </tr>
+             <tr>
+            <td colspan="7"><b>NỢ HIỆN TẠI:</b></td>
+            @if ($no_after_trahang_2 < 0)
+            <th ><b>0 VNĐ</b></th>
+            @else
+            <th ><b>{{ number_format($sum - $dathu_tongno_kh_date->tongthu_kh,0,',',',') }} VNĐ</b></th>
+            @endif
+
+            @endforeach
             </tr>
            
             </tbody>
         </table>
+
     </div>
     </div>
 </div>

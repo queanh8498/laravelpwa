@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Exports;
+use Maatwebsite\Excel\Concerns\Exportable;
+use Maatwebsite\Excel\Concerns\WithColumnWidth;
+
 use App\User;
 use App\khachhang;
 use App\dondathang;
@@ -20,6 +23,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 class Congno_KH_Time_Export implements FromView, ShouldAutoSize,WithEvents
 {
     protected $chitiet_kh_date;
+    protected $dathu_tongno_kh_date;
     protected $current_day;
     protected $current_day_add;
     protected $from_date;
@@ -28,14 +32,18 @@ class Congno_KH_Time_Export implements FromView, ShouldAutoSize,WithEvents
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($kh,$chitiet_kh_date,$current_day,$current_day_add,$from_date, $to_date) {
+    public function __construct($kh,$chitiet_kh_date, $dathu_tongno_kh_date,$from_date, $to_date,$current_day,$current_day_add) {
         //$this->data = $data;
         $this->kh = $kh;
         $this->chitiet_kh_date = $chitiet_kh_date;
-        $this->current_day = $current_day;
-        $this->current_day_add = $current_day_add;
+        $this->dathu_tongno_kh_date = $dathu_tongno_kh_date;
+
         $this->from_date = $from_date;
         $this->to_date = $to_date;
+
+        $this->current_day = $current_day;
+        $this->current_day_add = $current_day_add;
+        
         
     }
     public function  registerEvents(): array
@@ -45,17 +53,19 @@ class Congno_KH_Time_Export implements FromView, ShouldAutoSize,WithEvents
             AfterSheet::class    => function(AfterSheet $event) {
                 $kh=$this->kh;
                 $chitiet_kh_date=$this->chitiet_kh_date;
-                $current_day=$this->current_day;
-                $current_day_add=$this->current_day_add;
+                $dathu_tongno_kh_date=$this->dathu_tongno_kh_date;
                 $from_date=$this->from_date;
                 $to_date=$this->to_date;
+                $current_day=$this->current_day;
+                $current_day_add=$this->current_day_add;
+               // dd($dathu_tongno_kh_date);
 
         // Set khổ giấy in ngang
         $event->sheet->getDelegate()->getPageSetup()
             ->setOrientation(\PhpOffice\PhpSpreadsheet\Worksheet\PageSetup::ORIENTATION_LANDSCAPE);
         
         // Format dòng tiêu đề "Tiêu đề cột"
-        $event->sheet->getDelegate()->getStyle('A9:I10')->applyFromArray(
+        $event->sheet->getDelegate()->getStyle('A9:J10')->applyFromArray(
             [
                 'font' => [
                     'bold' => true,
@@ -78,8 +88,10 @@ class Congno_KH_Time_Export implements FromView, ShouldAutoSize,WithEvents
         foreach($chitiet_kh_date as $index=>$chitiet_kh_date)
         {
             $currentRow = $startRow + $index;
+           
             //dd($currentRow); 
-            $coordinate = "A${currentRow}:I${currentRow}";
+            $coordinate = "A${currentRow}:J${currentRow}";
+            
 
             $event->sheet->getDelegate()->getStyle($coordinate)->applyFromArray(
                 [
@@ -99,7 +111,8 @@ class Congno_KH_Time_Export implements FromView, ShouldAutoSize,WithEvents
         }
         //Set border for __Summary line
         $currentRow = $currentRow+1;
-        $coordinate = "A${currentRow}:I${currentRow}";
+        $row = $currentRow+3;
+        $coordinate = "A${currentRow}:J${row}";
         $event->sheet->getDelegate()->getStyle($coordinate)->applyFromArray(
             [
                 'vertical' => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_TOP,
@@ -122,6 +135,7 @@ class Congno_KH_Time_Export implements FromView, ShouldAutoSize,WithEvents
     public function view(): View
     {
         $kh=$this->kh;
+        $dathu_tongno_kh_date=$this->dathu_tongno_kh_date;
         $chitiet_kh_date=$this->chitiet_kh_date;
         $current_day=$this->current_day;
         $current_day_add=$this->current_day_add;
@@ -131,6 +145,7 @@ class Congno_KH_Time_Export implements FromView, ShouldAutoSize,WithEvents
         return view('khachhang.excel_chitietcongno_kh_time', [
             'kh' => $kh,
             'chitiet_kh_date' => $chitiet_kh_date,
+            'dathu_tongno_kh_date' => $dathu_tongno_kh_date,
             'current_day' => $current_day,
             'current_day_add' => $current_day_add,
             'from_date' => $from_date,

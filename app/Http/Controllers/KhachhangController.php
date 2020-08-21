@@ -160,10 +160,6 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
         $from_date = $request->input('from_date');
         $to_date = $request->input('to_date');
 
-        //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
-        $to_date_1 = date('Y-m-d', strtotime($to_date. ' + 1 days'));
-        //dd($to_date_1);
-
         //lấy ngày hiện tại -> format lại
         $current_day = Carbon::now('Asia/Ho_Chi_Minh');
         $a = $current_day;
@@ -181,13 +177,18 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
         left join 
                 (select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
                   join chitiettrahang ctth on pth.pth_id = ctth.pth_id
-                  join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' and pth.pth_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'" group by pth.ddh_id) 
+                  join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' and pth.pth_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date.'" group by pth.ddh_id) 
                   as aaa on dh.ddh_id = aaa.donhang_id
-                                WHERE dh.kh_id='.$id.' AND dh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'" GROUP BY dh.ddh_id');
-      
+                                WHERE dh.kh_id='.$id.' AND dh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date.'" GROUP BY dh.ddh_id');
+        $dathu_tongno_kh_date = DB::select('SELECT kh.kh_id,kh.kh_ten,pt_id,pt_ngaylap,pt_tienthu, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
+        from khachhang kh 
+        left join phieuthu pt on pt.kh_id=kh.kh_id 
+        left join congno_khachhang cn on cn.kh_id=kh.kh_id
+        where pt_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date.'" and kh.kh_id='.$id );
        
        return view('khachhang.search')
        ->with('chitiet_kh_date', $chitiet_kh_date)
+       ->with('dathu_tongno_kh_date', $dathu_tongno_kh_date)
        ->with('current_day', $current_day)
         ->with('current_day_add', $current_day_add)
         ->with('from_date', $from_date)
@@ -319,8 +320,8 @@ public function excel_chitietcongno_kh($id) {
 
         //dd($from_date);
         //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
-        $to_date_1 = date('Y-m-d', strtotime($to_date. ' + 1 days'));
-        //dd($to_date_1);
+       // $to_date_1 = date('Y-m-d', strtotime($to_date. ' + 1 days'));
+       // dd($to_date);
 
         //lấy ngày hiện tại -> format lại
         $current_day = Carbon::now('Asia/Ho_Chi_Minh');
@@ -331,16 +332,27 @@ public function excel_chitietcongno_kh($id) {
         $b = $current_day_add;
         $current_day_add=$b->format("Y-m-d");
 
-        $chitiet_kh_date = DB::select('SELECT *,kh.kh_ten,SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
-                                 FROM dondathang dh 
-                                JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
-                                join khachhang kh on kh.kh_id = dh.kh_id
-                                JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
-                                WHERE dh.kh_id='.$id.' AND dh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'" GROUP BY dh.ddh_id');
-    
-        $kh = khachhang::find($id);
+        $chitiet_kh_date = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+        FROM dondathang dh 
+        JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+        JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
+        join khachhang kh on kh.kh_id = dh.kh_id
+        left join 
+                (select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
+                  join chitiettrahang ctth on pth.pth_id = ctth.pth_id
+                  join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' and pth.pth_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date.'" group by pth.ddh_id) 
+                  as aaa on dh.ddh_id = aaa.donhang_id
+                                WHERE dh.kh_id='.$id.' AND dh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date.'" GROUP BY dh.ddh_id');
+        
+        $dathu_tongno_kh_date = DB::select('SELECT kh.kh_id,kh.kh_ten,pt_id,pt_ngaylap,pt_tienthu, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
+        from khachhang kh 
+        left join phieuthu pt on pt.kh_id=kh.kh_id 
+        left join congno_khachhang cn on cn.kh_id=kh.kh_id
+        where pt_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date.'" and kh.kh_id='.$id );
+       
+       $kh = khachhang::find($id);
 
-        return Excel::download(new Congno_KH_Time_Export($kh,$chitiet_kh_date,$current_day,$current_day_add,$from_date,$to_date), 'congno_kh_time.xlsx');
+        return Excel::download(new Congno_KH_Time_Export($kh,$chitiet_kh_date, $dathu_tongno_kh_date,$from_date,$to_date, $current_day,$current_day_add), 'congno_kh_time.xlsx');
 }
     public function phieuthu_kh($id) {
 
