@@ -108,6 +108,7 @@ tr:hover {background-color: #f5f5f5;
 
             <tbody>
             <?php $sum=0; ?>
+            <?php $tralaikhach=0; ?>
             @foreach($chitiet_kh_date as $ctkh)
                 <tr>
                     <td>DH00{{ $ctkh->ddh_id }}</td>
@@ -175,9 +176,11 @@ tr:hover {background-color: #f5f5f5;
 
                     </td>
                 </tr>
+                <?php $tralaikhach += $ctkh->pth_ctk; ?>
+
             @endforeach
             <tr>
-            <td colspan="7"><b>TỔNG CÔNG NỢ:</b></td>
+            <td colspan="7"><b>TỔNG CÔNG NỢ ĐƠN HÀNG:</b></td>
             <td  class="text-center"><b>{{ number_format($sum,0,',',',') }} VNĐ</b></td>
             </tr>
             <tr>
@@ -187,7 +190,7 @@ tr:hover {background-color: #f5f5f5;
            
             <tr>
             <td colspan="7"><b>TIỀN TRẢ LẠI KHÁCH:</b></td>
-            <td><b>{{ number_format($ctkh->pth_ctk,0,',',',') }} VNĐ</b></td>
+            <td><b>{{ number_format($tralaikhach,0,',',',') }} VNĐ</b></td>
                
             </tr>
              <tr>

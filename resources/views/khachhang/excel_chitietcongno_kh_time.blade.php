@@ -59,6 +59,7 @@
             <?php 
                 $i=1; 
                 $sum=0;
+                $tralaikhach=0;
             ?>
             @foreach($chitiet_kh_date as $key => $chitiet_kh_date)
             <tr align=center>
@@ -118,6 +119,8 @@
                     @endif
                     <td></td>
                     <!-- end -->
+                    <?php $tralaikhach += $chitiet_kh_date->pth_ctk; ?>
+
             </tr>
             @endforeach
             <tr align="center"> 
@@ -134,7 +137,7 @@
 
             <tr align="center"> 
             <th style="text-align:center;font-size:12px" colspan="8"><strong>Tiền trả khách</strong></th>
-            <th style="text-align:left;font-size:12px" colspan="2"><strong>{{ number_format($chitiet_kh_date->pth_ctk,0,',',',') }}</strong></th>
+            <th style="text-align:left;font-size:12px" colspan="2"><strong>{{ number_format($tralaikhach,0,',',',') }}</strong></th>
             </tr>
             
             <tr>

@@ -42,7 +42,7 @@
                 <th rowspan="2" style="text-align:center;width:15px"><strong>Tổng tiền (VND)</strong></th>
                 <th colspan="2" style="text-align:center;width:30px"><strong>Số tiền (VND)</strong></th>
                 <th rowspan="2" style="text-align:center;width:15px"><strong>Trả hàng</strong></th>
-                <th rowspan="2" style="text-align:center;width:15px"><strong>Nợ</strong></th>
+                <th rowspan="2" style="text-align:center;width:15px"><strong>Nợ đơn</strong></th>
             </tr>
             <tr>
                 <th  style="text-align:center;width:15px"><strong>Đã trả</strong></th>
@@ -53,6 +53,7 @@
             <?php 
                 $i=1; 
                 $sum=0;
+                $tralaikhach=0;
             ?>
             @foreach($chitiet_kh as $key => $chitiet_kh)
             <tr style="border: 1px thin #000" align=center>
@@ -79,10 +80,13 @@
                 ?>
                 <td>{{ number_format($no_after_trahang,0,',',',') }} </td>
                 <?php $sum += $no_after_trahang; ?>
+
+                <?php $tralaikhach += $chitiet_kh->pth_ctk; ?>
+
             </tr>
             @endforeach
             <tr style="border: 1px thin #000" align="center"> 
-                <th style="text-align:center;" colspan="7"><b>Tổng nợ: </b></th>
+                <th style="text-align:center;" colspan="7"><b>Tổng nợ đơn hàng: </b></th>
                 <th style="text-align:center;"><b>{{ number_format($sum,0,',',',') }}</b></th>
             </tr>
             <tr>
@@ -92,7 +96,7 @@
             </tr>
             <tr>
                 <th style="text-align:center;" colspan="7"><b>Tiền trả lại khách:</b></th>
-                <th style="text-align:center;"><b>{{ number_format($chitiet_kh->pth_ctk,0,',',',') }}</b></th>
+                <th style="text-align:center;"><b>{{ number_format($tralaikhach,0,',',',') }}</b></th>
             </tr>
             <tr>
                 <th style="text-align:center;" colspan="7"><b>Nợ hiện tại:</b></th>

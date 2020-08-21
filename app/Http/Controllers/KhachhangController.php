@@ -101,7 +101,7 @@ class KhachhangController extends Controller
 (select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
  join chitiettrahang ctth on pth.pth_id = ctth.pth_id
  join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id) as aaa on dh.ddh_id = aaa.donhang_id      
-WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) = CURDATE()');
+WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) = CURDATE() GROUP BY dh.ddh_id');
         
         //QUÁ HẠN LÀ CÓ BCCN_TOIHAN < NOW()
         $dh_quahan = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
@@ -111,7 +111,7 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) = CURDATE()');
 (select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
  join chitiettrahang ctth on pth.pth_id = ctth.pth_id
  join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id) as aaa on dh.ddh_id = aaa.donhang_id                  
-WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi <>0 ');
+WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi <>0 GROUP BY dh.ddh_id');
 
         //Sắp tới HẠN LÀ CÓ (bccn_toihan > now) and ( NOW() + 5 > BCCN_TOIHAN )
         $dh_saptoihan = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
@@ -122,7 +122,7 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
  join chitiettrahang ctth on pth.pth_id = ctth.pth_id
  join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id) as aaa on dh.ddh_id = aaa.donhang_id                                  
       WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) > CURDATE() 
-      AND adddate(CURDATE(),INTERVAL 6 DAY) > DATE(bc.bccn_hanno)
+      AND adddate(CURDATE(),INTERVAL 6 DAY) > DATE(bc.bccn_hanno) GROUP BY dh.ddh_id
       ');
 
         //Lọc ĐH đã trả
@@ -133,7 +133,7 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
 (select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
  join chitiettrahang ctth on pth.pth_id = ctth.pth_id
  join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id) as aaa on dh.ddh_id = aaa.donhang_id
-        WHERE dh.kh_id='.$id.' AND dh.ddh_congnomoi=0');
+        WHERE dh.kh_id='.$id.' AND dh.ddh_congnomoi=0 GROUP BY dh.ddh_id');
 
         return view('khachhang.chitiet')
         ->with('chitiet_kh', $chitiet_kh)

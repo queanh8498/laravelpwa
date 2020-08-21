@@ -56,7 +56,7 @@
                 <th rowspan="2">Tổng tiền (VND)</th>
                 <th colspan="2">Số tiền (VND)</th>
                 <th rowspan="2">Trả hàng </th>
-                <th rowspan="2">Nợ </th>
+                <th rowspan="2">Nợ đơn</th>
 
             </tr>
             <tr>
@@ -72,6 +72,7 @@
             <?php
                 $i=1;
                 $sum=0;
+                $tralaikhach=0;
             ?>
             @foreach($chitiet_kh as $key => $chitiet_kh)
             <tr align=center>
@@ -102,11 +103,12 @@
 
                 <!-- sum là tổng nợ đc tính sau khi khách trả hàng -->
                 <?php $sum += $no_after_trahang; ?>
+                <?php $tralaikhach += $chitiet_kh->pth_ctk; ?>
 
             </tr>
             @endforeach
             <tr>
-            <th colspan="7">Tổng nợ</th>
+            <th colspan="7">Tổng nợ đơn hàng</th>
             <th>{{ number_format($sum,0,',',',') }}</th>
             </tr>
 
@@ -119,8 +121,7 @@
                 
                 <tr>
                     <th colspan="7"><b>Tiền trả lại khách:</b></th>
-                    <!-- <?php //$tralaikhach = abs($sum - $dathu_tongno_kh->tongthu_kh) ; ?> -->
-                    <th>{{ number_format($chitiet_kh->pth_ctk,0,',',',') }}</th>
+                    <th>{{ number_format($tralaikhach,0,',',',') }}</th>
                 </tr>
                
 
