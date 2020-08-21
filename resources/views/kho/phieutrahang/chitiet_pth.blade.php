@@ -5,7 +5,7 @@
   
   <div class="panel panel-default">
     <div class="panel-heading">
-    Chi tiết phiếu khách trả hàng
+    Chi tiết phiếu trả nhà cung cấp
     </div>
     
     <div class="table-responsive">
