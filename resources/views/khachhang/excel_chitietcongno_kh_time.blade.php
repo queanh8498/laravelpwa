@@ -85,10 +85,10 @@
                     <td  style="text-align:center">{{ number_format($chitiet_kh_date->giatri_trahang,0,',',',') }}</td>
                 @endif
                 <?php $no_after_trahang_1 = $no - $chitiet_kh_date->giatri_trahang;
-                        $no_after_trahang_2 = $no - $chitiet_kh_date->giatri_trahang;
-                    if ($no_after_trahang_1 < 0){
-                        $no_after_trahang_1=0;
-                    }
+                         $no_after_trahang_2 = $no - $chitiet_kh_date->giatri_trahang;
+                    // if ($no_after_trahang_1 < 0){
+                    //     $no_after_trahang_1=0;
+                    // }
                 ?>
                 <td  style="text-align:center">{{ number_format($no_after_trahang_1,0,',',',') }} </td>
 
@@ -143,9 +143,9 @@
             <tr>
             <td style="text-align:center;font-size:12px" colspan="8"><b>Nợ hiện tại:</b></td>
             @if ($no_after_trahang_2 < 0)
-            <th style="text-align:left;font-size:12px" colspan="2" ><b>0 VNĐ</b></th>
+            <th style="text-align:left;font-size:12px" colspan="2" ><b>0</b></th>
             @else
-            <th style="text-align:left;font-size:12px" colspan="2" ><b>{{ number_format($sum - $dathu_tongno_kh_date->tongthu_kh,0,',',',') }} VNĐ</b></th>
+            <th style="text-align:left;font-size:12px" colspan="2" ><b>{{ number_format($sum - $dathu_tongno_kh_date->tongthu_kh ,0,',',',') }} VNĐ</b></th>
             @endif
             
             

@@ -162,9 +162,9 @@ tr:hover {background-color: #f5f5f5;
                 @endif
                 <?php $no_after_trahang_1 = $no - $ctkh->giatri_trahang;
                         $no_after_trahang_2 = $no - $ctkh->giatri_trahang;
-                    if ($no_after_trahang_1 < 0){
-                        $no_after_trahang_1=0;
-                    }
+                    // if ($no_after_trahang_1 < 0){
+                    //     $no_after_trahang_1=0;
+                    // }
                 ?>
                 <td>{{ number_format($no_after_trahang_1,0,',',',') }} </td>
 
@@ -190,8 +190,7 @@ tr:hover {background-color: #f5f5f5;
            
             <tr>
             <td colspan="7"><b>TIỀN TRẢ LẠI KHÁCH:</b></td>
-            <td><b>{{ number_format($tralaikhach,0,',',',') }} VNĐ</b></td>
-               
+            <td><b>{{ number_format($tralaikhach,0,',',',') }} VNĐ</b></td>               
             </tr>
              <tr>
             <td colspan="7"><b>NỢ HIỆN TẠI:</b></td>
@@ -200,10 +199,9 @@ tr:hover {background-color: #f5f5f5;
             @else
             <th ><b>{{ number_format($sum - $dathu_tongno_kh_date->tongthu_kh,0,',',',') }} VNĐ</b></th>
             @endif
-
             @endforeach
             </tr>
-           
+
             </tbody>
         </table>
 

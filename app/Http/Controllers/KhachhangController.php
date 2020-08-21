@@ -35,24 +35,16 @@ class KhachhangController extends Controller
     }
     public function getdetail($id){
 
-        // $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien 
-        //                         FROM dondathang dh 
-        //                         JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
-        //                         join khachhang kh on kh.kh_id = dh.kh_id
-        //                         JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
-        //                         WHERE dh.kh_id='.$id.'
-        //                          GROUP BY dh.ddh_id');
-                                // dd($chitiet_kh);
-                        $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
-                                FROM dondathang dh 
-                                JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
-                                JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
-                                join khachhang kh on kh.kh_id = dh.kh_id
-                                left join 
-                                        (select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
-                                          join chitiettrahang ctth on pth.pth_id = ctth.pth_id
-                                          join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id ) as aaa on dh.ddh_id = aaa.donhang_id
-                                WHERE dh.kh_id='.$id.' GROUP BY dh.ddh_id');
+        $chitiet_kh = DB::select('SELECT *,kh.kh_ten, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+            FROM dondathang dh 
+            JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
+            JOIN baocaocongno bc ON bc.ddh_id=dh.ddh_id
+            join khachhang kh on kh.kh_id = dh.kh_id
+            left join 
+                    (select pth.pth_id, pth.pth_ctk,pth.ddh_id as donhang_id, SUM(ctth_soluong*ctth_dongia)-SUM(ctth_soluong*ctth_dongia*dh.ddh_giamchietkhau/100) giatri_trahang from phieutrahang pth
+                        join chitiettrahang ctth on pth.pth_id = ctth.pth_id
+                        join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' group by pth.ddh_id ) as aaa on dh.ddh_id = aaa.donhang_id
+            WHERE dh.kh_id='.$id.' GROUP BY dh.ddh_id');
 
         $dathu_tongno_kh = DB::select('SELECT kh.kh_id,kh.kh_ten,pt_id,pt_ngaylap,pt_tienthu, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
                                         from khachhang kh 
@@ -94,7 +86,8 @@ class KhachhangController extends Controller
         //  dd($t); 
 
         //TỚI HẠN LÀ CÓ BCCN_TOIHAN = NOW()
-        $dh_toihan = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+        $dh_toihan = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien,
+                 SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100)-ddh_datra as no
         FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
         JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
         left join 
@@ -104,7 +97,8 @@ class KhachhangController extends Controller
 WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) = CURDATE() GROUP BY dh.ddh_id');
         
         //QUÁ HẠN LÀ CÓ BCCN_TOIHAN < NOW()
-        $dh_quahan = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+        $dh_quahan = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien,
+                 SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100)-ddh_datra as no
         FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
         JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
         left join 
@@ -114,7 +108,8 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) = CURDATE() GROUP BY dh.ddh_id');
 WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi <>0 GROUP BY dh.ddh_id');
 
         //Sắp tới HẠN LÀ CÓ (bccn_toihan > now) and ( NOW() + 5 > BCCN_TOIHAN )
-        $dh_saptoihan = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+        $dh_saptoihan = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien,
+                 SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100)-ddh_datra as no
         FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
         JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
         left join 
@@ -126,7 +121,8 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
       ');
 
         //Lọc ĐH đã trả
-        $dh_datra = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien
+        $dh_datra = DB::select('SELECT *, SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100) as tongtien,
+         SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia)-SUM(ctdh.ctdh_soluong * ctdh.ctdh_dongia * dh.ddh_giamchietkhau/100)-ddh_datra as no
         FROM baocaocongno bc JOIN dondathang dh ON dh.ddh_id=bc.ddh_id
         JOIN chitietdathang ctdh ON ctdh.ddh_id = dh.ddh_id
         left join 

@@ -74,9 +74,9 @@
                     <td>{{ number_format($chitiet_kh->giatri_trahang,0,',',',') }}</td>
                 @endif
                 <?php $no_after_trahang = $no - $chitiet_kh->giatri_trahang;
-                    if ($no_after_trahang < 0){
-                        $no_after_trahang=0;
-                    }
+                    // if ($no_after_trahang < 0){
+                    //     $no_after_trahang=0;
+                    // }
                 ?>
                 <td>{{ number_format($no_after_trahang,0,',',',') }} </td>
                 <?php $sum += $no_after_trahang; ?>
