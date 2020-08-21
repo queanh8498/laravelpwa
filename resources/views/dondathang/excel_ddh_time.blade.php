@@ -48,7 +48,7 @@
         ?>
         <tr>
             <td style="text-align: center; width:4px;">{{ $i++ }}</td>
-            <td style="text-align: center; width:8px;">{{ $chitiet_ddh_date->ddh_id}}</td>
+            <td style="text-align: center; width:12px;">DH00{{ $chitiet_ddh_date->ddh_id}}</td>
             <td style="text-align: left; width:15px;">{{ $chitiet_ddh_date->kh_ten}}</td>
             <td style="text-align: right; width:12px;">{{ $ddh_ngaylap}}</td>
             <td style="text-align: right; width:12px;">{{ number_format($chitiet_ddh_date->TongCong, 0, ',' , ',') }}</td>

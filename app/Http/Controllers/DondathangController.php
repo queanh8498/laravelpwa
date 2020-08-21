@@ -355,9 +355,7 @@ class DondathangController extends Controller
             }
             else{
                 $output =
-                '<tr>
-                    <td align="center" colspan="5">No Data Found</td>
-                </tr>';
+                'Không tìm thấy';
             }
 
             $data = array(

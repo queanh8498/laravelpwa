@@ -19,7 +19,7 @@
                 <tr></tr>
                 <tr>
                     <th colspan="2" style="font-weight: bold;">Mã hóa đơn:</th>
-                    <td colspan="2" style="text-align: left;">{{ $ddh->ddh_id }}</td>
+                    <td colspan="2" style="text-align: left;">DH00{{ $ddh->ddh_id }}</td>
                     <td></td>
                     <th colspan="2" style="font-weight: bold;">Trạng thái:</th>
                     <td colspan="2">

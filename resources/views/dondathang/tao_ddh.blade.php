@@ -32,7 +32,7 @@
     <br />
     <div class="row">
         <div class="col-lg-12">
-            <section class="panel">
+            <section class="panel panel-default">
                 <header class="panel-heading">
                     Tạo đơn hàng 
                 </header>

@@ -87,7 +87,7 @@
                             <div class="inner">
                             <p style="font-size: 1.3125rem; font-weight: bold;">{{ number_format($a_b_c, 0, ',', ',') }} </p>
 
-                            <p style="font-size: 14px; margin-top: 5px;">Tổng tiền thu được</p>
+                            <p style="font-size: 14px; margin-top: 5px;">Doanh thu</p>
                             </div>
                             <div class="icon" style="margin-right: -135px; margin-top: 10px;">
                                 <i class="fa fa-database" aria-hidden="true"></i>
@@ -99,7 +99,7 @@
                             <div class="inner">
                                 <p style="font-size: 1.3125rem; font-weight: bold;">{{ number_format($tongno, 0, ',', ',') }}</p>
 
-                                <p style="font-size: 14px; margin-top: 5px;">Tổng nợ</p>
+                                <p style="font-size: 14px; margin-top: 5px;">Tiền khách nợ</p>
                             </div>
                             <div class="icon" style="margin-right: -140px; margin-top: 10px;">
                                 <i class="fa fa-calendar-minus-o" aria-hidden="true"></i>
