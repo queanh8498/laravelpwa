@@ -30,7 +30,7 @@
                                 </div>
                                     <div class="form-group">
                                     <label for="exampleInputPassword1">Số điện thoại nhà cung cấp</label>
-                                   <input  type="number" pattern="[-+]?[0-9]" name="ncc_sdt" class="form-control" id="exampleInputEmail1" placeholder="Số điện thoại nhà cung cấp">
+                                   <input  type="text" data-validation="number" data-validation-error-msg="Làm ơn nhập số" name="ncc_sdt" class="form-control" id="exampleInputEmail1" placeholder="Số điện thoại nhà cung cấp">
                                 </div>
                                
                          

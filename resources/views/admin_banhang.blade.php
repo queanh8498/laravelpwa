@@ -38,7 +38,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <header class="header fixed-top clearfix">
 <!--logo start-->
 <div class="brand">
-    <a href="#" class="logo">
+    <a href="{{URL::to('banhang/tongquanbanhang')}}" class="logo">
         QUẢN LÝ
     </a>
     <div class="sidebar-toggle-box">
