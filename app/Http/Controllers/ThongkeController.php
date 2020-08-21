@@ -44,14 +44,14 @@ class ThongkeController extends Controller
 
         //tổng tiền trả hàng trong tháng hiện tại
         $sumtrahang_month_now=DB::select(
-            'SELECT SUM(tth.TienTraSauKhiGiamChietKhau) AS TongTienTraHang
+            'SELECT SUM(tth.TienTraKhach) AS TongTienTraKhach
             FROM 
-                    (SELECT ddh.ddh_id, pth.pth_id, pth.pth_ngaylap ,SUM(ctth.ctth_soluong*ctth.ctth_dongia)-SUM(ctth.ctth_soluong * ctth.ctth_dongia * ddh.ddh_giamchietkhau/100) AS TienTraSauKhiGiamChietKhau
-                    FROM dondathang ddh
-                    JOIN phieutrahang pth ON pth.ddh_id = ddh.ddh_id
-                    JOIN chitiettrahang ctth ON ctth.pth_id = pth.pth_id
-                    WHERE month(pth.pth_ngaylap)=MONTH(NOW())
-                    GROUP BY ddh.ddh_id, pth.pth_id) AS tth');
+                (SELECT ddh.ddh_id, pth.pth_id, pth.pth_ngaylap ,SUM(pth.pth_ctk) AS TienTraKhach
+                FROM dondathang ddh
+                JOIN phieutrahang pth ON pth.ddh_id = ddh.ddh_id
+                JOIN chitiettrahang ctth ON ctth.pth_id = pth.pth_id
+                WHERE month(pth.pth_ngaylap)=MONTH(NOW())
+                GROUP BY ddh.ddh_id, pth.pth_id) AS tth');
 
         //tổng tiền nợ all các đơn hàng trong tháng hiện tại
         $sumtienno_month_now=DB::select(
@@ -70,7 +70,7 @@ class ThongkeController extends Controller
             $b = $sumtienthu_month_now->tongtienthu;
         }
         foreach($sumtrahang_month_now as $sumtrahang_month_now){
-            $c = $sumtrahang_month_now->TongTienTraHang;
+            $c = $sumtrahang_month_now->TongTienTraKhach;
         }
         foreach($sumtienno_month_now as $sumtienno_month_now){
             $tienno = $sumtienno_month_now->tienno;
@@ -153,9 +153,9 @@ class ThongkeController extends Controller
 
         //thống kê tổng tiền khách trả hàng theo thời gian chọn
         $sumtrahang_timkiem = DB::select(
-            'SELECT SUM(tth.TienTraSauKhiGiamChietKhau) AS TongTienTraHang
+            'SELECT SUM(tth.TienTraKhach) AS TongTienTraKhach
             FROM 
-                (SELECT ddh.ddh_id, pth.pth_id, pth.pth_ngaylap ,SUM(ctth.ctth_soluong*ctth.ctth_dongia)-SUM(ctth.ctth_soluong * ctth.ctth_dongia * ddh.ddh_giamchietkhau/100) AS TienTraSauKhiGiamChietKhau
+                (SELECT ddh.ddh_id, pth.pth_id, pth.pth_ngaylap ,SUM(pth.pth_ctk) AS TienTraKhach
                 FROM dondathang ddh
                 JOIN phieutrahang pth ON pth.ddh_id = ddh.ddh_id
                 JOIN chitiettrahang ctth ON ctth.pth_id = pth.pth_id
@@ -180,7 +180,7 @@ class ThongkeController extends Controller
             $b = $sumtienthu_timkiem->tongtienthu;
         }
         foreach($sumtrahang_timkiem as $sumtrahang_timkiem){
-            $c = $sumtrahang_timkiem->TongTienTraHang;
+            $c = $sumtrahang_timkiem->TongTienTraKhach;
         }
         foreach($sumtienno_timkiem as $sumtienno_timkiem){
             $tienno = $sumtienno_timkiem->tienno;
