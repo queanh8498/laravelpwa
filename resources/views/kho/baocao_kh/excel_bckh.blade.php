@@ -32,10 +32,10 @@
                 </td>
             </tr>
              <tr>
-                <td colspan="2" class="caption" align="left" style="text-align: center; font-size: 12px">
+                <td colspan="3" class="caption" align="left" style="text-align: center; font-size: 12px">
                <i>Khách hàng: </i><strong>{{$kh->kh_ten}}</strong>
                 </td>
-                <td></td>
+               
                  <td></td>
                
                   <td colspan="2" class="caption" align="right" style="text-align: center; font-size: 12px">
