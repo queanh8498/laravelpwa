@@ -108,8 +108,8 @@
             <td>{{$dsctpth->ncc_ten}}</td>
             <td>{{$dsctpth->nhom_ten}}</td>
             <td>{{$dsctpth->ctth_soluong}}</td>
-            <td>{{number_format($dsctpth->ctth_dongia,0,',','.')}}</td>
-            <td>{{number_format($dsctpth->ctth_soluong*$dsctpth->ctth_dongia,0,',','.')}}</td>
+            <td>{{number_format($dsctpth->ctth_dongia,0,',',',')}}</td>
+            <td>{{number_format($dsctpth->ctth_soluong*$dsctpth->ctth_dongia,0,',',',')}}</td>
             <?php
             $total=$total+($dsctpth->ctth_soluong*$dsctpth->ctth_dongia);
              ?>
@@ -123,7 +123,7 @@
        
         <tr>
             <th>Tổng tiền:</th>
-            <td>{{number_format($total,0,',','.')}} đ</td>
+            <td>{{number_format($total,0,',',',')}} đ</td>
         </tr>
         <tr>
             <th>Giảm chiết khấu: </th>
@@ -131,22 +131,22 @@
         </tr>
         <tr>
             <th>Tiền trả hàng: </th>
-            <td>{{number_format($total-$total*(($pth->dondathang->ddh_giamchietkhau)/100),0,',','.')}}đ</td>
+            <td>{{number_format($total-$total*(($pth->dondathang->ddh_giamchietkhau)/100),0,',',',')}}đ</td>
         </tr>
         <tr>
             <th> Tiền cũ: </th>
-            <td>{{number_format($pth->pth_tcn,0,',','.')}} đ</td>
+            <td>{{number_format($pth->pth_tcn,0,',',',')}} đ</td>
         </tr>
         <?php
  $cnkh=DB::table('congno_khachhang')->where('kh_id',$pth->dondathang->khachhang->kh_id)->first();
         ?>
         <tr>
             <th> Còn lại:</th>
-            <td>{{number_format($cnkh->tongno,0,',','.')}} đ</td>
+            <td>{{number_format($cnkh->tongno,0,',',',')}} đ</td>
         </tr>
          <tr>
             <th> Cần trả khách: </th>
-            <td> {{number_format($pth->pth_ctk,0,',','.')}} đ</td>
+            <td> {{number_format($pth->pth_ctk,0,',',',')}} đ</td>
         </tr>
        
     </table>

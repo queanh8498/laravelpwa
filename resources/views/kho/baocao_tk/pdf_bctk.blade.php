@@ -105,8 +105,8 @@
                <td>{{$value->hh_ten}}</td>
               <td>{{$value->hh_donvitinh}}</td>
                <td>{{$value->hh_soluong}}</td>
-                <td> {{number_format($value->hh_dongia,0,',','.')}}</td>
-           <td> {{number_format($value->hh_soluong*$value->hh_dongia,0,',','.')}}</td>
+                <td> {{number_format($value->hh_dongia,0,',',',')}}</td>
+           <td> {{number_format($value->hh_soluong*$value->hh_dongia,0,',',',')}}</td>
           
                @endforeach
                 </tbody>

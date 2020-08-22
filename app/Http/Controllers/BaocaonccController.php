@@ -78,7 +78,7 @@ class BaocaonccController extends Controller
        ->where('nhacungcap.ncc_id',$request->ncc_id)
        ->get();
 
-if($from>=$to ){
+if($from>=$to ||$request->tungay==''||$request->denngay==''){
   echo "<input  style='color:red;' type='text' id='check' value='Ngày không hợp lệ' readonly='' class='form-control'>";
 }
 else{
@@ -126,7 +126,7 @@ else{
                 foreach ($data1 as $key1 => $value1) {
                     
             $output.=  '<td>'.$value1->quantity.'</td>
-                        <td>'.number_format($value1->total,0,',','.').'</td>';
+                        <td>'.number_format($value1->total,0,',',',').'</td>';
                       $tck=$tck+$value1->quantity;
                     }}
                     else{
@@ -150,7 +150,7 @@ else{
                 foreach ($data2 as $key2 => $value2) {
                     
             $output.=  '<td>'.$value2->quantity.'</td>
-                        <td>'.number_format($value2->total,0,',','.').'</td>';
+                        <td>'.number_format($value2->total,0,',',',').'</td>';
                       $tck=$tck+$value2->quantity;
                     }}
                     else{
@@ -162,7 +162,7 @@ else{
                 foreach ($data3 as $key3 => $value3) {
                     
             $output.=  '<td>'.$value3->quantity.'</td>
-                        <td>'.number_format($value3->total,0,',','.').'</td>';
+                        <td>'.number_format($value3->total,0,',',',').'</td>';
                       $tck=$tck-$value3->quantity;
                     }}
                     else{
@@ -173,7 +173,7 @@ else{
               $output.='<td>'.$tck.'</td>
               
              
-               <td>'.number_format($tck*$value->hh_dongia,0,',','.').'</td></tr>';
+               <td>'.number_format($tck*$value->hh_dongia,0,',',',').'</td></tr>';
           }
           $output.= "</tbody>";
           return $output;

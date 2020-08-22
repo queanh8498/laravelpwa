@@ -36,13 +36,13 @@
         <td colspan="2"> <i>Kho nhập: </i><strong>{{$pnk->khohang->kho_ten}}</strong></td>
         <td></td>
         <td></td>
-        <td colspan="3"> <i>Địa chỉ kho nhập: </i><strong>{{$pnk->khohang->kho_diachi}}</strong></td>
+        <td colspan="3"  style="text-align:right;"> <i>Địa chỉ kho nhập: </i><strong>{{$pnk->khohang->kho_diachi}}</strong></td>
         </tr>
         <tr>
         <td colspan="2">  <i>Nhà cung cấp: </i><strong>{{$pnk->nhacungcap->ncc_ten}}</strong></td>
         <td></td>
         <td></td>
-        <td colspan="3"> <i>Địa chỉ nhà cung cấp: </i><strong> {{$pnk->nhacungcap->ncc_diachi}}</strong></td>
+        <td colspan="3" style="text-align:right;"> <i>Địa chỉ nhà cung cấp: </i><strong> {{$pnk->nhacungcap->ncc_diachi}}</strong></td>
         </tr>
       
         
@@ -82,10 +82,10 @@
                   {{$dsctpn->ctpn_soluong}}
                 </td>
                   <td style="text-align:center;width:12px">
-                    {{number_format($dsctpn->ctpn_dongia,0,',','.')}}
+                    {{number_format($dsctpn->ctpn_dongia,0,',',',')}}
                   </td>
                     <td style="text-align:center;width:18px">
-                      {{number_format($dsctpn->ctpn_soluong*$dsctpn->ctpn_dongia,0,',','.')}}
+                      {{number_format($dsctpn->ctpn_soluong*$dsctpn->ctpn_dongia,0,',',',')}}
                     </td>
                <?php
             $total=$total+($dsctpn->ctpn_soluong*$dsctpn->ctpn_dongia);

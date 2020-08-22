@@ -116,7 +116,7 @@ class BaocaokhController extends Controller
        ->groupBy('hanghoa.hh_id')
        ->get();
 
-if($from>=$to ){
+if($from>=$to ||$request->tungay==''||$request->denngay==''){
   echo "<input  style='color:red;' type='text' id='check' value='Ngày không hợp lệ' readonly='' class='form-control'>";
 }
 else{

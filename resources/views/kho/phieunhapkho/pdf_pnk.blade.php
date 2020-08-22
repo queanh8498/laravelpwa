@@ -109,8 +109,8 @@
                <td>{{$dsctpn->hh_donvitinh}}</td>
             <td>{{$dsctpn->nhom_ten}}</td>
             <td>{{$dsctpn->ctpn_soluong}}</td>
-            <td>{{number_format($dsctpn->ctpn_dongia,0,',','.')}}</td>
-            <td>{{number_format($dsctpn->ctpn_soluong*$dsctpn->ctpn_dongia,0,',','.')}}</td>
+            <td>{{number_format($dsctpn->ctpn_dongia,0,',',',')}}</td>
+            <td>{{number_format($dsctpn->ctpn_soluong*$dsctpn->ctpn_dongia,0,',',',')}}</td>
             <?php
             $total=$total+($dsctpn->ctpn_soluong*$dsctpn->ctpn_dongia);
              ?>
@@ -119,7 +119,7 @@
          
          <tr>
             <th colspan="6">Tổng tiền</th>
-            <th>{{number_format($total,0,',','.') }}</th>
+            <th>{{number_format($total,0,',',',') }}</th>
             </tr>
           </tbody>
       </table>

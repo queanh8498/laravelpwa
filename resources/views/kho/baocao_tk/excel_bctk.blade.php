@@ -55,8 +55,8 @@
                <td align="center" valign="middle" width="15">{{$value->hh_ten}}</td>
               <td align="center" valign="middle" width="15">{{$value->hh_donvitinh}}</td>
                <td  align="center" valign="middle" width="20">{{$value->hh_soluong}}</td>
-                <td  align="center" valign="middle" width="20"> {{number_format($value->hh_dongia,0,',','.')}}</td>
-           <td  align="center" valign="middle" width="20"> {{number_format($value->hh_soluong*$value->hh_dongia,0,',','.')}}</td>
+                <td  align="center" valign="middle" width="20"> {{number_format($value->hh_dongia,0,',',',')}}</td>
+           <td  align="center" valign="middle" width="20"> {{number_format($value->hh_soluong*$value->hh_dongia,0,',',',')}}</td>
           
                @endforeach
                 

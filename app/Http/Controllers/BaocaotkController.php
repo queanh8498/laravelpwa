@@ -24,7 +24,7 @@ class BaocaotkController extends Controller
     	return view('kho.baocao_tk.bctk')->with('khohang',$khohang);
     }
         public function postpdf_bctk(Request $request){
-  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
+ 
        $current_day = Carbon::now('Asia/Ho_Chi_Minh');
       
        $date=date("Y-m-d H:i:s", strtotime($current_day));
@@ -45,7 +45,7 @@ $khohang=khohang::find($request->kho_id);
     return $pdf->stream();
     }
      public function excel_bctk(Request $request){
-  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
+ 
       $current_day = Carbon::now('Asia/Ho_Chi_Minh');
       
        $date=date("Y-m-d H:i:s", strtotime($current_day));
@@ -64,7 +64,7 @@ $khohang=khohang::find($request->kho_id);
     return Excel::download(new Baocaotk_Export($date,$data,$khohang), 'Baocao_tonkho.xlsx');
     }
       public function postxem_bctk(Request $request){
-  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
+
       $current_day = Carbon::now('Asia/Ho_Chi_Minh');
       
        $date=date("Y-m-d H:i:s", strtotime($current_day));
@@ -96,8 +96,8 @@ $khohang=khohang::find($request->kho_id);
                 <td>'.$value->hh_ten.'</td>
                 <td>'.$value->hh_donvitinh.'</td>
                 <td>'.$value->hh_soluong.'</td>
-                <td>'.number_format($value->hh_dongia,0,',','.').'</td>
-                <td>'.number_format($value->hh_soluong*$value->hh_dongia,0,',','.').'</td></tr>';
+                <td>'.number_format($value->hh_dongia,0,',',',').'</td>
+                <td>'.number_format($value->hh_soluong*$value->hh_dongia,0,',',',').'</td></tr>';
                
            
               

@@ -31,7 +31,7 @@
           @foreach($pth as $dspth)
           <tr>
            <?php 
-            $ngaylap=date("d-m-Y H:i:s", strtotime($dspth->pth_ngaylap));
+            $ngaylap=date("d-m-Y", strtotime($dspth->pth_ngaylap));
          
           ?>
             <td>PTH00{{ $dspth->pth_id }}</td>

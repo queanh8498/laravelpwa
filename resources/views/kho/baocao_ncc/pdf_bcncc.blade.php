@@ -125,7 +125,7 @@
                 @foreach ($data1 as $key1 => $value1)
                     
                    <td>{{$value1->quantity}}</td>
-                   <td>{{number_format($value1->total,0,',','.')}}</td>
+                   <td>{{number_format($value1->total,0,',',',')}}</td>
                      <?php $tck=$tck+$value1->quantity;?>
                    @endforeach
                     @else
@@ -151,7 +151,7 @@
                 @foreach ($data2 as $key2 => $value2)
                     
                    <td>{{$value2->quantity}}</td>
-                   <td>{{number_format($value2->total,0,',','.')}}</td>
+                   <td>{{number_format($value2->total,0,',',',')}}</td>
                      <?php $tck=$tck+$value2->quantity;?>
                    @endforeach
                     @else
@@ -163,7 +163,7 @@
                 @foreach ($data3 as $key3 => $value3)
                     
                    <td>{{$value3->quantity}}</td>
-                   <td>{{number_format($value3->total,0,',','.')}}</td>
+                   <td>{{number_format($value3->total,0,',',',')}}</td>
                      <?php $tck=$tck-$value3->quantity;?>
                    @endforeach
                     @else
@@ -172,7 +172,7 @@
                         <td>0</td>
                     @endif
                     <td>{{$tck}}</td>
-                    <td>{{number_format($tck*$value->hh_dongia,0,',','.')}}</td></tr>
+                    <td>{{number_format($tck*$value->hh_dongia,0,',',',')}}</td></tr>
                @endforeach
                 </tbody>
               </table>

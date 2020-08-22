@@ -25,9 +25,9 @@
   
         <tr>
         <td colspan="4"> <i>Khách trả hàng: </i><strong>{{$pth->dondathang->khachhang->kh_ten}}</strong></td>
-        <td></td>
+      
         
-        <td colspan="3"> <i>Địa chỉ khách trả hàng: </i><strong> {{$pth->dondathang->khachhang->kh_diachi}}</strong></td>
+        <td colspan="4" style="text-align:right;"> <i>Địa chỉ khách trả hàng: </i><strong> {{$pth->dondathang->khachhang->kh_diachi}}</strong></td>
         </tr>
         <tr>
         <td colspan="4"> <i>Phiếu trả cho đơn hàng: </i><strong>DDH00{{$pth->ddh_id}}</strong></td>
@@ -77,10 +77,10 @@
                 </td>
                
                   <td style="text-align:center;width:10px">
-                      {{number_format($dsctpth->ctth_dongia,0,',','.')}}
+                      {{number_format($dsctpth->ctth_dongia,0,',',',')}}
                   </td>
                     <td style="text-align:center;width:15px">
-                      {{number_format($dsctpth->ctth_soluong*$dsctpth->ctth_dongia,0,',','.')}}
+                      {{number_format($dsctpth->ctth_soluong*$dsctpth->ctth_dongia,0,',',',')}}
                     </td>
                  <?php
             $total=$total+($dsctpth->ctth_soluong*$dsctpth->ctth_dongia);
@@ -102,7 +102,7 @@
                 <strong>Tổng tiền: </strong>
                 </td>
                  <td align="center" width="15" valign="middle">
-                     {{number_format($total,0,',','.')}}
+                     {{number_format($total,0,',',',')}}
                     </td>
             </tr>
             <tr>
@@ -128,7 +128,7 @@
                 <strong>Tiền trả hàng:</strong>
                 </td>
                  <td align="center" width="15" valign="middle">
-                     {{number_format($total-$total*(($pth->dondathang->ddh_giamchietkhau)/100),0,',','.')}}
+                     {{number_format($total-$total*(($pth->dondathang->ddh_giamchietkhau)/100),0,',',',')}}
                     </td>
             </tr>
              <tr>
@@ -141,7 +141,7 @@
                 <strong>Tiền cũ:</strong>
                 </td>
                  <td align="center" width="15" valign="middle">
-                     {{number_format($pth->pth_tcn,0,',','.')}}
+                     {{number_format($pth->pth_tcn,0,',',',')}}
                     </td>
             </tr>
              <tr>
@@ -157,7 +157,7 @@
                 <strong>Còn lại:</strong>
                 </td>
                  <td align="center" width="15" valign="middle">
-                      {{number_format($cnkh->tongno,0,',','.')}}
+                      {{number_format($cnkh->tongno,0,',',',')}}
                     </td>
             </tr>
              <tr>

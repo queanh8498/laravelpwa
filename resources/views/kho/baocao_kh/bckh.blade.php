@@ -91,7 +91,7 @@
         event.preventDefault();
        var a= $('#dynamic_form').serialize();
       
-       console.log(a);
+      // console.log(a);
           $.ajax({
 
         type:'post',

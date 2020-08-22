@@ -97,7 +97,7 @@
         event.preventDefault();
        var a= $(this).serialize();
        
-         console.log(a);
+     //    console.log(a);
         $.ajax({
             url: '{{ route("dynamic-field.insertncc") }}',
             method:'post',
@@ -168,7 +168,7 @@ count++;
            var check=$(this).val();
           
            if ($(this).is(":checked")) {
-            console.log(check);
+          //  console.log(check);
 
             $('#hh_id'+check).prop('disabled', false);
             $('#ctpn_soluong'+check).prop('disabled', false);

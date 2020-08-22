@@ -42,7 +42,7 @@
             <td>{{$dshh->hh_donvitinh}}</td>
             <td>{{$dshh->nhomhanghoa->nhom_ten}}</td>
             <td>{{$dshh->khohang->kho_ten}}</td>
-            <td>{{number_format($dshh->hh_dongia).' '.'VNĐ'}}</td>
+            <td>{{number_format($dshh->hh_dongia).' '.''}}</td>
             <td>{{$dshh->hh_soluong}}</td>
             <td>{{$hh_ngaytaomoi}}</td>
             <td>{{$hh_ngaycapnhat }}</td>

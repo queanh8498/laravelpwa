@@ -141,7 +141,7 @@ $(document).ready(function(){
         data:{'ncc_id':ncc_id},
       
         success:function(data){
-         console.log(data);
+     //    console.log(data);
              $('#nhom_id'+count).html(data);
         },
         error:function(){
@@ -159,7 +159,7 @@ $(document).ready(function(){
  $('#dynamic_form').on('submit', function(event){
         event.preventDefault();
        var a= $(this).serialize();
-       console.log(a);
+   //    console.log(a);
          
         $.ajax({
             url: '{{ route("dynamic-field.insert") }}',

@@ -77,8 +77,8 @@
             <td>{{$dsctptncc->hh_ten}}</td>
              <td>{{$dsctptncc->hh_donvitinh}}</td>
             <td>{{$dsctptncc->ctncc_soluong}}</td>
-            <td>{{number_format($dsctptncc->ctncc_dongia,0,',','.') }}</td>
-            <td>{{number_format($dsctptncc->ctncc_soluong*$dsctptncc->ctncc_dongia,0,',','.')}}</td>
+            <td>{{number_format($dsctptncc->ctncc_dongia,0,',',',') }}</td>
+            <td>{{number_format($dsctptncc->ctncc_soluong*$dsctptncc->ctncc_dongia,0,',',',')}}</td>
             <?php
             $total=$total+($dsctptncc->ctncc_soluong*$dsctptncc->ctncc_dongia);
              ?>

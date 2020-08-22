@@ -81,7 +81,7 @@
                 @foreach ($data1 as $key1 => $value1)
                     
                    <td align="center" valign="middle" width="10">{{$value1->quantity}}</td>
-                   <td align="center" valign="middle" width="12">{{number_format($value1->total,0,',','.')}}</td>
+                   <td align="center" valign="middle" width="12">{{number_format($value1->total,0,',',',')}}</td>
                      <?php $tck=$tck+$value1->quantity;?>
                    @endforeach
                     @else
@@ -107,7 +107,7 @@
                 @foreach ($data2 as $key2 => $value2)
                     
                    <td align="center" valign="middle" width="10">{{$value2->quantity}}</td>
-                   <td align="center" valign="middle" width="12">{{number_format($value2->total,0,',','.')}}</td>
+                   <td align="center" valign="middle" width="12">{{number_format($value2->total,0,',',',')}}</td>
                      <?php $tck=$tck+$value2->quantity;?>
                    @endforeach
                     @else
@@ -119,7 +119,7 @@
                 @foreach ($data3 as $key3 => $value3)
                     
                    <td align="center" valign="middle" width="10">{{$value3->quantity}}</td>
-                   <td align="center" valign="middle" width="12">{{number_format($value3->total,0,',','.')}}</td>
+                   <td align="center" valign="middle" width="12">{{number_format($value3->total,0,',',',')}}</td>
                      <?php $tck=$tck-$value3->quantity;?>
                    @endforeach
                     @else
@@ -128,7 +128,7 @@
                         <td align="center" valign="middle" width="12">0</td>
                     @endif
                     <td align="center" valign="middle" width="10">{{$tck}}</td>
-                    <td align="center" valign="middle" width="12">{{number_format($tck*$value->hh_dongia,0,',','.')}}</td></tr>
+                    <td align="center" valign="middle" width="12">{{number_format($tck*$value->hh_dongia,0,',',',')}}</td></tr>
                @endforeach
                 
  </table>

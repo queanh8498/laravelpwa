@@ -26,7 +26,7 @@
         <tr>
         <td colspan="3"> <i>Nhà cung cấp: </i><strong> {{$ptncc->nhacungcap->ncc_ten}}</strong></td>
         <td></td>
-        <td colspan="3"> <i>Địa chỉ nhà cung cấp: </i><strong> {{$ptncc->nhacungcap->ncc_diachi}}</strong></td>
+        <td colspan="3" style="text-align:right;"> <i>Địa chỉ nhà cung cấp: </i><strong> {{$ptncc->nhacungcap->ncc_diachi}}</strong></td>
         </tr>
         <tr>
         <td colspan="3">  <i>Tạo bởi phiếu nhập: </i><strong>PNK00{{$ptncc->pnk_id}}</strong></td>
@@ -67,10 +67,10 @@
                    {{$dsctptncc->ctncc_soluong}}
                 </td>
                 <td style="text-align:center;width:15px">
-                    {{number_format($dsctptncc->ctncc_dongia,0,',','.')}}
+                    {{number_format($dsctptncc->ctncc_dongia,0,',',',')}}
                 </td>
                   <td style="text-align:center;width:18px">
-                    {{number_format($dsctptncc->ctncc_soluong*$dsctptncc->ctncc_dongia,0,',','.')}}
+                    {{number_format($dsctptncc->ctncc_soluong*$dsctptncc->ctncc_dongia,0,',',',')}}
                   </td>
                  
                <?php
