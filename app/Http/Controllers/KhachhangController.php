@@ -29,7 +29,7 @@ class KhachhangController extends Controller
     {
         $kh=DB::select('select kh.kh_id,kh.kh_ten,kh.kh_diachi,kh.kh_sdt, 
         cn.tongno as tongcongno  from khachhang as kh 
-        join congno_khachhang as cn on kh.kh_id = cn.kh_id group by kh.kh_id');
+        left join congno_khachhang as cn on kh.kh_id = cn.kh_id group by kh.kh_id');
         //dd($kh);
         return view('khachhang.index')->with('kh',$kh);
     }
@@ -199,9 +199,18 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
     public function store(Request $request){
 
         $validation = $request->validate([
-            'kh_sdt' => 'unique:khachhang',
+            'kh_sdt' => 'required||min:10|max:10|unique:khachhang',
             'kh_ten' => 'required',
             'kh_diachi' => 'required'
+        ],
+        [
+            'kh_sdt.unique'=>'Số điện thoại đã tồn tại',
+            'kh_ten.required'=>'Vui lòng nhập tên khách hàng',
+            'kh_diachi.required'=>'Vui lòng nhập địa chỉ',
+            'kh_sdt.required'=>'Vui lòng nhập số điện thoại ',
+            'kh_sdt.min'=>'Số điện thoại phải có độ dài 10 số',
+            'kh_sdt.max'=>'Số điện thoại phải có độ dài 10 số',
+            
         ]);
 
         $kh=new khachhang();
@@ -229,6 +238,7 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
             'kh_ten'=>'required|min:3',
             'kh_sdt'=> 'required|min:10|max:10',
             'kh_diachi'=>'required',
+            'kh_sdt' => 'unique:khachhang',
             
     ],
     [
@@ -238,6 +248,7 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
             'kh_sdt.required'=>'Vui lòng nhập số điện thoại ',
             'kh_sdt.min'=>'Số điện thoại phải có độ dài 10 số',
             'kh_sdt.max'=>'Số điện thoại phải có độ dài 10 số',
+            'kh_sdt.unique'=>'Số điện thoại đã tồn tại',
          
     ]);
 

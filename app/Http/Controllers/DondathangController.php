@@ -28,6 +28,7 @@ use App\PhieuXuatKho;
 use App\KhoHang;
 use App\NhaCungCap;
 use App\congno_khachhang;
+use Illuminate\Validation\Rule;
 
 
 session_start();
@@ -448,25 +449,36 @@ class DondathangController extends Controller
     }
 
 	public function store_kh_moi(Request $request)
-    {
-        $validation = $request->validate([
-            'kh_sdt_' => 'unique:khachhang',
-            'kh_ten_' => 'required',
-            'kh_diachi_' => 'required',
-            'kh_sdt_' => 'required',
+    {   
+        $kh_ten=$request->kh_ten_;
+        $kh_sdt=$request->kh_sdt_;
+        $kh_diachi=$request->kh_diachi_;
+
+        $data = [
+            'kh_ten' => $kh_ten,
+            'kh_sdt' => $kh_sdt,
+            'kh_diachi' => $kh_diachi,
+        ];
+
+        Validator::make($data, [
+            'kh_ten' => 'required',
+            'kh_sdt' => 'required|min:10|max:10|unique:khachhang',
+            'kh_diachi' => 'required',
         ],
         [
-            'kh_sdt_.unique'=>'Số diện thoại này đã tồn tại',
-            'kh_ten_.required'=>'Vui lòng nhập họ tên khách hàng',
-            'kh_diachi_.required'=>'Vui lòng nhập địa chỉ khách hàng',
-            'kh_sdt_.required'=>'Vui lòng nhập số điện thoại'
-        ]
-    );
+                'kh_sdt.unique'=>'Số diện thoại này đã tồn tại',
+                'kh_sdt.required'=>'Vui lòng nhập số điện thoại',
+                'kh_ten.required'=>'Vui lòng nhập họ tên khách hàng',
+                'kh_sdt.min'=>'Số điện thoại phải có độ dài 10 số',
+                'kh_sdt.max'=>'Số điện thoại phải có độ dài 10 số',
+                'kh_diachi.required'=>'Vui lòng nhập địa chỉ khách hàng',
+            ]
+        )->validate();
 
         $kh = new khachhang();
-        $kh->kh_ten = $request->kh_ten_;
-        $kh->kh_sdt = $request->kh_sdt_;
-        $kh->kh_diachi = $request->kh_diachi_;
+        $kh->kh_ten = $kh_ten;
+        $kh->kh_sdt = $kh_sdt;
+        $kh->kh_diachi = $kh_diachi;
         
         $kh->save();
 

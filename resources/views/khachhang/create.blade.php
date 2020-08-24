@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label>Số điện thoại:</label>
-                            <input type="text"  class="form-control" name="kh_sdt" id="kh_sdt" value="">    
+                            <input type="number" pattern="[-+]?[0-9]" class="form-control" name="kh_sdt" id="kh_sdt" value="">    
                         </div>
                              
                         <div class="form-group">

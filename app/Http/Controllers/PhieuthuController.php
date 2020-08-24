@@ -11,7 +11,6 @@ use App\User;
 use DB;
 use Validator;
 
-
 session_start();
 use Carbon\Carbon;
 
@@ -81,8 +80,22 @@ class PhieuthuController extends Controller
                 'kh_sdt'=>'required',
                 'pt_tienthu'  => 'required',
             );
+            $messages = [];
 
-            $error = Validator::make($request->all(), $rules);
+            $kh_sdt = $request->kh_sdt;
+            $pt_tienthu = $request->pt_tienthu;
+
+            $data = [
+                'pt_tienthu' => $pt_tienthu,
+                'kh_sdt' => $kh_sdt,
+            ];
+            foreach($data as $key => $val)
+            {
+                $messages['pt_tienthu.required'] = 'Vui lòng nhập số tiền thu.';
+                $messages['kh_sdt.required'] = 'Vui lòng nhập số điện thoại khách hàng';  
+            }    
+
+            $error = Validator::make($request->all(), $rules,$messages);
 
             if($error->fails()){
                 return response()->json([

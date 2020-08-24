@@ -88,7 +88,7 @@
                                
                                 <div class="col-md-5">
                                     <label for="no_hientaihienra">Còn nợ</label>
-                                    <input type="text" name="no_hientaihienra" class="form-control" id="no_hientaihienra">
+                                    <input type="text" name="no_hientaihienra" class="form-control" id="no_hientaihienra" readonly>
                                 </div>
                             </div>
                         </div>

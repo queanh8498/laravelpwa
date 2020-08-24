@@ -68,6 +68,7 @@ tr:hover {background-color: #f5f5f5;}
                     @else
                     <td>{{ number_format($kh->tongcongno,0,',',',') }}</td>
                     @endif
+                    @if(isset($kh->tongcongno))
                     <td>
                         <a href="{{URL::to('banhang/khachhang/chitiet/'.$kh->kh_id)}}" class="active styling-edit" ui-toggle-class="">
                             <i class="fa fa-eye text-active" title="Chi tiết khách hàng"></i></a>
@@ -79,6 +80,10 @@ tr:hover {background-color: #f5f5f5;}
 						<a href="{{ URL::to('/banhang/excel-chitietcongno-kh/'.$kh->kh_id) }}" class="active styling-edit" ui-toggle-class="">
                         <i class="fa fa-file-excel-o" title="Xuất Excel chi tiết công nợ"></i></a>
 					</td>
+                    
+                    @else
+                    <td>Chưa có đơn</td>
+                    @endif
                 </tr>
             @endforeach
                 
