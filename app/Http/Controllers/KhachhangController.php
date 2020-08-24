@@ -238,7 +238,6 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
             'kh_ten'=>'required|min:3',
             'kh_sdt'=> 'required|min:10|max:10',
             'kh_diachi'=>'required',
-            'kh_sdt' => 'unique:khachhang',
             
     ],
     [
@@ -248,7 +247,6 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
             'kh_sdt.required'=>'Vui lòng nhập số điện thoại ',
             'kh_sdt.min'=>'Số điện thoại phải có độ dài 10 số',
             'kh_sdt.max'=>'Số điện thoại phải có độ dài 10 số',
-            'kh_sdt.unique'=>'Số điện thoại đã tồn tại',
          
     ]);
 
