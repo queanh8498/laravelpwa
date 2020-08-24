@@ -119,8 +119,12 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-6">
+                                        <?php 
+                                            use Carbon\Carbon; 
+                                            $ddh_ngaylap = Carbon::now('Asia/Ho_Chi_Minh');
+                                        ?>
                                         <label for="ddh_ngaylap">Ngày lập</label>
-                                        <input type="date" name="ddh_ngaylap" class="form-control" id="ddh_ngaylap" >
+                                        <input type="text" name="ddh_ngaylap" class="form-control" id="ddh_ngaylap" value='<?php echo $ddh_ngaylap->format('d-m-Y'); ?>' readonly>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="ddh_thoihan">Thời hạn thanh toán (Số ngày)</label>

@@ -188,7 +188,7 @@ class DondathangController extends Controller
                 'nhom_id.*'=>'required',
                 'hh_id.*'=>'required',
                 'ctdh_soluong.*'  => 'required',
-                'ddh_ngaylap' => 'required',
+                //'ddh_ngaylap' => 'required',
                 'ddh_datra' => 'required',
             );
 
@@ -201,7 +201,7 @@ class DondathangController extends Controller
                 $messages['nhom_id.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.($key + 1).' của cột Nhóm hàng hóa.';
                 $messages['hh_id.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.($key + 1).' của cột Tên hàng hóa.';
                 $messages['ctdh_soluong.'.$key.'.required'] = 'Bạn chưa nhập dòng thứ '.($key + 1).' của cột Số lượng.';
-                $messages['ddh_ngaylap.required'] = 'Bạn chưa nhập vào "Ngày lập"';
+                //$messages['ddh_ngaylap.required'] = 'Bạn chưa nhập vào "Ngày lập"';
                 $messages['ddh_datra.required'] = 'Bạn chưa nhập vào "Khách đã trả"';
             }
             $error = Validator::make($request->all(), $rules,$messages);
