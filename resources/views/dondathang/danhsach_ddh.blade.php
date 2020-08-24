@@ -1,6 +1,9 @@
 @extends('admin_banhang')
 
 @section('admin_content')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
      <style> 
         table{  
             border: 1px solid #ccc;
@@ -12,6 +15,16 @@
         }
         td{
             border-right: 1px solid #ccc;
+        }
+        .input-group-addon{
+            padding: 6px 18px;
+        }
+        span:hover{
+            cursor: pointer;
+        }
+        .glyphicon{
+            top: 4px;
+            right: 6px;
         }
     </style>
     <a type="button" name="taoddh" class="btn btn-success" href="{{ URL::to('banhang/taodondathang') }}"> <i class="glyphicon glyphicon-plus"></i> Tạo đơn hàng</a><br><br>
@@ -31,10 +44,18 @@
                     {{ csrf_field() }}
             
                     <div class="col-sm-5">
-                        Từ :<input type="date" name="from_date" id="from_date" class="form-control" />
+                        Từ ngày : 
+                            <div class="input-group date">
+                                <input type="text" class="date form-control" name="from_date" id="from_date"/>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
                     </div>
                     <div class="col-sm-5">
-                        Đến :<input type="date" name="to_date" id="to_date" class="form-control"  />
+                        Đến ngày:
+                            <div class="input-group date">
+                                <input type="text" class="date form-control" name="to_date" id="to_date" class="form-control"  />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
                     </div>
                 
                     <!-- <div class="col-md-1">
@@ -106,4 +127,10 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+    $('.date').datepicker({  
+       format: 'dd-mm-yyyy'
+     });  
+    </script>
 @endsection

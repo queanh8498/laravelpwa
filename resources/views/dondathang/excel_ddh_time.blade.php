@@ -45,6 +45,7 @@
         @foreach($chitiet_ddh_date as $chitiet_ddh_date)
         <?php
              $ddh_ngaylap=date("d-m-Y", strtotime($chitiet_ddh_date->ddh_ngaylap));
+             $bccn_hanno=date("d-m-Y", strtotime($chitiet_ddh_date->bccn_hanno));
         ?>
         <tr>
             <td style="text-align: center; width:4px;">{{ $i++ }}</td>
@@ -56,7 +57,7 @@
             <td style="text-align: right; width:12px;">{{ number_format($chitiet_ddh_date->ddh_congnocu, 0, ',' , ',') }}</td>
             <td style="text-align: right; width:12px;">{{ number_format($chitiet_ddh_date->ddh_congnomoi, 0, ',' , ',') }}</td>
             <td style="text-align: right; width:12px;">{{ number_format($chitiet_ddh_date->ddh_congnocu + $chitiet_ddh_date->ddh_congnomoi, 0, ',' , ',') }}</td>
-            <td style="text-align: right; width:12px;">{{ $chitiet_ddh_date->bccn_hanno }}</td>
+            <td style="text-align: right; width:12px;">{{ $bccn_hanno }}</td>
         </tr>
         @endforeach
     </table>

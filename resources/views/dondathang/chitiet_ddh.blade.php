@@ -10,6 +10,10 @@
             <div class="table-responsive">
                 <table class="table table-striped b-t b-light">
                 @foreach ($ddh as $ddh)
+                    <?php
+                        $ddh_ngaylap=date("d-m-Y", strtotime($ddh->ddh_ngaylap));
+                        $bccn_hanno=date("d-m-Y", strtotime($ddh->bccn_hanno));
+                    ?>
                     <tr>
                         <th>Mã hóa đơn:</th>
                         <td>DH00{{ $ddh->ddh_id }}</td>
@@ -24,7 +28,7 @@
                     </tr>
                     <tr>
                         <th>Ngày lập:</th>
-                        <td>{{ $ddh->ddh_ngaylap }}</td>
+                        <td>{{ $ddh_ngaylap }}</td>
                         <th>Nhân viên bán:</th>
                         <td>{{ $ddh->name }}</td>
                     </tr>
@@ -38,7 +42,7 @@
                         <th>Công nợ cũ:</th>
                         <td>{{ number_format($ddh->ddh_congnocu, 0, ',' , ',') }} VND</td>
                         <th>Ngày cho nợ:</th>
-                        <td>{{ $ddh->bccn_hanno }}</td>
+                        <td>{{ $bccn_hanno }}</td>
                     </tr>
                 @endforeach
                 </table>

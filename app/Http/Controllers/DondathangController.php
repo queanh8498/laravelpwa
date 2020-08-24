@@ -72,10 +72,12 @@ class DondathangController extends Controller
         ]);
         //******search from date to date
         $from_date = $request->input('from_date');
+        $from_date_1 = date('Y-m-d', strtotime($from_date));
+        
         $to_date = $request->input('to_date');
-
         //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
-        $to_date_1 = date('Y-m-d', strtotime($to_date. ' + 1 days'));
+        // $to_date_1 = date('Y-m-d', strtotime($to_date. ' + 1 days'));
+        $to_date_1 = date('Y-m-d', strtotime($to_date));
         //dd($to_date_1);
 
         //lấy ngày hiện tại -> format lại
@@ -94,7 +96,7 @@ class DondathangController extends Controller
             JOIN nhanvien nv ON ddh.id = nv.id
             JOIN khachhang kh ON ddh.kh_id = kh.kh_id
             LEFT JOIN baocaocongno bccn ON ddh.ddh_id = bccn.ddh_id
-            WHERE ddh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'"
+            WHERE ddh.ddh_ngaylap BETWEEN "'.$from_date_1.'" AND "'.$to_date_1.'"
             GROUP BY ddh.ddh_id, kh.kh_ten, nv.name, ddh.ddh_ngaylap, ddh.ddh_trangthai, ddh.ddh_giamchietkhau, ddh.ddh_congnocu, ddh.ddh_congnomoi, bccn.bccn_hanno, ddh.ddh_datra');
         // dd($chitiet_kh_date);
 

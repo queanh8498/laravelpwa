@@ -111,10 +111,12 @@ class ThongkeController extends Controller
         ]);
         //******search from date to date
         $from_date = $request->input('from_date');
+        $from_date_1 = date('Y-m-d', strtotime($from_date));
+        
         $to_date = $request->input('to_date');
-
         //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
-        $to_date_1 = date('Y-m-d', strtotime($to_date. ' + 1 days'));
+        // $to_date_1 = date('Y-m-d', strtotime($to_date. ' + 1 days'));
+        $to_date_1 = date('Y-m-d', strtotime($to_date));
         //dd($to_date_1);
 
         //lấy ngày hiện tại -> format lại
@@ -136,20 +138,20 @@ class ThongkeController extends Controller
         $sodonhang_timkiem = DB::select(
             'SELECT COUNT(*) AS sodonhang
             FROM dondathang ddh
-            WHERE ddh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'"');
+            WHERE ddh.ddh_ngaylap BETWEEN "'.$from_date_1.'" AND "'.$to_date_1.'"');
         //dd($sodonhang_timkiem);
         
         //thống kê tổng tiền khách trả theo thời gian chọn
         $sumkhachtra_timkiem = DB::select(
             'SELECT SUM(ddh.ddh_datra) AS tienkhachtra
             FROM dondathang ddh
-            WHERE ddh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'"');
+            WHERE ddh.ddh_ngaylap BETWEEN "'.$from_date_1.'" AND "'.$to_date_1.'"');
 
         //thống kê tổng tiền thu theo thời gian chọn
         $sumtienthu_timkiem = DB::select(
             'SELECT SUM(pt.pt_tienthu) AS tongtienthu
             FROM phieuthu pt
-            WHERE pt.pt_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'"');
+            WHERE pt.pt_ngaylap BETWEEN "'.$from_date_1.'" AND "'.$to_date_1.'"');
 
         //thống kê tổng tiền khách trả hàng theo thời gian chọn
         $sumtrahang_timkiem = DB::select(
@@ -159,7 +161,7 @@ class ThongkeController extends Controller
                 FROM dondathang ddh
                 JOIN phieutrahang pth ON pth.ddh_id = ddh.ddh_id
                 JOIN chitiettrahang ctth ON ctth.pth_id = pth.pth_id
-                WHERE pth.pth_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'"
+                WHERE pth.pth_ngaylap BETWEEN "'.$from_date_1.'" AND "'.$to_date_1.'"
                 GROUP BY ddh.ddh_id, pth.pth_id) AS tth;');
 
         //tổng tiền nợ all các đơn hàng theo thời gian chọn
@@ -167,7 +169,7 @@ class ThongkeController extends Controller
             'SELECT SUM(bccn.bccn_soducongno) AS tienno
             FROM dondathang ddh
             JOIN baocaocongno bccn ON ddh.ddh_id = bccn.ddh_id
-            WHERE ddh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date_1.'"');
+            WHERE ddh.ddh_ngaylap BETWEEN "'.$from_date_1.'" AND "'.$to_date_1.'"');
         
 
         foreach($sodonhang_timkiem as $sodonhang_timkiem){

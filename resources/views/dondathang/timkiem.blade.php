@@ -1,6 +1,9 @@
 @extends('admin_banhang')
 
 @section('admin_content')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
     <style> 
         table{  
             border: 1px solid #ccc;
@@ -12,6 +15,16 @@
         }
         td{
             border-right: 1px solid #ccc;
+        }
+        .input-group-addon{
+            padding: 6px 18px;
+        }
+        span:hover{
+            cursor: pointer;
+        }
+        .glyphicon{
+            top: 4px;
+            right: 6px;
         }
     </style>
     <a type="button" name="taoddh" class="btn btn-success" href="{{ URL::to('banhang/taodondathang') }}"> <i class="glyphicon glyphicon-plus"></i> Tạo đơn hàng</a><br><br>
@@ -30,11 +43,21 @@
                 <form method="post" action="{{ route('dondathang.timkiem') }}">
                     {{ csrf_field() }}
             
-                    <div class="col-md-5">
-                        Từ :<input type="date" name="from_date" id="from_date" class="form-control" value="{{ old('from_date',$from_date) }}" />
+                    <div class="col-sm-5">
+                        <!-- Từ :<input type="date" name="from_date" id="from_date" class="form-control" value="{{ old('from_date',$from_date) }}" /> -->
+                        Từ ngày : 
+                            <div class="input-group date">
+                                <input type="text" class="date form-control" name="from_date" id="from_date" value="{{ old('from_date',$from_date) }}"/>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
                     </div>
-                    <div class="col-md-5">
-                        Đến :<input type="date" name="to_date" id="to_date" class="form-control"  value="{{ old('to_date',$to_date) }}"/>
+                    <div class="col-sm-5">
+                        <!-- Đến :<input type="date" name="to_date" id="to_date" class="form-control"  value="{{ old('to_date',$to_date) }}"/> -->
+                        Đến ngày: 
+                            <div class="input-group date">
+                                <input type="text" class="date form-control" name="to_date" id="to_date" class="form-control" value="{{ old('to_date',$to_date) }}"/>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
                     </div>
 
                     <div class="col-md-1">
@@ -73,11 +96,15 @@
 
                     <tbody>
                         @foreach($chitiet_ddh_date as $ddh)
+                            <?php
+                                $ddh_ngaylap=date("d-m-Y", strtotime($ddh->ddh_ngaylap));
+                                $bccn_hanno=date("d-m-Y", strtotime($ddh->bccn_hanno));
+                            ?>
                             <tr>
                                 <td>{{ $ddh->ddh_id }}</td>
                                 <td>{{ $ddh->kh_ten }}</td>
-                                <td>{{ $ddh->ddh_ngaylap }}</td>
-                                <td>{{ $ddh->bccn_hanno }}</td>
+                                <td>{{ $ddh_ngaylap }}</td>
+                                <td>{{ $bccn_hanno }}</td>
                                 <td>{{ number_format($ddh->ddh_congnocu, 0, ',' , ',') }} đ</td>
                                 <td>
                                     @if(($ddh->ddh_datra)==($ddh->TongCong))
@@ -101,4 +128,10 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript">
+        $('.date').datepicker({  
+            format: 'dd-mm-yyyy'
+        });  
+    </script>
 @endsection

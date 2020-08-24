@@ -1,6 +1,9 @@
 @extends('admin_banhang')
 
 @section('admin_content')
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
     <style> 
         table, th, td {  
             border: 1px solid #ccc;
@@ -39,6 +42,19 @@
             color: white;
 
         }
+        .input-group-addon{
+            padding: 6px 18px;
+        }
+        span:hover{
+            cursor: pointer;
+        }
+        .glyphicon{
+            top: 4px;
+            right: 6px;
+        }
+        .input-group{
+            width: 95%;
+        }
     </style>
     <div class="panel panel-default">
         <div class="panel-heading">
@@ -50,13 +66,22 @@
                     {{ csrf_field() }}
             
                     <div class="col-sm-5">
-                        Từ :<input type="date" name="from_date" id="from_date" class="form-control"  value="{{ old('from_date',$from_date) }}" />
-                    </div>
-                    <div class="col-sm-5" style="margin-left: 33px;">
-                        Đến :<input type="date" name="to_date" id="to_date" class="form-control" value="{{ old('to_date',$to_date) }}" />
+                        Từ ngày :
+                        <div class="input-group date">
+                            <input type="text" class="date form-control" name="from_date" id="from_date" value="{{ old('from_date',$from_date) }}" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
                     </div>
 
-                    <div class="col-sm-1" style="margin-left: 18px;">
+                    <div class="col-sm-5">
+                        Đến ngày:
+                        <div class="input-group date">
+                            <input type="text"  class="date form-control" name="to_date" id="to_date" value="{{ old('to_date',$to_date) }}" />
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-1">
                         <br><button class="btn btn-outline-primary" type="submit">Tìm kiếm</button>
                     </div>
 
@@ -107,5 +132,11 @@
             
         </div>
     </div>
+
+    <script type="text/javascript">
+        $('.date').datepicker({  
+            format: 'dd-mm-yyyy'
+        });  
+    </script>
    
 @endsection

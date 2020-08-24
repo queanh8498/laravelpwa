@@ -16,6 +16,10 @@
         </thead>
         <tbody>
             @foreach ($ddh0 as $ddh)
+                <?php
+                    $ddh_ngaylap=date("d-m-Y", strtotime($ddh->ddh_ngaylap));
+                    $bccn_hanno=date("d-m-Y", strtotime($ddh->bccn_hanno));
+                ?>
                 <tr></tr>
                 <tr>
                     <th colspan="2" style="font-weight: bold;">Mã hóa đơn:</th>
@@ -32,7 +36,7 @@
                 </tr>
                 <tr>
                     <th colspan="2" style="font-weight: bold;">Ngày lập:</th>
-                    <td colspan="2">{{ $ddh->ddh_ngaylap }}</td>
+                    <td colspan="2">{{ $ddh_ngaylap }}</td>
                     <td></td>
                     <th colspan="2" style="font-weight: bold;">Nhân viên bán:</th>
                     <td colspan="2">{{ $ddh->name }}</td>
@@ -49,7 +53,7 @@
                     <td colspan="2">{{ number_format($ddh->ddh_congnocu, 0, ',' , ',') }} VND</td>
                     <td></td>
                     <th colspan="2" style="font-weight: bold;">Ngày cho nợ:</th>
-                    <td colspan="2">{{ $ddh->bccn_hanno }}</td>
+                    <td colspan="2">{{ $bccn_hanno }}</td>
                 </tr>
             @endforeach
         </tbody>
