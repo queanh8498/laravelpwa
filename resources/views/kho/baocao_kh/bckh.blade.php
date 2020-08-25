@@ -81,7 +81,7 @@
                                     </div>
                                   </div>
                                    <div class="col-sm-6">
-                                 <label>Đến </label> 
+                                 <label>Đến ngày: </label> 
                                       <div class="input-group date">
                                         <input type="text" class="date form-control" name="denngay" id="denngay"/>
                                         <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
