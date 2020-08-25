@@ -4,7 +4,49 @@
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
     <style> 
+table, th, td {  
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+        .small-box{
+            margin-bottom: 10px;
+            -webkit-transition: transform 0.9s ease;
+            -o-transition: transform 0.9s ease;
+            -moz-transition: transform 0.9s ease;
+            transition: transform 0.9s ease;
+        }
+        /* .small-box:hover{
+            -webkit-transform: scale(1.1);
+            -moz-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            -o-transform: scale(1.1);
+            transform: scale(1.1); 
+        } */
+        .small-box > .inner{
+            padding: 10px 10px 3px 10px;
+        }
+        .small-box .icon {
+            /* -webkit-transition: all .3s linear;
+            -o-transition: all .3s linear;
+            transition: all .3s linear; */
+            position: absolute;
+            top: -15px;
+            right: 10px;
+            z-index: 0;
+            font-size: 40px;
+            color: white;
+            padding-right: 10px;
+        }
+        h5, p{
+            color: white;
 
+        }
+        .input-group-addon{
+            padding: 6px 18px;
+        }
+        span:hover{
+            cursor: pointer;
+        }
         .glyphicon{
             top: 4px;
             right: 6px;
@@ -31,7 +73,21 @@
                               <form role="form" method="post" id="dynamic_form" action="{{URL::to('/banhang/pdf-bcncc')}}" > 
                                 @csrf
                             <div class="position-center">
-                                     <div class="form-group">
+                                 <div class="col-sm-6">
+                                 <label>Từ ngày: </label>    
+                                    <div class="input-group date">
+                                        <input type="text" class="date form-control" name="tungay" id="tungay"/>
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                    </div>
+                                <div class="col-sm-6">
+                                 <label>Đến ngày</label> 
+                                      <div class="input-group date">
+                                        <input type="text" class="date form-control" name="denngay" id="denngay"/>
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                      </div>
+                                    </div>
+                                         <div class="col-sm-12 form-group"  >
                                     <label for="exampleInputPassword1">Nhà cung cấp</label>
                                       <select name="ncc_id" class="form-control input-sm m-bot15" id="ncc_id">
                                         @foreach($ncc as $key => $dsncc)
@@ -39,22 +95,11 @@
                                         @endforeach  
                                     </select>
                                 </div>
-                                
-                                 <label>Từ ngày: </label>    
-                                    <div class="input-group date">
-                                        <input type="text" class="date form-control" name="tungay" id="tungay"/>
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                    </div>
-                                  
-                                 <label>Đến </label> 
-                                      <div class="input-group date">
-                                        <input type="text" class="date form-control" name="denngay" id="denngay"/>
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                      </div>
                                              
                             <br>
+                              <div class="col-sm-1">
                               <input  type="button" name="save" id="save" class="btn btn-primary" value="Xem báo cáo" />
-
+                                </div>
                             </div>
                           
                          
