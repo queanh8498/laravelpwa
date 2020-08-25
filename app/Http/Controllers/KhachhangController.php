@@ -154,7 +154,11 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
     ]);
         //******search from date to date
         $from_date = $request->input('from_date');
+        $from_date = date('Y-m-d', strtotime($from_date));
         $to_date = $request->input('to_date');
+        $to_date = date('Y-m-d', strtotime($to_date));
+
+        //dd($to_date);
 
         //lấy ngày hiện tại -> format lại
         $current_day = Carbon::now('Asia/Ho_Chi_Minh');
@@ -176,6 +180,8 @@ WHERE dh.kh_id='.$id.' AND date(bc.bccn_hanno) < CURDATE() and dh.ddh_congnomoi 
                   join dondathang dh on dh.ddh_id = pth.ddh_id  WHERE dh.kh_id='.$id.' and pth.pth_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date.'" group by pth.ddh_id) 
                   as aaa on dh.ddh_id = aaa.donhang_id
                                 WHERE dh.kh_id='.$id.' AND dh.ddh_ngaylap BETWEEN "'.$from_date.'" AND "'.$to_date.'" GROUP BY dh.ddh_id');
+                                //dd($chitiet_kh_date);
+        
         $dathu_tongno_kh_date = DB::select('SELECT kh.kh_id,kh.kh_ten,pt_id,pt_ngaylap,pt_tienthu, SUM(pt.pt_tienthu) as tongthu_kh,tongno 
         from khachhang kh 
         left join phieuthu pt on pt.kh_id=kh.kh_id 
@@ -327,6 +333,9 @@ public function excel_chitietcongno_kh($id) {
         //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
        // $to_date_1 = date('Y-m-d', strtotime($to_date. ' + 1 days'));
        // dd($to_date);
+       $from_date = date('Y-m-d', strtotime($from_date));
+       $to_date = date('Y-m-d', strtotime($to_date));
+
 
         //lấy ngày hiện tại -> format lại
         $current_day = Carbon::now('Asia/Ho_Chi_Minh');

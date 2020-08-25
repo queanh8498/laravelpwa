@@ -1,5 +1,8 @@
 @extends('admin_banhang')
 @section('admin_content')
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
 <style>
 
@@ -27,12 +30,25 @@ h5{ text-align:center;
 
 .datarow{ text-align:center;}
 
-tr:hover {background-color: #f5f5f5;
+tr:hover {background-color: #f5f5f5;}
+
+.input-group-addon{
+        padding: 6px 18px;
+    }
+span:hover{
+cursor: pointer;
+}
+.glyphicon{
+top: 4px;
+right: 6px;
+}
 
 }
 </style>
     @if (empty($chitiet_kh_date))
         <h4>KHÁCH HÀNG NÀY CHƯA MUA HÀNG</4>
+        <br><br>
+        <a type="button" class="btn btn-dark" href="{{ route('khachhang.index')}}">Trở về</a>
         <?php $a = '';?>
     @else
     @foreach($chitiet_kh_date as $ctkh)
@@ -50,21 +66,28 @@ tr:hover {background-color: #f5f5f5;
 <h5>Khách Hàng: {{$a}}</h5>
 
     <div class="container-fluid" id="container">
-       <a type="button" class="btn btn-dark" href="{{ route('khachhang.chitiet',['id'=>$id]) }}">Trở về</a>
-       <a type="button" class="btn btn-dark" href="{{ route('khachhang.chitiet.excel.time', ['id'=>$id,'from_date'=>$from_date,'to_date'=>$to_date]) }}">Xuất Excel</a>
        <!-- <h3>Từ {{ $from_date }} đến {{ $to_date }}</h3> -->
-       <br><hr>
        <div class="row">
        <!-- new -->
-       <div class="">
+       <div class="d-flex">
            <form method="POST" action="{{ route('khachhang.search',['id'=>$id]) }}">
            <!-- <input type="text" name="search" class="form-control m-input" placeholder="Enter Country Name" /> -->
            {{ csrf_field() }}
            <div class="col-sm-5">
-                <b>Từ :</b><input type="date" name="from_date" id="from_date" class="form-control" value="{{ old('from_date',$from_date) }}"/>
+           Từ ngày : 
+                <div class="input-group date">
+                <?php   $from_date = date('d-m-Y', strtotime($from_date));?>
+                    <input type="text" class="date form-control" name="from_date" id="from_date" value="{{ old('from_date',$from_date) }}"/>
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>                    
             </div>
             <div class="col-sm-5">
-                <b>Đến :</b><input type="date" name="to_date" id="to_date" class="form-control" value="{{ old('to_date',$to_date) }}" />
+            Đến ngày:
+                <div class="input-group date">
+                <?php   $to_date = date('d-m-Y', strtotime($to_date));?>
+                    <input type="text" class="date form-control" name="to_date" id="to_date" value="{{ old('to_date',$to_date) }}" class="form-control"  />
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
             </div>
             <div class="col-md-1">
                 <input type="hidden" name="kh_id" id="kh_id" class="form-control" value="<?php echo $id;?>">
@@ -75,7 +98,9 @@ tr:hover {background-color: #f5f5f5;
             </div>
         </form>
        </div>
-        </div>
+        <div class="ml-auto" style="padding-right:20px">
+        <a type="button" class="btn btn-dark" href="{{ route('khachhang.chitiet',['id'=>$id]) }}">Trở về</a>
+       <a type="button" class="btn btn-dark" href="{{ route('khachhang.chitiet.excel.time', ['id'=>$id,'from_date'=>$from_date,'to_date'=>$to_date]) }}">Xuất Excel</a>
         </div>
         <!-- endnew -->
 
@@ -210,5 +235,11 @@ tr:hover {background-color: #f5f5f5;
 </div>
     @endif
 
+    <script type="text/javascript">
+    $('.date').datepicker({  
+       format: 'dd-mm-yyyy'
+     });  
+   
+</script>
 
 @endsection

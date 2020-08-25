@@ -1,6 +1,8 @@
 @extends('admin_banhang')
 @section('admin_content')
-
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
 
 <style>
 .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {
@@ -31,6 +33,17 @@ tr:hover {background-color: #f5f5f5;}
 #table1, #table2, #table3, #table4, #table5{
     display: none;
 }
+.input-group-addon{
+            padding: 6px 18px;
+        }
+span:hover{
+    cursor: pointer;
+}
+.glyphicon{
+    top: 4px;
+    right: 6px;
+}
+
 </style>
     @if (empty($chitiet_kh))
         <h4>KHÁCH HÀNG NÀY CHƯA MUA HÀNG</4>
@@ -48,41 +61,33 @@ tr:hover {background-color: #f5f5f5;}
     @if (empty($chitiet_kh))
     @else
 
-<h3>THÔNG TIN CHI TIẾT KHÁCH HÀNG</h3>
-<h5>Khách Hàng: {{$a}}</h5>
+<h3 style="margin-top:-15px">THÔNG TIN CHI TIẾT KHÁCH HÀNG</h3>
+<h5 style="margin-top:-15px"> Khách Hàng: {{$a}}</h5>
 
-    <div class="container-fluid" id="container">
-        <div class="row">
-        <a type="button" class="btn btn-dark" href="{{ route('khachhang.index') }}">Trở về</a>
-
-           
-        </div>
-    </div>
-
-<br><hr>
-	 <div class="row">
-        @if(count($errors)>0)
-        <span class="text-alert">
-            @foreach($errors->all() as $err)
-                {{$err}}<br>
-            @endforeach
-        </span>
-        @endif
-        </div>
-        <div class="d-flex">
+<a style="margin-top:15px" type="button" class="btn btn-dark" href="{{ route('khachhang.index') }}">Trở về</a>
+<br>
+<div class="d-flex" >
             <div>
             <form method="POST" action="{{ route('khachhang.search',['id'=>$id]) }}">
-                    <!-- <input type="text" name="search" class="form-control m-input" placeholder="Enter Country Name" /> -->
                     {{ csrf_field() }}
                        
-                        <div class="col-sm-4">
-                            <b>Từ :</b><input type="date" name="from_date" id="from_date" class="form-control" />
-                        </div>
-                        <div class="col-sm-4">
-                            <b>Đến :</b><input type="date" name="to_date" id="to_date" class="form-control"  />
+                        <div class="col-sm-5">
+                        Từ ngày : 
+                            <div class="input-group date">
+                                <input type="text" class="date form-control" name="from_date" id="from_date"/>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
                         </div>
 
-                        <div class="col-md-2">
+                        <div class="col-sm-5">
+                        Đến ngày:
+                            <div class="input-group date">
+                                <input type="text" class="date form-control" name="to_date" id="to_date" class="form-control"  />
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-1">
                             <br><button class="btn btn-dark" type="submit">Tìm kiếm</button>
                         </div>
                         <div class="col-md-1">
@@ -98,10 +103,16 @@ tr:hover {background-color: #f5f5f5;}
                 <a class="btn btn-success" onclick='show(5);'  style="color:white;/"><b>Đã trả</b></a>
                 <a class="btn btn-light" onclick='show(10);'><b>Tất cả Đơn</b></a>
             </div>
+        </div>      
+	 <div class="row">
+        @if(count($errors)>0)
+        <span class="text-alert">
+            @foreach($errors->all() as $err)
+                {{$err}}<br>
+            @endforeach
+        </span>
+        @endif
         </div>
-        
-    
-    <br />
 
     <div class="table-agile-info">
   <div class="panel panel-default">
@@ -552,4 +563,10 @@ function show(nr) {
 
  </script>
 
+ <script type="text/javascript">
+    $('.date').datepicker({  
+       format: 'dd-mm-yyyy'
+     });  
+   
+</script>
 @endsection

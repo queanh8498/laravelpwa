@@ -85,7 +85,7 @@
                     <td  style="text-align:center">{{ number_format($chitiet_kh_date->giatri_trahang,0,',',',') }}</td>
                 @endif
                 <?php $no_after_trahang_1 = $no - $chitiet_kh_date->giatri_trahang;
-                         $no_after_trahang_2 = $no - $chitiet_kh_date->giatri_trahang;
+                    $no_after_trahang_2 = $no - $chitiet_kh_date->giatri_trahang;
                     // if ($no_after_trahang_1 < 0){
                     //     $no_after_trahang_1=0;
                     // }
@@ -124,14 +124,13 @@
             </tr>
             @endforeach
             <tr align="center"> 
-            <th style="text-align:center;font-size:12px" colspan="8"><strong>Tổng nợ</strong></th>
+            <th style="text-align:center;font-size:12px" colspan="8"><strong>Tổng nợ Đơn hàng</strong></th>
             <th style="font-size:12px" colspan="2"><strong>{{ number_format($sum,0,',',',') }}</strong></th>
             </tr>
            
             <tr> 
-            @if (is_array($dathu_tongno_kh_date))
             @foreach($dathu_tongno_kh_date as $key => $dathu_tongno_kh_date)    
-                    <th style="text-align:center;font-size:12px" colspan="8"><strong>Đã thu</strong></th>
+            <th style="text-align:center;font-size:12px" colspan="8"><strong>Đã thu</strong></th>
             <th style="text-align:left;font-size:12px" colspan="2"><strong>{{ number_format($dathu_tongno_kh_date->tongthu_kh,0,',',',') }}</strong></th>
             </tr>
 
@@ -148,11 +147,7 @@
             <th style="text-align:left;font-size:12px" colspan="2" ><b>{{ number_format($sum - $dathu_tongno_kh_date->tongthu_kh ,0,',',',') }} VNĐ</b></th>
             @endif
             
-            
-           
-
             @endforeach
-            @endif
             </tr>
 
 
