@@ -67,11 +67,11 @@ span:hover{
 <a style="margin-top:15px" type="button" class="btn btn-dark" href="{{ route('khachhang.index') }}">Trở về</a>
 <br>
 <div class="d-flex" >
-            <div>
+            <div style="width: 600px;"> 
             <form method="POST" action="{{ route('khachhang.search',['id'=>$id]) }}">
                     {{ csrf_field() }}
                        
-                        <div class="col-sm-5">
+                        <div class="col-sm-4">
                         Từ ngày : 
                             <div class="input-group date">
                                 <input type="text" class="date form-control" name="from_date" id="from_date"/>
@@ -79,7 +79,7 @@ span:hover{
                             </div>
                         </div>
 
-                        <div class="col-sm-5">
+                        <div class="col-sm-4">
                         Đến ngày:
                             <div class="input-group date">
                                 <input type="text" class="date form-control" name="to_date" id="to_date" class="form-control"  />
@@ -93,7 +93,6 @@ span:hover{
                         <div class="col-md-1">
                             <input type="hidden" name="kh_id" id="kh_id" class="form-control" value="<?php echo $id;?>">
                         </div>
-
                 </form>
             </div>
             <div class="ml-auto" style="padding-top:20px">
