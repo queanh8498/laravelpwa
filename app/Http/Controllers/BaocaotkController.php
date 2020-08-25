@@ -27,7 +27,7 @@ class BaocaotkController extends Controller
  
        $current_day = Carbon::now('Asia/Ho_Chi_Minh');
       
-       $date=date("Y-m-d H:i:s", strtotime($current_day));
+       $date=date("Y-m-d", strtotime($current_day));
    
           $data= DB::table('hanghoa')
        ->where('kho_id',$request->kho_id)
@@ -48,7 +48,7 @@ $khohang=khohang::find($request->kho_id);
  
       $current_day = Carbon::now('Asia/Ho_Chi_Minh');
       
-       $date=date("Y-m-d H:i:s", strtotime($current_day));
+       $date=date("Y-m-d", strtotime($current_day));
    
           $data= DB::table('hanghoa')
        ->where('kho_id',$request->kho_id)
@@ -67,7 +67,7 @@ $khohang=khohang::find($request->kho_id);
 
       $current_day = Carbon::now('Asia/Ho_Chi_Minh');
       
-       $date=date("Y-m-d H:i:s", strtotime($current_day));
+       $date=date("Y-m-d", strtotime($current_day));
    
           $data= DB::table('hanghoa')
        ->where('kho_id',$request->kho_id)

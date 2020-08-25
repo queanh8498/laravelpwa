@@ -22,10 +22,9 @@ class BaocaonccController extends Controller
     	return view('kho.baocao_ncc.bcncc')->with('ncc',$ncc);
     }
     public function postpdf_bcncc(Request $request){
-  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
-      $from=date("Y-m-d H:i:s", strtotime($request->tungay));
-      $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
-      $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
+ 
+      $from=date("Y-m-d", strtotime($request->tungay));
+      $to=date("Y-m-d", strtotime($request->denngay));
       $data= DB::table('hanghoa')
        ->join('nhomhanghoa','nhomhanghoa.nhom_id','=','hanghoa.nhom_id')
        ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
@@ -34,7 +33,6 @@ class BaocaonccController extends Controller
        $ncc=nhacungcap::find($request->ncc_id);
         $data4 = [
         'from' => $from,
-        'to_ht'  => $to_ht,
         'to'  => $to,
         'ncc'=>$ncc,
         'data'=>$data,
@@ -46,10 +44,9 @@ class BaocaonccController extends Controller
     return $pdf->stream();
     }
  public function excel_bcncc(Request $request){
-  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
-      $from=date("Y-m-d H:i:s", strtotime($request->tungay));
-      $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
-      $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
+
+      $from=date("Y-m-d", strtotime($request->tungay));
+      $to=date("Y-m-d", strtotime($request->denngay));
       $data= DB::table('hanghoa')
        ->join('nhomhanghoa','nhomhanghoa.nhom_id','=','hanghoa.nhom_id')
        ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
@@ -59,26 +56,25 @@ class BaocaonccController extends Controller
         $data4 = [
         'from' => $from,
         'to'  => $to,
-        'to_ht'  => $to_ht,
         'ncc'=>$ncc,
         'data'=>$data,
     ];
    
    
-    return Excel::download(new Baocaoncc_Export($from,$to,$data,$ncc,$to_ht), 'Baocao_nhacungcap.xlsx');
+    return Excel::download(new Baocaoncc_Export($from,$to,$data,$ncc), 'Baocao_nhacungcap.xlsx');
     }
       public function postxem_bcncc(Request $request){
 
-       //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
-       $from=date("Y-m-d H:i:s", strtotime($request->tungay));
-       $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
+      
+       $from=date("Y-m-d", strtotime($request->tungay));
+       $to=date("Y-m-d", strtotime($request->denngay));
           $data= DB::table('hanghoa')
        ->join('nhomhanghoa','nhomhanghoa.nhom_id','=','hanghoa.nhom_id')
        ->join('nhacungcap','nhacungcap.ncc_id','=','nhomhanghoa.ncc_id')
        ->where('nhacungcap.ncc_id',$request->ncc_id)
        ->get();
 
-if($from>=$to ||$request->tungay==''||$request->denngay==''){
+if($from>$to ||$request->tungay==''||$request->denngay==''){
   echo "<input  style='color:red;' type='text' id='check' value='Ngày không hợp lệ' readonly='' class='form-control'>";
 }
 else{

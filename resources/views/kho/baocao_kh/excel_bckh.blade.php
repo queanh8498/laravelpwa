@@ -10,7 +10,6 @@
 
   $date=date("d-m-Y", strtotime($from));
   $date1=date("d-m-Y", strtotime($to));
-   $date2=date("d-m-Y", strtotime($to_ht));
  ?>
     <div class="row">
         <table border="0" align="center" cellpadding="5" style="border-collapse: collapse;">
@@ -28,7 +27,7 @@
             </tr>
               <tr>
                 <td colspan="7" class="caption" align="center" style="text-align: center; font-size: 14px">
-                   Từ ngày:{{$date}} - Đến ngày:{{$date2}}
+                   Từ ngày:{{$date}} - Đến ngày:{{$date1}}
                 </td>
             </tr>
              <tr>

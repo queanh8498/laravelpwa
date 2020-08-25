@@ -1,5 +1,18 @@
 @extends('admin_banhang')
 @section('admin_content')
+ <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
+    <style> 
+
+        .glyphicon{
+            top: 4px;
+            right: 6px;
+        }
+        .input-group{
+            width: 100%;
+        }
+    </style>
 <div class="row">
             <div class="col-lg-12">
                     <section class="panel">
@@ -34,11 +47,17 @@
                         
                                  
                                      <input type="hidden" name="kh_id" class="form-control" id="kh_id" >
-                                 <label>Từ ngày: </label>
-                                   <input type="date" class="form-control" id="tungay" name="tungay">
+                                     <label>Từ ngày: </label>    
+                                    <div class="input-group date">
+                                        <input type="text" class="date form-control" name="tungay" id="tungay"/>
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
                                   
                                  <label>Đến </label> 
-                                      <input type="date" class="form-control" id="denngay" name="denngay">
+                                      <div class="input-group date">
+                                        <input type="text" class="date form-control" name="denngay" id="denngay"/>
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                      </div>
                                  
                             <br>
                               <input  type="button" name="save" id="save" class="btn btn-primary" value="Xem báo cáo" />
@@ -61,6 +80,11 @@
 
             </div>
         </div>
+     <script type="text/javascript">
+        $('.date').datepicker({  
+            format: 'dd-mm-yyyy'
+        });  
+    </script>
 <script type="text/javascript">
    $(document).ready(function(){
         fetch_customer_data();

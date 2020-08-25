@@ -55,10 +55,8 @@ class BaocaokhController extends Controller
         }
     }
     public function excel_bckh(Request $request){
-  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
-      $from=date("Y-m-d H:i:s", strtotime($request->tungay));
-      $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
-      $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
+      $from=date("Y-m-d", strtotime($request->tungay));
+      $to=date("Y-m-d", strtotime($request->denngay));
         $data= DB::table('chitietdathang')
        ->join('hanghoa','hanghoa.hh_id','=','chitietdathang.hh_id')
        ->join('dondathang','dondathang.ddh_id','=','chitietdathang.ddh_id')
@@ -71,17 +69,15 @@ class BaocaokhController extends Controller
         'to'  => $to,
         'kh'=>$kh,
         'data'=>$data,
-        'to_ht'=>$to_ht,
+        
     ];
    
    
-    return Excel::download(new Baocaokh_Export($from,$to,$data,$kh,$to_ht), 'Baocao_khachhang.xlsx');
+    return Excel::download(new Baocaokh_Export($from,$to,$data,$kh), 'Baocao_khachhang.xlsx');
     }
     public function postpdf_bckh(Request $request){
-  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
-      $from=date("Y-m-d H:i:s", strtotime($request->tungay));
-      $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
-      $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
+      $from=date("Y-m-d", strtotime($request->tungay));
+      $to=date("Y-m-d", strtotime($request->denngay));
         $data= DB::table('chitietdathang')
        ->join('hanghoa','hanghoa.hh_id','=','chitietdathang.hh_id')
        ->join('dondathang','dondathang.ddh_id','=','chitietdathang.ddh_id')
@@ -94,7 +90,7 @@ class BaocaokhController extends Controller
         'to'  => $to,
         'kh'=>$kh,
         'data'=>$data,
-        'to_ht'=>$to_ht,
+       
     ];
  
      $pdf = PDF::loadView('kho.baocao_kh.pdf_bckh',$data4);
@@ -104,11 +100,10 @@ class BaocaokhController extends Controller
 
 
      public function postxem_bckh(Request $request){
-  //vd: chọn 22/7 -> 27/7 kết quả chỉ lấy từ 22/7 -> 26/7 ==> nên phải cộng 1 day.
+  
      
-       $from=date("Y-m-d H:i:s", strtotime($request->tungay));
-       $to=date("Y-m-d H:i:s", strtotime($request->denngay. ' + 1 days'));
-      $to_ht=date("Y-m-d H:i:s", strtotime($request->denngay));
+       $from=date("Y-m-d", strtotime($request->tungay));
+       $to=date("Y-m-d", strtotime($request->denngay));
           $data= DB::table('chitietdathang')
        ->join('hanghoa','hanghoa.hh_id','=','chitietdathang.hh_id')
        ->join('dondathang','dondathang.ddh_id','=','chitietdathang.ddh_id')
@@ -116,7 +111,7 @@ class BaocaokhController extends Controller
        ->groupBy('hanghoa.hh_id')
        ->get();
 
-if($from>=$to ||$request->tungay==''||$request->denngay==''){
+if($from>$to ||$request->tungay==''||$request->denngay==''){
   echo "<input  style='color:red;' type='text' id='check' value='Ngày không hợp lệ' readonly='' class='form-control'>";
 }
 else{

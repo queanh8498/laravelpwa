@@ -38,17 +38,17 @@ class Baocaoncc_Export implements FromView , ShouldAutoSize,WithEvents
     protected  $from;
     protected  $to;
     protected  $ncc;
-    protected  $to_ht;
+  
     /**
     * @return \Illuminate\Support\Collection
     */
-    public function __construct($from,$to,$data,$ncc,$to_ht) {
+    public function __construct($from,$to,$data,$ncc) {
         //$this->data = $data;
         $this->from = $from;
         $this->to = $to;
          $this->data = $data;
           $this->ncc = $ncc;
-            $this->to_ht = $to_ht;
+        
         
     }
     public function  registerEvents(): array
@@ -60,7 +60,7 @@ class Baocaoncc_Export implements FromView , ShouldAutoSize,WithEvents
                     $to=$this->to;
                     $data=$this->data;
                     $ncc=$this->ncc;
-                    $to_ht=$this->to_ht;
+                  
  
         // Set khổ giấy in ngang
         $event->sheet->getDelegate()->getPageSetup()
@@ -143,7 +143,7 @@ class Baocaoncc_Export implements FromView , ShouldAutoSize,WithEvents
         $to=$this->to;
          $data=$this->data;
           $ncc=$this->ncc;
-          $to_ht=$this->to_ht;
+        
         
        // dd($kh);
        // dd($a);
@@ -153,7 +153,7 @@ class Baocaoncc_Export implements FromView , ShouldAutoSize,WithEvents
             'to' => $to,
             'data' => $data,
             'ncc' => $ncc,
-            'to_ht' => $to_ht,
+          
         ]);
     }
   
