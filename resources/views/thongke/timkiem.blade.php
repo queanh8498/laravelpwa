@@ -4,7 +4,10 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/css/bootstrap-datepicker.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.5.0/js/bootstrap-datepicker.js"></script>
-    <style> 
+    <style>
+        .footer{
+            margin-top: 160px;
+        }
         table, th, td {  
             border: 1px solid #ccc;
             border-collapse: collapse;
@@ -60,7 +63,7 @@
         <div class="panel-heading">
             Thống kê 
         </div>
-        <div class="container-fluid">
+        <div class="container-fluid" style="margin-top: 20px;">
             <div class="row">
                 <form method="post" action="{{ route('thongke.timkiem') }}" style="margin-left: 115px;"> 
                     {{ csrf_field() }}

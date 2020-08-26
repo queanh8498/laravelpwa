@@ -5,6 +5,12 @@
 
 
 @section('content')
+<style>
+	body{
+		background: linear-gradient(to bottom, #0099ff 0%, #fff 100%);
+	}
+</style>
+
 <div class="log-w3">
 <div class="w3layouts-main">
 	<h2>Đăng nhập</h2>
@@ -24,11 +30,11 @@
 		
 		<form action="{{URL::to('/dangnhap')}}" method="post">
 			{{ csrf_field() }}
-			<input type="text"  class="ggg" name="email" placeholder="Điền email" >
-			<input type="password" class="ggg" name="password" placeholder="Điền password" >
+			<input type="text"  class="ggg" name="email" placeholder="Email" >
+			<input type="password" class="ggg" name="password" placeholder="Password" >
 
-			<span><input type="checkbox" />Nhớ đăng nhập</span>
-			<h6><a href="#">Quên mật khẩu</a></h6>
+			<!-- <span><input type="checkbox" />Nhớ đăng nhập</span>
+			<h6><a href="#">Quên mật khẩu</a></h6> -->
 				<div class="clearfix"></div>
 				<input type="submit" value="Đăng nhập" name="login">
 		</form>

@@ -4,6 +4,9 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 */
+
+@import url("https://fonts.googleapis.com/css?family=Acme|CantataOne|Sniglet|DancingScript|Rubik");
+
 h4, h5, h6,
 h1, h2, h3 {margin: 0;}
 ul, ol {margin: 0;}
@@ -13,8 +16,11 @@ html, body{
 	font-family: 'Roboto', sans-serif;
     font-size: 100%;
     overflow-x: hidden;
-    background: url(../images/bg.jpg) no-repeat 0px 0px;
-	background-size:cover;
+    /* background: linear-gradient(to bottom, #0099ff 0%, #fff 100%); */
+    /* background: none; */
+    background: #e4edf7;
+    height: 100vh;
+    width: 100%;
 }
 body a{
 	transition: 0.5s all ease;
@@ -214,7 +220,7 @@ ul.sidebar-menu li a.active i {
     transition:all .3s ease-in-out;
 }
 .footer {
-    background:#3e48bb;
+    background:#1269db;
     padding: 20px;
 }
 .footer p {
@@ -231,7 +237,8 @@ ul.sidebar-menu li a.active i {
     left:0;
     right:0;
     z-index:1002;
-    background:rgb(129 132 228);
+    /* background:rgb(129 132 228); */
+    background: #1572e8;
     -webkit-transition:all .3s ease-in-out;
     -moz-transition:all .3s ease-in-out;
     -o-transition:all .3s ease-in-out;
@@ -251,7 +258,8 @@ ul.sidebar-menu li a.active i {
     width:100%;
 }
 .brand {
-    background:#5123bf;
+    /* background:#fff; */
+    background:#0d56b6;
     float:left;
     width:240px;
     height:80px;
@@ -259,10 +267,13 @@ ul.sidebar-menu li a.active i {
 }
 a.logo {
     font-size:32px;
+    /* color:#006df0; */
     color:#fff;
     float:left;
-    margin:20px 0 0 25px;
+    margin: 17px 0 0 45px;
     text-transform:uppercase;
+    letter-spacing: 1px;
+    
 }
 a.logo:hover,a.logo:focus {
     text-decoration:none;
@@ -518,8 +529,10 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     padding: 0px;
     background: none;
     margin-right: 0;
-    border: 1px solid #0606176b;
-    background: #4408d6;
+    /* border: 1px solid #0606176b; */
+    border: 1px solid #2121746b;
+    /* background: #4408d6; */
+    background: #1269db;
 }
 .top-nav ul.top-menu>li.language>a {
     margin-top:-2px;
@@ -578,31 +591,35 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
 }
 /*search*/
 .search {
-    width: 20px;
+    width: 25px;
     -webkit-transition: all .3s ease;
     -moz-transition: all .3s ease;
     -ms-transition: all .3s ease;
     -o-transition: all .3s ease;
     transition: all .3s ease;
     border: 1px solid #957fae1a;
-    box-shadow: none;
-    background: #3c31e0 url(../images/search-icon.png) no-repeat 10px 8px;
-    padding: 0 5px 0 30px;
+    /* box-shadow: none; */
+    /* background: #3c31e0 url(../images/search-icon.png) no-repeat 10px 8px; */
+    background: #0f5abc url(../images/search-icon.png) no-repeat 10px 8px;
+    padding: 0px 5px 0 30px;
     color: #fff;
     border-radius: 100px;
     -webkit-border-radius: 100px;
-	cursor:pointer;
+    cursor:pointer;
+    /* box-shadow: 0 0 15px 0 rgba(82, 87, 84, 0.6); */
+    box-shadow: 4px 4px 10px rgba(69, 65, 78, 0.06);
 }
 .search:focus {
     width:180px;
-    border:1px solid #8b5c7e;
+    /* border:1px solid #8b5c7e; */
+    border:1px solid #000;
     box-shadow:none;
     -webkit-transition:all .3s ease;
     -moz-transition:all .3s ease;
     -ms-transition:all .3s ease;
     -o-transition:all .3s ease;
     transition:all .3s ease;
-    color:#c8c8c8;
+    color: black;
     font-weight: 300;
 }
 .todo-search:focus{
@@ -1658,7 +1675,9 @@ ul.bs-glyphicons-list {
 }
 .panel-default>.panel-heading {
     color: #000000 ! important;
-    background-color: #aac1e8 ! important;
+    /* background-color: #aac1e8 ! important; */
+    background-color: #a2cbff ! important;
+    /* background-color: #448eed ! important; */
     border-color: #ddede0 ! important;
     font-size: 20px;
 }
@@ -2367,37 +2386,44 @@ ul.inbox-pagination li {
 }
 /*-- gallery --*/
 .w3layouts-main h2 {
-	color:#f8f5fbfc;
+	/* color:#f8f5fbfc; */
+	color: rgba(255, 255, 255, 0.877);
     font-size: 29px;
+    font-family: "Rubik", sans-serif;
+    font-weight: bold;
     letter-spacing: 2px;
     text-transform: uppercase;
     padding-bottom: 15px;
-	    text-align: center;
+	text-align: center;
 }
 .w3layouts-main {
     width: 30%;
     margin:5em auto;
-    background:rgb(25 70 197);
+    background: linear-gradient(to bottom, #0099ff 0%, #fff 100%);
     padding: 42px 35px;
 }
 /*--//header--*/
 /*--login--*/
 input.ggg{
     width: 100%;
-    padding: 15px 0px 15px 15px;
-    border: 1px solid #fff;
+    padding: 15px 0px 5px 0px;
+    border: 1px solid #000;
     outline: none;
     font-size: 14px;
     color: #fff;
     margin: 14px 0px;
-	background: none;
+    background: none;
+    border-bottom: 1px solid #fff;
+    border-top: 0px;
+    border-left: 0px;
+    border-right: 0px;
 }
 .w3layouts-main span {
     font-size: 16px;
-    color: #fff;
+    color: #0099ff;
     float: left;
-    width: 32%;
-	margin-top: 8px;
+    width: 37%;
+	margin-top: 23px;
 }
 .w3layouts-main h6 {
     font-size: 16px;
@@ -2405,11 +2431,12 @@ input.ggg{
     width: 37%;
 	color: #fff;
     letter-spacing: 1px;
-	margin-top: 8px;
+	margin-top: 20px;
 	text-decoration:underline;
 }
 .w3layouts-main a {
-    color: #fff;
+    color: #337ab7;
+    text-decoration: none;
 	transition:0.5s all;
 	-webkit-transition:0.5s all;
 	-o-transition:0.5s all;
@@ -2417,7 +2444,7 @@ input.ggg{
 	-ms-transition:0.5s all;
 }
 .w3layouts-main a:hover{
-	color:#14b7e8;
+	color:#0099ff;
 	transition:0.5s all;
 	-webkit-transition:0.5s all;
 	-o-transition:0.5s all;
@@ -2425,17 +2452,22 @@ input.ggg{
 	-ms-transition:0.5s all;
 }
 .w3layouts-main input[type="submit"] {
+    width: 100%;
     padding: 12px 38px;
     font-size: 18px;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    background:#1456e8;
+    letter-spacing: 1px;
+    background: #009cff;
+    border-radius: 4px;
+    font-family: "Rubik", sans-serif;
+    font-weight: bold;
     color: white;
     border: none;
     outline: none;
 	display: table;
     cursor: pointer;
-    margin: 45px auto 31px;
+    margin: 40px 0px 10px 0px;
+    /* margin: 45px auto 31px; */
     transition: 0.5s all;
     -webkit-transition: 0.5s all;
     -o-transition: 0.5s all;
@@ -2558,7 +2590,8 @@ div#graph10,div#graph11 {
 }
 @media (max-width: 1366px){
 .w3layouts-main {
-    width: 35%;
+    width: 30%;
+    box-shadow: 0 0 20px rgba(72,98,85, 0.6);
 }
 .captn {
     width: 280px;
