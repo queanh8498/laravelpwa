@@ -158,6 +158,19 @@
         @endforeach
     </table>
     <br>
+     <table>
+                <thead>
+                    <tr>
+                        <th width="200px"></th>
+                        <th width="800px"></th>
+                       
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            
+        </table>  
     <hr style="color: black; margin-top: 105px;" />
     <table class="table_3">
         <tr>

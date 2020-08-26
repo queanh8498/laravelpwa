@@ -16,24 +16,23 @@ use Barryvdh\DomPDF\Facade as PDF;
 use App\Exports\DonHang_ChiTiet_Export;
 use App\Exports\DonHang_Time_Export;
 use Maatwebsite\Excel\Facades\Excel;
-use App\KhachHang;
-use App\DonDatHang;
-use App\HangHoa;
-use App\ChiTietDatHang;
-use App\ChiTietPhieuXuat;
+use App\khachhang;
+use App\dondathang;
+use App\hanghoa;
+use App\chitietdathang;
+use App\chitietphieuxuat;
 use App\User;
-use App\BaoCaoCongNo;
-use App\NhomHangHoa;
-use App\PhieuXuatKho;
-use App\KhoHang;
-use App\NhaCungCap;
+use App\baocaocongno;
+use App\nhomhanghoa;
+use App\phieuxuatkho;
+use App\khohang;
+use App\nhacungcap;
 use App\congno_khachhang;
-use Illuminate\Validation\Rule;
 
 
 session_start();
 
-class DondathangController extends Controller
+class DonDatHangController extends Controller
 {
     public function xem_danhsachdondathang(){
         $danhsach_ddh = DB::select(

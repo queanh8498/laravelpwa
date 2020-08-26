@@ -10,9 +10,9 @@ use Validator;
 use Carbon\Carbon;
 use Datetime;
 use Session;
-use App\Dondathang;
-use App\Khachhang;
-use App\Baocaocongno;
+use App\dondathang;
+use App\khachhang;
+use App\baocaocongno;
 
 class ThongkeController extends Controller
 {

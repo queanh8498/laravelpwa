@@ -151,8 +151,22 @@
        
     </table>
     <br/>
-    <hr style="color: black; margin-top: 250px;" />
+  
           <table>
+                <thead>
+                    <tr>
+                        <th width="200px"></th>
+                        <th width="800px"></th>
+                       
+                        
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            
+        </table>    
+          <hr style="color: black; margin-top: 250px;" />  
+           <table>
                 <thead>
                     <tr>
                         <th width="200px">Người lập phiếu</th>
@@ -164,6 +178,6 @@
                 <tbody>
                 </tbody>
             
-        </table>      
+        </table>    
 </body>
 </html>
