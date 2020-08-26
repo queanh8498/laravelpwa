@@ -106,7 +106,7 @@
                             
                                  
                             <br>
-                             <div class="col-sm-1">
+                             <div class="col-sm-1" style="margin-bottom:50px">
                               <input  type="button" name="save" id="save" class="btn btn-primary" value="Xem báo cáo" />
                             </div>
 

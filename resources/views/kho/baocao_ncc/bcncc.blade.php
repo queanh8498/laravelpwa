@@ -97,14 +97,14 @@ table, th, td {
                                 </div>
                                              
                             <br>
-                              <div class="col-sm-1">
+                              <div class="col-sm-1" style="margin-bottom:50px">
                               <input  type="button" name="save" id="save" class="btn btn-primary" value="Xem báo cáo" />
                                 </div>
                             </div>
                           
                          
                           <br>
-                           <table  class="table table-bordered table-striped" id="table" >
+                           <table  class="table table-bordered table-striped" id="table"  >
 
              
                            </table>
