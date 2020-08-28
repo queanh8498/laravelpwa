@@ -175,7 +175,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
  <!-- footer -->
 		  <div class="footer">
 			<div class="wthree-copyright">
-			  <p>PHẦN MỀM QUẢN LÝ BÁN HÀNG LARAVEL</p>
+			  <p>PHẦN MỀM QUẢN LÝ BÁN HÀNG</p>
 			</div>
 		  </div>
   <!-- / footer -->

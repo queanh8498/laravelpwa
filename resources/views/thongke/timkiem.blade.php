@@ -96,7 +96,7 @@
             
                 <div class="row">
                     <div class="col-md-3" >
-                        <div class="small-box" style="border-radius: 5px 5px 5px 5px; height: 100px; width: 250px; margin: 0px 0px 20px 130px; background: linear-gradient(45deg,#39f 0%,#0040FF 100%); border-color: #2982cc;">
+                        <div class="small-box" style="border-radius: 5px 5px 5px 5px; height: 100px; width: 250px; margin: 0px 0px 20px 130px; background: #78c350; border-color: #2982cc;">
                             <div class="inner">
                                 <p style="font-size: 1.3125rem; font-weight: bold;">{{ $sodonhang }}</p>
 
@@ -108,7 +108,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="small-box" style="border-radius: 5px 5px 5px 5px; height: 100px; width: 250px; margin: 0px 20px 20px 140px; background: linear-gradient(45deg,#39f 0%,#0040FF 100%); border-color: #2982cc;">
+                        <div class="small-box" style="border-radius: 5px 5px 5px 5px; height: 100px; width: 250px; margin: 0px 20px 20px 140px; background: #45bbe0; border-color: #2982cc;">
                             <div class="inner">
                             <p style="font-size: 1.3125rem; font-weight: bold;">{{ number_format($a_b_c, 0, ',' , ',') }} </p>
 
@@ -120,7 +120,7 @@
                         </div>
                     </div>
                     <div class="col-md-3">
-                        <div class="small-box" style="border-radius: 5px 5px 5px 5px; height: 100px; width: 250px; margin: 0px 10px 20px 150px; background: linear-gradient(45deg,#39f 0%,#0040FF 100%); border-color: #2982cc;">
+                        <div class="small-box" style="border-radius: 5px 5px 5px 5px; height: 100px; width: 250px; margin: 0px 10px 20px 150px; background: #f06292; border-color: #2982cc;">
                             <div class="inner">
                                 <p style="font-size: 1.3125rem; font-weight: bold;">{{ number_format($tongno, 0, ',' , ',') }}</p>
 
