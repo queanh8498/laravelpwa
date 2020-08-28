@@ -13,12 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
 //BACKEND
 //ĐĂNG NHẬP
-Route::get('/dangnhap','NhanvienController@getdangnhap');
+Route::get('/','NhanvienController@getdangnhap');
 Route::post('/dangnhap','NhanvienController@postdangnhap');
 //ĐĂNG XUẤT
 Route::get('/dangxuat','NhanvienController@getdangxuat');

@@ -22,6 +22,6 @@ class NhanvienLoginMiddleware
        
        }
        else
-         return redirect('/dangnhap');
+         return redirect('/');
     }
 }

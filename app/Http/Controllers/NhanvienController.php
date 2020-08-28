@@ -142,12 +142,12 @@ class NhanvienController extends Controller
      	else 
      	{
    
-   		return redirect('/dangnhap')->with('thongbao','Đăng nhập không thành công');
+   		return redirect('/')->with('thongbao','Đăng nhập không thành công');
      	}
     }
       public function getdangxuat(){
         Auth::logout();
-        return redirect ('/dangnhap');
+        return redirect ('/');
     }
    
 }
