@@ -311,7 +311,7 @@ span:hover{
 
                     <td style="color:blue"><b>{{ $dh_saptoihan->bccn_hanno }} (Sắp tới hạn)</b></td>
                     
-                    <td>{{ number_format($ctkh->tongtien,0,',',',') }} VNĐ</td>
+                    <td>{{ number_format($dh_saptoihan->tongtien,0,',',',') }} VNĐ</td>
 
                     <td>{{ number_format($dh_saptoihan->no,0,',',',') }} VNĐ</td>
 
